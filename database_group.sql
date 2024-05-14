@@ -1,3 +1,6 @@
+-- use this if error logged that database exists
+-- DROP DATABASE sport_app;
+
 CREATE DATABASE sport_app;
 use sport_app;
 
