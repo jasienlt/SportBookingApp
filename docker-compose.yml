@@ -1,17 +1,27 @@
+# cat docker-compose.yml
 version: '2.26.1'
 services:
   mysqldb:
-    image: mysql:8.0
+    image: mysql:latest
     restart: unless-stopped
-    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD= userroot
+      - MYSQL_DATABASE= sport_app
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
-    expose:
-      - $MYSQLDB_DOCKER_PORT
     volumes:
-      - type: bind
-        source: "c/Users/ngola/OneDrive/Documents/GitHub/SportBookingApp/database_group.sql"
-        target: /var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
   # app:
   #   depends_on:
   #     - mysqldb
@@ -31,3 +41,4 @@ services:
   #     - .m2:/root/.m2
   #   stdin_open: true
   #   tty: true
+

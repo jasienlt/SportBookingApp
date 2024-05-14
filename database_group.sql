@@ -1,3 +1,6 @@
+CREATE DATABASE sport_app;
+use sport_app;
+
 CREATE TABLE sportgroup (
     id int NOT NULL,
     name varchar(100) NOT NULL,
