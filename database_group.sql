@@ -1,207 +1,204 @@
-CREATE DATABASE sportApp;
-USE sportApp;
-
--- create table schema
-
-CREATE TABLE Group(
-    GroupId int NOT NULL AUTO_INCREMENT,
-    GroupName varchar(100) NOT NULL,
-    PRIMARY KEY (GroupId)
-);
-
-CREATE TABLE Court(
-    CourtId int NOT NULL AUTO_INCREMENT,
-    CourtName varchar(100) NOT NULL,
-    Address varchar(1000) NULL,
-    Phone varchar(10) NULL,
-    GroupId int,
-
-    PRIMARY KEY (CourtId),
+CREATE TABLE sportgroup (
+    id int NOT NULL,
+    name varchar(100) NOT NULL,
     
-    INDEX group_id (GroupId),
-    FOREIGN KEY (GroupId)
-        REFERENCES Group(GroupId)
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE court(
+    id int NOT NULL,
+    name varchar(100) NOT NULL,
+    address varchar(1000) NULL,
+    phone varchar(10) NULL,
+    sportgroup_id int,
+    
+    PRIMARY KEY (id),
+    INDEX sportgroup_idx (sportgroup_id),
+    FOREIGN KEY (sportgroup_id)
+        REFERENCES sportgroup(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE Product(
-    ProductId int NOT NULL AUTO_INCREMENT,
-    ProductName varchar(100) NOT NULL,
-    ProductPrice float NOT NULL,
-    ProductAmount int NOT NULL,
-    CourtId int,
+CREATE TABLE product (
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name varchar(100) NOT NULL,
+    price float NOT NULL,
+    amount int NOT NULL,
+    court_id int,
 
-    PRIMARY KEY (CourtId),
 
-    INDEX prod_court_id (CourtId),
-    FOREIGN KEY (CourtId)
-        REFERENCES Court(CourtId)
+    INDEX prod_court_idx (court_id),
+    FOREIGN KEY (court_id)
+        REFERENCES court(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE Court_Customer(
-    CourtId int NOT NULL,
-    CustId int NOT NULL,
-    LoyaltyPoint float NULL,
+CREATE TABLE customer (
+    id int NOT NULL,
+    first_name varchar(100) NOT NULL,
+    last_name varchar(100) NOT NULL,
+    phone varchar(10) NULL,
+    email varchar(1000) NULL,
 
-    PRIMARY KEY (CourtId),
-    PRIMARY KEY (CustId),
+    PRIMARY KEY (id)
+);
 
-    INDEX cc_court_id (CourtId),
-    FOREIGN KEY (CourtId)
-        REFERENCES Court(CourtId)
+CREATE TABLE court_customer (
+    court_id int NOT NULL,
+    customer_id int NOT NULL,
+    loyalty_point float NULL,
+
+    INDEX cc_court_idx (court_id),
+    FOREIGN KEY (court_id)
+        REFERENCES court(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
 
-    INDEX cc_cust_id (CustId),
-    FOREIGN KEY (CustId)
-        REFERENCES Customer(CustId)
+    INDEX cc_customer_idx (customer_id),
+    FOREIGN KEY (customer_id)
+        REFERENCES customer(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 
 );
 
-CREATE TABLE Customer(
-    CustId int NOT NULL AUTO_INCREMENT,
-    FirstName varchar(100) NOT NULL,
-    LastName varchar(100) NOT NULL,
-    Phone varchar(10) NULL,
-    Email varchar(1000) NULL,
 
-    PRIMARY KEY (CustId)
-);
+CREATE TABLE field (
+    id int NOT NULL,
+    name varchar(100) NOT NULL,
+    sport_type varchar(100) NOT NULL,
+    court_id int,
 
-CREATE TABLE Field (
-    FieldId int NOT NULL AUTO_INCREMENT,
-    FieldName varchar(100) NOT NULL,
-    SportType varchar(100) NOT NULL,
-    CourtId int,
-
-    PRIMARY KEY (FieldId),   
-    INDEX field_court_id (CourtId),
-    FOREIGN KEY (CourtId)
-        REFERENCES Court(CourtId)
+    PRIMARY KEY (id),   
+    INDEX f_court_idx (court_id),
+    FOREIGN KEY (court_id)
+        REFERENCES court(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE TimeSlot(
-    TimeSlotId int NOT NULL AUTO_INCREMENT,
-    StartTime time,
-    EndTime time,
-    CourtId int,
+CREATE TABLE timeslot(
+    id int NOT NULL,
+    start_time time,
+    end_time time,
+    court_id int,
 
-    PRIMARY KEY (TimeSlotId),
+    PRIMARY KEY (id),
     
-    INDEX ts_court_id (CourtId),
-    FOREIGN KEY (CourtId)
-        REFERENCES Group(CourtId)
+    INDEX ts_court_idx (court_id),
+    FOREIGN KEY (court_id)
+        REFERENCES court (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE Field_TimeSlot(
-    FieldId int NOT NULL,
-    TimeSlotId int NOT NULL,
-    Price float NOT NULL,
-    DayInWeek int NOT NULL,
+CREATE TABLE field_timeslot (
+    field_id int NOT NULL,
+    ts_id int NOT NULL,
+    price float NOT NULL,
+    day_in_week int NOT NULL,
 
-    PRIMARY KEY (FieldId),
-    PRIMARY KEY (TimeSlotId),
 
-    INDEX fts_field_id (FieldId),
-    FOREIGN KEY (FieldId)
-        REFERENCES Field(FieldId)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE.
-    
-    INDEX fts_timeslot_id (TimeSlotId),
-    FOREIGN KEY (TimeSlotId)
-        REFERENCES TimeSlot(TimeSlotId)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
-CREATE TABLE Booking (
-    BookingId int NOT NULL AUTO_INCREMENT,
-    BookingDate
-    CustId int,
-    FieldId int,
-    TimeSlotId int,
-    PaymentId int,
-
-    PRIMARY KEY (BookingId),
-
-    INDEX b_cust_id (CustId),
-    FOREIGN KEY (CustId)
-        REFERENCES Customer(CustId)
+    INDEX fts_field_id (field_id),
+    FOREIGN KEY (field_id)
+        REFERENCES field(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    INDEX b_field_id (FieldId),
-    FOREIGN KEY (FieldId)
-        REFERENCES Field(FieldId)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE.
-    INDEX b_timeslot_id (TimeSlotId),
-    FOREIGN KEY (TimeSlotId)
-        REFERENCES TimeSlot(TimeSlotId)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    INDEX b_payment_id (PaymentId),
-    FOREIGN KEY (PaymentId)
-        REFERENCES Payment(PaymentId)
+    
+    INDEX fts_timeslot_id (ts_id),
+    FOREIGN KEY (ts_id)
+        REFERENCES timeslot(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
-CREATE TABLE Payment(
-    PaymentId int NOT NULL AUTO_INCREMENT,
-    PaymentType int NOT NULL,
+CREATE TABLE payment(
+    id int NOT NULL,
+    payment_type int NOT NULL,
 
-    PRIMARY KEY (PaymentId)
+    PRIMARY KEY (id)
 );
+
+CREATE TABLE booking (
+    id int NOT NULL,
+    date date,
+    customer_id int,
+    field_id int,
+    ts_id int,
+    p_id int,
+
+    PRIMARY KEY (id),
+
+    INDEX b_customer_id (customer_id),
+    FOREIGN KEY (customer_id)
+        REFERENCES customer(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    INDEX b_field_id (field_id),
+    FOREIGN KEY (field_id)
+        REFERENCES field(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    INDEX b_timeslot_id (ts_id),
+    FOREIGN KEY (ts_id)
+        REFERENCES timeslot(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    INDEX b_payment_id (p_id),
+    FOREIGN KEY (p_id)
+        REFERENCES payment(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 
 -- insert for each table
 
 -- 1) Group
-INSERT INTO Group(GroupId,GroupName)
-VALUES (1,"Dung Cau Long"), (2,"Vuong Bong Ro");
+INSERT INTO sportgroup(id,name)
+VALUES (1,'Dung Cau Long'), (2,'Vuong Bong Ro');
 
 -- 2) Court
-INSERT INTO Court(CourtId,CourtName,Address,Phone,GroupId)
-VALUES (1,"Dung Cau Long - Chi nhanh 1", "abc xyz", "0123456789",1),
-(2,"Dung Cau Long - Chi nhanh 2","def ghi", "0987654321",1);
+INSERT INTO court(id,name,address,phone,sportgroup_id)
+VALUES (1,'Dung Cau Long - Chi nhanh 1', 'abc xyz', '0123456789',1),
+(2,'Dung Cau Long - Chi nhanh 2','def ghi', '0987654321',1);
 
 -- 3) Product
-INSERT INTO Product(ProductName,ProductPrice,ProductAmount,CourtId)
-VALUES ("Sting Dau", 8000, 1, 1),("Pepsi", 10000,1,1),("7Up",10500,1,1);
+INSERT INTO product(id,name,price,amount,court_id)
+VALUES (1,'Sting Dau', 8000, 1, 1),(2,'Pepsi', 10000,1,1),(3,'7Up',10500,1,1);
 
 -- 4) Customer
-INSERT INTO Customer(CustId, FirstName, LastName, Phone, Email)
-VALUES (1,"Dung","Nguyen",0112349395,"dung.nguyen@yahoo.com"),(2,"Vuong","Tran",0482039493,"vuong.tran@hotmail.com");
+INSERT INTO customer(id, first_name, last_name, phone, email)
+VALUES (1,'Dung','Nguyen',0112349395,'dung.nguyen@yahoo.com'),(2,'Vuong','Tran',0482039493,'vuong.tran@hotmail.com');
 
 -- 5) Court_Customer
-INSERT INTO Court_Customer(CourtId,CustId,LoyaltyPoint)
+INSERT INTO court_customer(court_id,customer_id,loyalty_point)
 VALUES (1,1,500), (1,2,300);
 
 -- 6) Field
-INSERT INTO Field(FieldId, FieldName, SportType, CourtId)
-VALUES (1,"San 1", 1, 1), (2,"San 2",1,1), (3,"San 3",1,1);
+INSERT INTO field(id, name, sport_type, court_id)
+VALUES (1,'San 1', 1, 1), (2,'San 2',1,1), (3,'San 3',1,1);
 
 -- 7) Time Slot
-INSERT INTO TimeSlot(TimeSlotId, StartTime, EndTime, Price, DayInWeek)
-VALUES (1,str_to_date('0500', '%h%i'),str_to_date('0530', '%h%i'),50000,1),
-       (2,str_to_date('0530', '%h%i'),str_to_date('0600', '%h%i'),50000,1),
-       (3,str_to_date('0600', '%h%i'),str_to_date('0630', '%h%i'),55000,1);
+INSERT INTO timeslot(id, start_time, end_time, court_id)
+VALUES (1,str_to_date('0500', '%h%i'),str_to_date('0530', '%h%i'),1),
+       (2,str_to_date('0530', '%h%i'),str_to_date('0600', '%h%i'),1),
+       (3,str_to_date('0600', '%h%i'),str_to_date('0630', '%h%i'),1);
 
--- 8) Payment
-INSERT INTO Payment(PaymentId, PaymentType)
+-- 8) Field - Timeslot 
+INSERT INTO field_timeslot(field_id, ts_id, price, day_in_week)
+VALUES (1,1,50000,1),
+       (1,2,50000,1),
+       (1,3,55000,1);
+
+-- 9) Payment
+INSERT INTO payment(id, payment_type)
 VALUES (1,1), (2,2),(3,1);
 
--- 9) Booking
-INSERT INTO Booking(BookingDate, CustId, FieldId, TimeSlotId,PaymentId)
-VALUES (str_to_date('2024-05-01', '%Y%m%d'),1,1,1,1),
-       (str_to_date('2024-05-01', '%Y%m%d'),1,1,2,1);
+-- 10) Booking
+INSERT INTO booking(id,date, customer_id, field_id, ts_id,p_id)
+VALUES (1,str_to_date('2024-05-01', '%Y-%m-%d'),1,1,1,1),
+       (2,str_to_date('2024-05-01', '%Y-%m-%d'),1,1,2,1);
 
