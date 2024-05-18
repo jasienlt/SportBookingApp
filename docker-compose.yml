@@ -7,6 +7,9 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=userroot
       - MYSQL_DATABASE=sport_app
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=newuser
+      - MYSQL_PASSWORD=password
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
@@ -41,3 +44,4 @@ services:
   #     - .m2:/root/.m2
   #   stdin_open: true
   #   tty: true
+
