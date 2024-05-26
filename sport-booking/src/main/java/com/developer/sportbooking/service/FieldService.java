@@ -1,0 +1,22 @@
+package com.developer.sportbooking.service;
+
+import com.developer.sportbooking.entity.Field;
+import com.developer.sportbooking.entity.Timeslot;
+
+import java.util.List;
+
+public interface FieldService {
+    Field saveField(Field field);
+
+    List<Field> findAllField();
+
+    Field findFieldById(Integer id);
+
+    Field findFieldByCourtId(Integer id);
+
+    Field findFieldByTimeslotId(Integer id);
+
+    Field updateFieldById(Field field, Integer id);
+
+    void deleteFieldById(Integer id);
+}

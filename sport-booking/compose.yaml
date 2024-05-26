@@ -1,0 +1,27 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=userroot
+      - MYSQL_DATABASE=sport_app
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=newuser
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./src/main/resources:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+#    environment:
+#      - 'MYSQL_DATABASE=mydatabase'
+#      - 'MYSQL_PASSWORD=secret'
+#      - 'MYSQL_ROOT_PASSWORD=verysecret'
+#      - 'MYSQL_USER=myuser'
+#    ports:
+#      - '3306'
