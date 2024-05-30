@@ -1,0 +1,153 @@
+body {
+    background-color: blue;
+    color: white;
+}
+
+.hourBtn {
+    border: 3px solid #eef3f1;
+    border-radius: 10%;
+}
+
+.checkbox {
+    margin-left: 3%;
+}
+
+.fieldImg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
+}
+
+.button-overlay {
+    position: relative;
+    display: inline-block;
+}
+
+.button-overlay button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    border-radius: 50%;
+}
+
+.button-overlay small {
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.submitBtn {
+    display: block;
+    width: 100%;
+    background-color: #9df9ef;
+    color: #0049B7;
+}
+
+.submitBtn:hover {
+    background-color: #f75990;
+    color: #9df9ef;
+}
+
+.submitBtn span {
+    cursor: pointer;
+    position: relative;
+    transition: 0.5s;
+}
+
+.submitBtn span::after{
+    content: '>>';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+    color: #9df9ef;
+}
+
+.submitBtn:hover span {
+    padding-right: 30px;
+}
+
+.submitBtn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.headerImg {
+    position: relative;
+    display: inline-block;
+}
+
+.courtImg {
+    height: 40%;
+    width: 100%;
+}
+
+.logoImg {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    width: 17%;
+    border-radius: 50%;
+}
+
+.rating {
+    position: absolute;
+    left: 23%;
+}
+
+.courtName {
+    grid-area: name;
+
+}
+
+.ratingStar {
+    grid-area: rating;
+}
+
+.bookingPageBtn {
+    display: block;
+    grid-area: button;
+    justify-items: end;
+}
+
+.grid-container {
+    height: 20%;
+    display: grid;
+    grid-template-areas:
+    'name button'
+    'rating button';
+    grid-template-rows: 40%;
+    padding-top: 5px;
+}
+
+.backBtn {
+    position: absolute;
+    left: 3%;
+    cursor: pointer;
+}
+
+#fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+#hourGroupBtn {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    padding: 0%;
+}
+
+#dateInWeek {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+#test {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}

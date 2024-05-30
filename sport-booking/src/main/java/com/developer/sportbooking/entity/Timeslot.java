@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,6 +44,7 @@ public class Timeslot {
     // Court - Timeslot: one to many (child side)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "court_id", referencedColumnName = "id")
+    @JsonIgnore
     private Court court;
 
     @Override
@@ -64,5 +66,6 @@ public class Timeslot {
                 orphanRemoval = true)
 
     // Can seek to change into HashMap - holding key (field,timeslot) - value as list of (startTime, endTime)
+    @JsonIgnore
     private List<Field_Timeslot> fields = new ArrayList<>();
 }

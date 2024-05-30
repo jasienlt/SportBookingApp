@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class Field_Timeslot {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "field_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonIgnore
     private Field field;
 
     @ManyToOne(fetch = FetchType.LAZY)

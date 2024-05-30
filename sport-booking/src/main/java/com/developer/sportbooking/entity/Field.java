@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Field {
     // Court - Field: one to many (child side)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "court_id", referencedColumnName = "id")
+    @JsonIgnore
     private Court court;
 
     public Field() {}
@@ -55,6 +57,7 @@ public class Field {
     @OneToMany(mappedBy = "field",
                 cascade = CascadeType.ALL,
                 orphanRemoval = true)
+    @JsonIgnore
     private List<Field_Timeslot> timeslots = new ArrayList<>();
 
     public void addTimeslot(Timeslot timeslot) {

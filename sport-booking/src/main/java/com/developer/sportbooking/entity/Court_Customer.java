@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class Court_Customer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "court_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonIgnore
     private Court court;
 
     @ManyToOne(fetch = FetchType.LAZY)

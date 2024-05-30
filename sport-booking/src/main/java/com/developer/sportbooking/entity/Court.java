@@ -1,7 +1,10 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +37,7 @@ public class Court {
 
 
     // Sportgroup - Court: one to many (child side)
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "sportgroup_id", referencedColumnName = "id")
     @JsonIgnore
@@ -129,6 +133,7 @@ public class Court {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonIgnore
     private List<Court_Customer> customers = new ArrayList<Court_Customer>();
 
     public Court() {

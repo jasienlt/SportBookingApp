@@ -21,7 +21,7 @@ public class SportgroupController {
     }
 
     // Read operation
-    @GetMapping("/sportgroup")
+    @GetMapping("/sportgroups")
     public List<Sportgroup> fetchAllSportgroup() {
         return sportgroup_serv.findAllSportgroup();
     }
