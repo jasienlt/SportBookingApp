@@ -24,7 +24,7 @@ body {
     display: inline-block;
 }
 
-.button-overlay button {
+.button-overlay input {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -143,11 +143,6 @@ body {
 }
 
 #dateInWeek {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-}
-
-#test {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 }

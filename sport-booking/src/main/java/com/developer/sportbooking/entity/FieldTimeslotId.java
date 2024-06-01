@@ -13,15 +13,14 @@ import java.util.Objects;
 @Getter
 public class FieldTimeslotId implements Serializable {
     @Column(name = "field_id")
-    private Integer fieldId;
+    public Integer fieldId;
     @Column(name = "ts_id")
-    private Integer timeslotId;
+    public Integer timeslotId;
 
     public FieldTimeslotId() {
     }
 
     public FieldTimeslotId(Integer fieldId, Integer timeslotId) {
-        super();
         this.fieldId = fieldId;
         this.timeslotId = timeslotId;
     }
@@ -40,6 +39,6 @@ public class FieldTimeslotId implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         FieldTimeslotId other = (FieldTimeslotId) obj;
-        return Objects.equals(getFieldId(), other.getFieldId()) && Objects.equals(getTimeslotId(), other.getTimeslotId());
+        return fieldId.equals(other.fieldId) && timeslotId.equals(other.timeslotId);
     }
 }

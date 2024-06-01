@@ -1,4 +1,5 @@
 import { selectedHour } from './hourScript.js';
+import {enableFieldSelected, disableFieldSelected} from './fieldScript.js';
 
 const bookingDayCb = document.getElementsByClassName('bookingDayCb');
 const allDaysCb = document.getElementById('day-7');
@@ -20,7 +21,7 @@ function unCheckAllDayCb() {
 
 function updateSelectedDays() {
   for (let i = 0; i < bookingDayCb.length - 1; i++) {
-    bookingDayCb[i].checked == true
+    bookingDayCb[i].checked === true
       ? selectedDays.add(i)
       : selectedDays.delete(i);
   }

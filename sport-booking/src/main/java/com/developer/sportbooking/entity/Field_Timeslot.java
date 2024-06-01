@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 public class Field_Timeslot {
     @EmbeddedId
-    private FieldTimeslotId id;
+    public FieldTimeslotId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "field_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -22,6 +22,7 @@ public class Field_Timeslot {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ts_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonIgnore
     private Timeslot timeslot;
 
     @Column(name = "price")
