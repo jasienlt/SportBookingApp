@@ -16,18 +16,21 @@ public class FieldTimeslotId implements Serializable {
     public Integer fieldId;
     @Column(name = "ts_id")
     public Integer timeslotId;
+    @Column(name = "days_id")
+    public Integer dayId;
 
     public FieldTimeslotId() {
     }
 
-    public FieldTimeslotId(Integer fieldId, Integer timeslotId) {
+    public FieldTimeslotId(Integer fieldId, Integer timeslotId, Integer dayId) {
         this.fieldId = fieldId;
         this.timeslotId = timeslotId;
+        this.dayId = dayId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fieldId, timeslotId);
+        return Objects.hash(fieldId, timeslotId, dayId);
     }
 
     @Override
@@ -39,6 +42,6 @@ public class FieldTimeslotId implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         FieldTimeslotId other = (FieldTimeslotId) obj;
-        return fieldId.equals(other.fieldId) && timeslotId.equals(other.timeslotId);
+        return fieldId.equals(other.fieldId) && timeslotId.equals(other.timeslotId) && dayId.equals(other.dayId);
     }
 }
