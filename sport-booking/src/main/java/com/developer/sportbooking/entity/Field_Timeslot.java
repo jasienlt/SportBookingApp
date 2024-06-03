@@ -25,11 +25,13 @@ public class Field_Timeslot {
     @JsonIgnore
     private Timeslot timeslot;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "days_id", insertable = false, updatable = false)
+    private Integer dateInWeek;
+
     @Column(name = "price")
     private Float price;
 
-    @Column(name = "day_in_week")
-    private Integer dateInWeek;
 
     // Booking - Field_Timeslot: one to many (child side)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,10 +40,11 @@ public class Field_Timeslot {
 
     public Field_Timeslot() {}
 
-    public Field_Timeslot(Field field, Timeslot timeslot) {
+    public Field_Timeslot(Field field, Timeslot timeslot, Integer dateInWeek) {
         this.field = field;
         this.timeslot = timeslot;
-        this.id = new FieldTimeslotId(field.getId(), timeslot.getId());
+        this.dateInWeek = dateInWeek
+        this.id = new FieldTimeslotId(field.getId(), timeslot.getId(), dateInWeek);
     }
 
     //Constructors, getters and setters removed for brevity
@@ -55,11 +58,12 @@ public class Field_Timeslot {
 
         Field_Timeslot that = (Field_Timeslot) o;
         return Objects.equals(field, that.field) &&
-                Objects.equals(timeslot, that.timeslot);
+                Objects.equals(timeslot, that.timeslot) &&
+                Objects.equals(dateInWeek, that.dateInWeek);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(field, timeslot);
+        return Objects.hash(field.getId(), timeslot.getId(), dateInWeek);
     }
 
 }
