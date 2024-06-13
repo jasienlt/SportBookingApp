@@ -1,5 +1,6 @@
 package com.developer.sportbooking.controller;
 
+import com.developer.sportbooking.config.CustomCustomerDetails;
 import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.service.CustomerService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Objects;
 
 @Controller
@@ -25,6 +27,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("currentCustomer", new Customer());
@@ -32,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping("/home")
-    public String home(Model model, @AuthenticationPrincipal UserDetails customerDetails) {
+    public String home(Model model, @AuthenticationPrincipal CustomCustomerDetails customerDetails) {
         model.addAttribute("customerdetail", customerDetails);
         return "home";
     }
@@ -48,13 +51,13 @@ public class CustomerController {
         String encodedPassword = encoder.encode(customerDto.getPassword());
         customerDto.setPassword(encodedPassword);
         Customer customer = customerService.validateCustomer(customerDto.getEmail(),customerDto.getPassword());
+        System.out.println("ABC");
         if (Objects.isNull(customer)) {
             // Return an error--?
             return "registration";
         } else {
             customerService.saveCustomer(customerDto);
             model.addAttribute("currentCustomer", customer);
-            model.addAttribute("firstName", customer.getFirstName());
             return "home";
         }
     }
@@ -70,14 +73,13 @@ public class CustomerController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(customerDto.getPassword());
         customerDto.setPassword(encodedPassword);
-        Customer customer = customerService.validateCustomer(customerDto.getEmail(), customerDto.getPassword());
-        if (Objects.nonNull(customer)) {
-            model.addAttribute("CustomerExist", customer);
-            return "register";
+        if (customerService.isCustomerExist(customerDto.getEmail())) {
+            model.addAttribute("CustomerExist", 1);
+            return "registration";
         }
             customerService.saveCustomer(customerDto);
             model.addAttribute("firstName", customerDto.getFirstName());
-            return "home";
+            return "login";
 
     }
 }

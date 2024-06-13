@@ -28,19 +28,15 @@
 <div class="container">
     <h2 class="mb-3">Home Page</h2>
     <%-- Check if user is logged in --%>
-    <c:choose>
-        <c:when test="${empty firstName}">
-            <p>Welcome, ${firstName} !</p>
-            <p><a href="logout">Logout</a></p>
-        </c:when>
-        <c:otherwise>
-            <p>Please log in to access the dashboard.  <a href="login">Login</a></p>
-        </c:otherwise>
-    </c:choose>
+    <sec:authorize access = "isAuthenticated()"> Welcome <sec:authentication property="principal.username" />
+    </sec:authorize>
+    <sec:authorize access = "!isAuthenticated()"> <p> Please log in to access.  <a href="login">Login</a> </p></sec:authorize>
+
 
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
