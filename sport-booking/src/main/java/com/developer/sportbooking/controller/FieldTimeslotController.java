@@ -14,17 +14,19 @@ import java.util.Optional;
 
 @RestController
 public class FieldTimeslotController {
-    @Autowired
     FieldTimeslotService fieldTimeslotService;
+
     @Autowired
-    FieldTimeslotRepo fieldTimeslotRepo;
+    FieldTimeslotController(FieldTimeslotService fieldTimeslotService) {
+        this.fieldTimeslotService = fieldTimeslotService;
+    }
     @GetMapping("/fieldTimeslot")
     public List<Field_Timeslot> findAllFieldTimeslot() {
         return fieldTimeslotService.findAllFieldTimeslot();
     }
 
-    @GetMapping("/a")
-    public Optional<Field_Timeslot> test() {
-        return fieldTimeslotRepo.findById(new FieldTimeslotId(1, 1));
-    }
+//    @GetMapping("/a")
+//    public Optional<Field_Timeslot> test() {
+//        return fieldTimeslotRepo.findById(new FieldTimeslotId(1, 1, 1));
+//    }
 }

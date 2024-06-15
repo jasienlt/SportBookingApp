@@ -24,13 +24,15 @@
     ></script>
 </head>
 <body>
-    <h1>Start time: ${selectedStartTimeslot}</h1>
-    <h1>End time: ${selectedEndTimeslot}</h1>
-    <c:forEach items="${selectedDates}" var="selectedDate">
-        <h1>Booking on: ${selectedDate}</h1>
-    </c:forEach>
-    <c:forEach items="${selectedFields}" var="selectedField">
-        <h1>Select field: ${selectedField}</h1>
-    </c:forEach>
+    <form>
+        <h1>Start time: ${selectedStartTimeslot}</h1>
+        <h1>End time: ${selectedEndTimeslot}</h1>
+        <c:forEach items="${selectedDates}" var="selectedDate">
+            <h1>Booking on: ${selectedDate}</h1>
+        </c:forEach>
+        <c:forEach items="${selectedFields}" var="selectedField">
+            <h1>Select field: ${selectedField}</h1>
+        </c:forEach>
+    </form>
 </body>
 </html>

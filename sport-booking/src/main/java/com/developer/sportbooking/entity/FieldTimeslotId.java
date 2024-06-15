@@ -16,7 +16,7 @@ public class FieldTimeslotId implements Serializable {
     public Integer fieldId;
     @Column(name = "ts_id")
     public Integer timeslotId;
-    @Column(name = "days_id")
+    @Column(name = "day_in_week")
     public Integer dayId;
 
     public FieldTimeslotId() {

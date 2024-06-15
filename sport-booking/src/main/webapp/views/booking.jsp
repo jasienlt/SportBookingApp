@@ -40,7 +40,9 @@
                 <input
                         id="bookingDate"
                         class="form-control align-self-center"
-                        type="date"
+                        type="month"
+                        value="${currentDate}"
+                        min="${currentDate}"
                 />
             </div>
 
@@ -71,7 +73,7 @@
                     <div class="button-overlay mx-2 my-3">
                         <img class="fieldImg" src="../resource/image/field.png" alt="field"/>
                         <input class="btn btn-light btn-sm fieldBtn" type="button" value="${field.id}" name="fields" disabled>
-                        <small>50k/h</small>
+                        <small>50k/h-70k/h</small>
                     </div>
                 </c:forEach>
             </div>
@@ -85,6 +87,7 @@
                             id="emailInput"
                             aria-describedby="emailHelp"
                             placeholder="Enter email"
+                            required
                     />
                 </div>
                 <div class="form-group">
@@ -94,6 +97,7 @@
                             class="form-control"
                             id="customerNameInput"
                             placeholder="Customer Name"
+                            required
                     />
                 </div>
                 <div class="form-group">
@@ -112,12 +116,24 @@
                 </button>
             </div>
         </form>
+        <div id="overlay"></div>
+        <div id="popup">
+            <h1>Booking Summary</h1>
+            <p id="selectedFieldsSummary"><span>Fields: </span></p>
+            <p id="bookingTime"><span>Time: </span></p>
+            <p id="bookingDates"><span>Dates: </span></p>
+            <p id="priceSummary"><span>Price: </span></p>
+            <button type="submit" id="checkout" class="btn btn-dark btn-lg submitBtn my-2">Checkout</button>
+            <button id="closePopup" class="btn btn-dark btn-lg submitBtn my-2">Back to booking</button>
+        </div>
     </div>
 </div>
-<script src="../scripts/utils.js"></script>
-<script src="../scripts/generateScript.js"></script>
+
+<script type="module" src="../scripts/utils.js"></script>
+<script type="module" src="../scripts/generateScript.js"></script>
 <script type="module" src="../scripts/dayScripts.js"></script>
 <script type="module" src="../scripts/hourScript.js"></script>
 <script type="module" src="../scripts/fieldScript.js"></script>
+<script type="module" src="../scripts/bookingSummary.js"></script>
 </body>
 </html>

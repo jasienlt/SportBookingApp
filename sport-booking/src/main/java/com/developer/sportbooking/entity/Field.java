@@ -60,11 +60,11 @@ public class Field {
     @JsonIgnore
     private List<Field_Timeslot> timeslots = new ArrayList<>();
 
-    public void addTimeslot(Timeslot timeslot) {
-        Field_Timeslot fieldTimeslot = new Field_Timeslot(this, timeslot);
-        timeslots.add(fieldTimeslot);
-        timeslot.getFields().add(fieldTimeslot);
-    }
+//    public void addTimeslot(Timeslot timeslot) {
+//        Field_Timeslot fieldTimeslot = new Field_Timeslot(this, timeslot);
+//        timeslots.add(fieldTimeslot);
+//        timeslot.getFields().add(fieldTimeslot);
+//    }
 
     public void removeTimeslot(Timeslot timeslot) {
         for (Iterator<Field_Timeslot> iterator = timeslots.iterator();

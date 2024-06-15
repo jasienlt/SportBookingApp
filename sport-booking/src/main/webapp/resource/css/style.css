@@ -133,7 +133,7 @@ body {
 
 #fields {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 }
 
 #hourGroupBtn {
@@ -145,4 +145,37 @@ body {
 #dateInWeek {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+#popup {
+    color: black;
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #000;
+    background-color: #fff;
+    z-index: 1000;
+}
+
+#popup h1 {
+    color: #f75990;
+    text-align: center;
+}
+
+#popup p {
+    font-weight: bold;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
