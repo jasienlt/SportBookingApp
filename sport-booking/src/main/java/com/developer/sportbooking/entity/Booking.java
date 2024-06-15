@@ -25,6 +25,9 @@ public class Booking {
     @Column(name = "date", nullable = false)
     private Date date;
 
+    @Column(name = "price", nullable = false)
+    private Double price;
+
     // Customer - Booking: one to many (child side)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

@@ -125,6 +125,7 @@ CREATE TABLE booking (
     , field_id int
     , ts_id int
     , p_id int
+    , price float
     , PRIMARY KEY (id)
     , INDEX b_customer_id (customer_id)
     , FOREIGN KEY (customer_id) REFERENCES customer(id)
@@ -264,7 +265,7 @@ VALUES
 
 -- 10) Booking
 INSERT INTO
-    booking(id, date, customer_id, field_id, ts_id, p_id)
+    booking(id, date, customer_id, field_id, ts_id, p_id, price)
 VALUES
-(1, str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 1, 1)
-     , (2, str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 2, 1);
+(1, str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 1, 1, 50)
+     , (2, str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 2, 1, 100);
