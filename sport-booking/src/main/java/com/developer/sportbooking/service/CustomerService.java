@@ -1,19 +1,21 @@
 package com.developer.sportbooking.service;
 
+import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Customer;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public interface CustomerService {
-    Customer saveCustomer(Customer customer);
+
+    Customer saveCustomer(CustomerDto customerDto);
+
+    Customer validateCustomer(String email, String password);
 
     List<Customer> findAllCustomer();
 
-    List<Customer> findCustomerByCourt(Integer id);
+    List<Customer> findByCourt(Long id);
 
-    Customer findCustomerById(Integer id);
-
-    Customer updateCustomerById(Customer customer, Integer id);
-
-    void deleteCustomerById(Integer id);
 }

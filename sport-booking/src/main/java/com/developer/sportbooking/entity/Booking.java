@@ -20,7 +20,7 @@ public class Booking {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "date", nullable = false)
     private Date date;
@@ -43,6 +43,11 @@ public class Booking {
         if (this == o) return true;
         if (!(o instanceof Booking )) return false;
         return id != null && id.equals(((Booking) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
     // Booking - FieldTimeslot: one to many (parent side)

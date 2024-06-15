@@ -9,19 +9,19 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourtDto {
-    private Integer id;
+    private Long id;
     private String name;
     private String address;
     private String phone;
 
     @Nullable
-    private Integer sportgroupId;
+    private Long sportgroupId;
 
-    public CourtDto(Integer id, String name, String address, String phone) {
-        this.id = id;
+    public CourtDto(String name, String address, String phone, @Nullable Long sportgroupId) {
         this.name = name;
         this.address = address;
         this.phone = phone;
+        this.sportgroupId = sportgroupId;
     }
 
 

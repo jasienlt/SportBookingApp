@@ -9,9 +9,14 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FieldDto {
-    private Integer id;
+    private Long id;
     private String name;
 
     @Nullable
-    private Integer courtId;
+    private Long courtId;
+
+    public FieldDto(String name, Long courtId) {
+        this.name = name;
+        this.courtId = courtId;
+    }
 }

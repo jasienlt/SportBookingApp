@@ -24,7 +24,7 @@ public class Court {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -139,7 +139,7 @@ public class Court {
     public Court() {
     }
 
-    public Court(Integer id, String name, String address, String phone, Sportgroup sportgroup) {
+    public Court(Long id, String name, String address, String phone, Sportgroup sportgroup) {
         this.id = id;
         this.name = name;
         this.address = address;

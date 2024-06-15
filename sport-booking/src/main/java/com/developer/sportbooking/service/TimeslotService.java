@@ -1,7 +1,6 @@
 package com.developer.sportbooking.service;
 
 import com.developer.sportbooking.entity.Timeslot;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -10,13 +9,13 @@ public interface TimeslotService {
 
     List<Timeslot> findAllTimeslot();
 
-//    Timeslot findTimeslotById(Integer id);
+//    Timeslot findTimeslotById(Long id);
 //
-//    Timeslot findTimeslotByCourtId(Integer id);
+//    Timeslot findTimeslotByCourtId(Long id);
 //
-//    Timeslot findTimeslotByFieldId(Integer id);
+//    Timeslot findTimeslotByFieldId(Long id);
 //
-//    Timeslot updateTimeslotById(Timeslot timeslot, Integer id);
+//    Timeslot updateTimeslotById(Timeslot timeslot, Long id);
 //
-//    void deleteTimeslotById(Integer id);
+//    void deleteTimeslotById(Long id);
 }

@@ -12,20 +12,22 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingDto {
-    private Integer id;
+    private Long id;
     private Date date;
 
     @Nullable
-    private Integer customerId;
+    private Long customerId;
 
     @Nullable
-    private Integer fieldId;
+    private Long fieldId;
 
     @Nullable
-    private Integer timeslotId;
+    private Long timeslotId;
 
-    public BookingDto(Integer id, Date date) {
-        this.id = id;
+    public BookingDto(Date date, @Nullable Long customerId, @Nullable Long fieldId, @Nullable Long timeslotId) {
         this.date = date;
+        this.customerId = customerId;
+        this.fieldId = fieldId;
+        this.timeslotId = timeslotId;
     }
 }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface FieldTimeslotService {
     List<Field_Timeslot> findAllFieldTimeslot();
-    List<Field_Timeslot> findFieldTimeslotByListId(List<Integer> fieldIds, Integer startTimeId, Integer endTimeId, List<Integer> dayIds);
+    List<Field_Timeslot> findFieldTimeslotByListId(List<Long> fieldIds, Long startTimeId, Long endTimeId, List<Integer> dayIds);
 }

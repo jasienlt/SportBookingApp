@@ -25,11 +25,11 @@ public class FieldTimeslotImpl implements FieldTimeslotService {
     }
 
     @Override
-    public List<Field_Timeslot> findFieldTimeslotByListId(List<Integer> fieldIds, Integer startTimeId, Integer endTimeId, List<Integer> dayIds) {
+    public List<Field_Timeslot> findFieldTimeslotByListId(List<Long> fieldIds, Long startTimeId, Long endTimeId, List<Integer> dayIds) {
         List<Field_Timeslot> res = new ArrayList<>();
 
-        for(Integer fieldId : fieldIds) {
-            for(int timeId = startTimeId; timeId <= endTimeId; timeId++) {
+        for(Long fieldId : fieldIds) {
+            for(Long timeId = startTimeId; timeId <= endTimeId; timeId++) {
                 for(Integer dayId : dayIds) {
                     Optional<Field_Timeslot> fieldTimeslot = fieldTimeslotRepo.findById(new FieldTimeslotId(fieldId, timeId, dayId));
                     fieldTimeslot.ifPresent(res::add);

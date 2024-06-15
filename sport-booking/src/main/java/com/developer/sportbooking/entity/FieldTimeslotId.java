@@ -13,16 +13,16 @@ import java.util.Objects;
 @Getter
 public class FieldTimeslotId implements Serializable {
     @Column(name = "field_id")
-    public Integer fieldId;
+    public Long fieldId;
     @Column(name = "ts_id")
-    public Integer timeslotId;
+    public Long timeslotId;
     @Column(name = "day_in_week")
     public Integer dayId;
 
     public FieldTimeslotId() {
     }
 
-    public FieldTimeslotId(Integer fieldId, Integer timeslotId, Integer dayId) {
+    public FieldTimeslotId(Long fieldId, Long timeslotId, Integer dayId) {
         this.fieldId = fieldId;
         this.timeslotId = timeslotId;
         this.dayId = dayId;

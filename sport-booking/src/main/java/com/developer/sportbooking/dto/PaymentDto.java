@@ -9,14 +9,14 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentDto {
-    private Integer id;
+    private Long id;
     private String paymentType;
 
     @Nullable
-    private String bookingId;
+    private Long bookingId;
 
-    public PaymentDto(Integer id, String paymentType) {
-        this.id = id;
+    public PaymentDto(String paymentType, @Nullable Long bookingId) {
         this.paymentType = paymentType;
+        this.bookingId = bookingId;
     }
 }

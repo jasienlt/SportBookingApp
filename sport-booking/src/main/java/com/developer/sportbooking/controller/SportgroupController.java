@@ -27,20 +27,20 @@ public class SportgroupController {
     }
 
     @GetMapping("/sportgroup")
-    public Sportgroup fetchSportgroupById(@RequestParam Integer id) {
+    public Sportgroup fetchSportgroupById(@RequestParam Long id) {
 
         return sportgroup_serv.findSportgroupById(id);
     }
 
     // Update operation
     @PutMapping("/sportgroup/{id}")
-    public Sportgroup updateSportgroup(@PathVariable int id, @RequestBody Sportgroup sportgroup) {
+    public Sportgroup updateSportgroup(@PathVariable Long id, @RequestBody Sportgroup sportgroup) {
         return sportgroup_serv.updateSportgroupById(sportgroup, id);
     }
 
     // Delete operation
     @DeleteMapping("/sportgroup/{id}")
-    public String deleteSportgroup(@PathVariable int id) {
+    public String deleteSportgroup(@PathVariable Long id) {
         sportgroup_serv.deleteSportgroupById(id);
         return "Deleted Sportgroup with id: " + id;
     }

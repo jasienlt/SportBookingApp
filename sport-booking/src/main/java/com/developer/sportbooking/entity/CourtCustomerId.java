@@ -13,14 +13,14 @@ import java.util.Objects;
 @Getter
 public class CourtCustomerId implements Serializable {
     @Column(name = "court_id")
-    private Integer courtId;
+    private Long courtId;
     @Column(name = "customer_id")
-    private Integer customerId;
+    private Long customerId;
 
     public CourtCustomerId() {
     }
 
-    public CourtCustomerId(Integer courtId, Integer customerId) {
+    public CourtCustomerId(Long courtId, Long customerId) {
         super();
         this.courtId = courtId;
         this.customerId = customerId;

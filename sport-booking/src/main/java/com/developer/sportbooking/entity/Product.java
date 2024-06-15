@@ -18,7 +18,7 @@ public class Product {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,7 +35,7 @@ public class Product {
     @JsonIgnore
     private Court court;
 
-    public Product(Integer id, String name, Float price, Integer amount) {
+    public Product(Long id, String name, Float price, Integer amount) {
         this.id = id;
         this.name = name;
         this.price = price;

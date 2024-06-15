@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.developer.sportbooking.entity.Sportgroup;
 
 @Repository
-public interface SportgroupRepo extends JpaRepository<Sportgroup, Integer>{
+public interface SportgroupRepo extends JpaRepository<Sportgroup, Long>{
 
 }

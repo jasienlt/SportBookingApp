@@ -9,18 +9,18 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDto {
-    private Integer id;
+    private Long id;
     private String name;
     private Float price;
     private Integer amount;
 
     @Nullable
-    private Integer courtId;
+    private Long courtId;
 
-    public ProductDto(Integer id, String name, Float price, Integer amount) {
-        this.id = id;
+    public ProductDto(String name, Float price, Integer amount, @Nullable Long courtId) {
         this.name = name;
         this.price = price;
         this.amount = amount;
+        this.courtId = courtId;
     }
 }

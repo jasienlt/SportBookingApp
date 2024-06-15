@@ -25,7 +25,7 @@ public class Timeslot {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @NaturalId
     @Column(name = "start_time", nullable = false)

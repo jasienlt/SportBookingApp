@@ -25,7 +25,7 @@ public class SportgroupServiceImpl implements SportgroupService {
     }
 
     @Override
-    public Sportgroup findSportgroupById(Integer sportgroupId) {
+    public Sportgroup findSportgroupById(Long sportgroupId) {
         if (sportgroupRepo.findById(sportgroupId).isPresent()) {
             return sportgroupRepo.findById(sportgroupId).get();
         }
@@ -33,7 +33,7 @@ public class SportgroupServiceImpl implements SportgroupService {
     }
 
     @Override
-    public Sportgroup updateSportgroupById(Sportgroup sportgroup, Integer id) {
+    public Sportgroup updateSportgroupById(Sportgroup sportgroup, Long id) {
         Sportgroup sportgroup1 = sportgroupRepo.findById(id).get();
         if (Objects.nonNull(sportgroup.getName())
                 && !"".equalsIgnoreCase(
@@ -46,7 +46,7 @@ public class SportgroupServiceImpl implements SportgroupService {
     }
 
     @Override
-    public void deleteSportgroupById(Integer id) {
+    public void deleteSportgroupById(Long id) {
         sportgroupRepo.deleteById(id);
     }
 }

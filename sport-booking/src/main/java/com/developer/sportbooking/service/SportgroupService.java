@@ -9,9 +9,9 @@ public interface SportgroupService {
 
     List<Sportgroup> findAllSportgroup();
 
-    Sportgroup findSportgroupById(Integer id);
+    Sportgroup findSportgroupById(Long id);
 
-    Sportgroup updateSportgroupById(Sportgroup sportgroup, Integer id);
+    Sportgroup updateSportgroupById(Sportgroup sportgroup, Long id);
 
-    void deleteSportgroupById(Integer id);
+    void deleteSportgroupById(Long id);
 }

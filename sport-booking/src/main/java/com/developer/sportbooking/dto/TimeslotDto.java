@@ -11,17 +11,17 @@ import java.sql.Time;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TimeslotDto {
-    private Integer id;
+    private Long id;
     private Time startTime;
     private Time endTime;
 
     @Nullable
-    private Integer fieldId;
+    private Long fieldId;
 
-    public TimeslotDto(Integer id, Time startTime, Time endTime) {
-        this.id = id;
+    public TimeslotDto(Time startTime, Time endTime, @Nullable Long fieldId) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.fieldId = fieldId;
     }
 
 }

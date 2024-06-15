@@ -1,5 +1,12 @@
 # SportBookingApp
 
+Overview of Login & Register Feature
+
+The aim is to create a secured environment for users to login and/or register.
+MVC dataflow:
+
+        VIEW --UserDetail--> CONTROLLER --UserDTO--> Service --UserEntity--> Database
+
 Instructions on connecting to db via Docker Desktop and MySQL Workbench:
 
 Download Docker Desktop here: https://docs.docker.com/desktop/install/windows-install/
@@ -23,3 +30,6 @@ Create a connection to MySQL Workbench:
   Username: root
   Password: userroot
 --> Click test connection to make sure the connection is valid. Ignore/Accept all warnings for incompatible version of MySQL.
+
+Initiate the project
+1. Run [text](src/main/java/com/developer/sportbooking/SportBookingApplication.java)

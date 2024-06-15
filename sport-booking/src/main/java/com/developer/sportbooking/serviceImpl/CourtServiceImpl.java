@@ -48,8 +48,10 @@ public class CourtServiceImpl implements CourtService {
         return (List<Court>) courtRepo.findAll();
     }
 
+
+
     @Override
-    public Court findCourtById(Integer courtId) {
+    public Court findCourtById(Long courtId) {
         if (courtRepo.findById(courtId).isPresent()) {
             return courtRepo.findById(courtId).get();
         }
@@ -57,7 +59,7 @@ public class CourtServiceImpl implements CourtService {
     }
 
     @Override
-    public Court updateCourtById(Court court, Integer id) {
+    public Court updateCourtById(Court court, Long id) {
         Court court1 = courtRepo.findById(id).get();
         if (Objects.nonNull(court.getName())
                 && !"".equalsIgnoreCase(
@@ -69,7 +71,7 @@ public class CourtServiceImpl implements CourtService {
     }
 
     @Override
-    public void deleteCourtById(Integer id) {
+    public void deleteCourtById(Long id) {
         courtRepo.deleteById(id);
     }
 }

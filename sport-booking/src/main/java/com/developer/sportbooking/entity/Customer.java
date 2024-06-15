@@ -1,9 +1,10 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.*;
 
@@ -15,21 +16,34 @@ import java.util.*;
 
 public class Customer {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "email", nullable = false)
+    @NaturalId(mutable = true)
+    @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "password")
+    private String password;
+
+    // Security config
+//    private boolean isEnabled = false;
+
+//    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable (name = "customer_roles",
+//        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+//    private List<Role> roles;
 
     // Customer - Booking: one to many (parent side)
     @OneToMany(
@@ -39,12 +53,12 @@ public class Customer {
     )
     private List<Booking> bookings = new ArrayList<>();
 
-    public void addTimeslot(Booking booking) {
+    public void addBooking(Booking booking) {
         bookings.add(booking);
         booking.setCustomer(this);
     }
 
-    public void removeTimeslot(Booking booking) {
+    public void removeBooking(Booking booking) {
         bookings.remove(booking);
         booking.setCustomer(null);
     }
@@ -55,16 +69,19 @@ public class Customer {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonIgnore
     private List<Court_Customer> courts = new ArrayList<>();
 
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, String phone, String email) {
+    public Customer(String firstName, String lastName, String phone, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
+        this.password = password;
+//        this.roles = roles;
     }
 
     //Getters and setters omitted for brevity

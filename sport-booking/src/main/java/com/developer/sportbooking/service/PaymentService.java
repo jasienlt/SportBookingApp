@@ -10,11 +10,11 @@ public interface PaymentService {
 
     List<Payment> findAllPayment();
 
-    Payment findPaymentById(Integer id);
+    Payment findPaymentById(Long id);
 
-    Payment findPaymentByBookingId(Integer id);
+    Payment findPaymentByBookingId(Long id);
 
-    Payment updatePaymentById(Payment payment, Integer id);
+    Payment updatePaymentById(Payment payment, Long id);
 
-    void deletePaymentById(Integer id);
+    void deletePaymentById(Long id);
 }

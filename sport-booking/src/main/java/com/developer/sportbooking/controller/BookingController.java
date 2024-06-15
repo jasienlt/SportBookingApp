@@ -58,22 +58,22 @@ public class BookingController {
     @PostMapping("/booking")
     @ResponseBody
     public Map<String, Integer> bookingSummary(@RequestParam String fields,
-                                               @RequestParam Integer startBookingTime,
-                                               @RequestParam Integer endBookingTime,
+                                               @RequestParam Long startBookingTime,
+                                               @RequestParam Long endBookingTime,
                                                @RequestParam String dates) {
 
         int price = 0;
         Map<String, Integer> response = new HashMap<>();
 
         List<Integer> selectedDates = new ArrayList<>();
-        List<Integer> selectedFields = new ArrayList<>();
+        List<Long> selectedFields = new ArrayList<>();
 
         for(String s : dates.split(" ")) {
             selectedDates.add(Integer.parseInt(s));
         }
 
         for(String s : fields.split(" ")) {
-            selectedFields.add(Integer.parseInt(s));
+            selectedFields.add(Long.parseLong(s));
         }
 
         List<Field_Timeslot> fieldTimeslots = fieldTimeslotService.findFieldTimeslotByListId(selectedFields, startBookingTime, endBookingTime, selectedDates);
