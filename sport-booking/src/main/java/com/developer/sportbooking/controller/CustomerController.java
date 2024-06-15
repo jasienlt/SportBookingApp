@@ -73,13 +73,13 @@ public class CustomerController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(customerDto.getPassword());
         customerDto.setPassword(encodedPassword);
-        if (customerService.isCustomerExist(customerDto.getEmail())) {
-            model.addAttribute("CustomerExist", 1);
-            return "registration";
-        }
-            customerService.saveCustomer(customerDto);
-            model.addAttribute("firstName", customerDto.getFirstName());
-            return "login";
+//        if (customerService.isCustomerExist(customerDto.getEmail())) {
+//            model.addAttribute("CustomerExist", 1);
+//            return "registration";
+//        }
+        customerService.saveCustomer(customerDto);
+        model.addAttribute("firstName", customerDto.getFirstName());
+        return "login";
 
     }
 }
