@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "Field_Timeslot")
+@Entity(name = "FieldTimeslot")
 @Table(name = "field_timeslot")
 @Getter
 @Setter
-public class Field_Timeslot {
+public class FieldTimeslot {
     @EmbeddedId
     public FieldTimeslotId id;
 
@@ -33,9 +34,9 @@ public class Field_Timeslot {
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
 
-    public Field_Timeslot() {}
+    public FieldTimeslot() {}
 
-    public Field_Timeslot(FieldTimeslotId fieldTimeslotId, Float price) {
+    public FieldTimeslot(FieldTimeslotId fieldTimeslotId, Float price) {
         this.id = fieldTimeslotId;
         this.price = price;
     }
@@ -49,7 +50,7 @@ public class Field_Timeslot {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        Field_Timeslot that = (Field_Timeslot) o;
+        FieldTimeslot that = (FieldTimeslot) o;
         return Objects.equals(id, that.id);
     }
     @Override

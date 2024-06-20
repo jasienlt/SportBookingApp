@@ -18,4 +18,6 @@ public interface CustomerService {
 
     List<Customer> findByCourt(Long id);
 
+    Customer getCustomerById(Long id);
+
 }

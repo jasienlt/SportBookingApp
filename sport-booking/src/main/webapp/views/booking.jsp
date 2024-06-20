@@ -77,7 +77,7 @@
                     </div>
                 </c:forEach>
             </div>
-
+            <input type="hidden" name="totalFee" id="totalFee">
             <form>
                 <div class="form-group">
                     <label for="emailInput">Email Address</label>
@@ -115,17 +115,17 @@
                     <span>Submit</span>
                 </button>
             </div>
+            <div id="overlay"></div>
+            <div id="popup">
+                <h1>Booking Summary</h1>
+                <p id="selectedFieldsSummary"><span>Fields: </span></p>
+                <p id="bookingTime"><span>Time: </span></p>
+                <p id="bookingDates"><span>Dates: </span></p>
+                <p id="priceSummary"><span>Price: </span></p>
+                <button type="submit" id="checkout" class="btn btn-dark btn-lg submitBtn my-2">Checkout</button>
+                <button id="closePopup" class="btn btn-dark btn-lg submitBtn my-2">Back to booking</button>
+            </div>
         </form>
-        <div id="overlay"></div>
-        <div id="popup">
-            <h1>Booking Summary</h1>
-            <p id="selectedFieldsSummary"><span>Fields: </span></p>
-            <p id="bookingTime"><span>Time: </span></p>
-            <p id="bookingDates"><span>Dates: </span></p>
-            <p id="priceSummary"><span>Price: </span></p>
-            <button type="submit" id="checkout" class="btn btn-dark btn-lg submitBtn my-2">Checkout</button>
-            <button id="closePopup" class="btn btn-dark btn-lg submitBtn my-2">Back to booking</button>
-        </div>
     </div>
 </div>
 

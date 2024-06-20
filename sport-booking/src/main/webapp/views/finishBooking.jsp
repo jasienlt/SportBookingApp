@@ -24,7 +24,7 @@
     ></script>
 </head>
 <body>
-    <form action="./finishBooking" method="post">
+    <form action="">
         <h1>Start time: ${selectedStartTimeslot}</h1>
         <h1>End time: ${selectedEndTimeslot}</h1>
         <c:forEach items="${selectedDates}" var="selectedDate">
@@ -33,7 +33,6 @@
         <c:forEach items="${selectedFields}" var="selectedField">
             <h1>Select field: ${selectedField}</h1>
         </c:forEach>
-        <h1>Total Fee: ${totalFee}</h1>
     </form>
 </body>
 </html>

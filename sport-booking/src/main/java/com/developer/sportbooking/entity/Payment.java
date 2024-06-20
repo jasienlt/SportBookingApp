@@ -24,8 +24,7 @@ public class Payment {
     private String paymentType;
 
     // Booking - Payment: one to one (owning side)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "payment")
     private Booking booking;
 
     public Payment(String paymentType) {

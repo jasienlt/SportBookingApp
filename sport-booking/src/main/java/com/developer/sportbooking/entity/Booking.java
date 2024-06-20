@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Date;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "booking")
-
-
 public class Booking {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +37,13 @@ public class Booking {
     @JoinColumn(name = "p_id", referencedColumnName = "id")
     private Payment payment;
 
+    // Booking - FieldTimeslot: one to many (parent side)
+    @OneToMany(
+            mappedBy = "booking",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<FieldTimeslot> fieldTimeslots = new ArrayList<>();
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,22 +56,16 @@ public class Booking {
         return getClass().hashCode();
     }
 
-    // Booking - FieldTimeslot: one to many (parent side)
-    @OneToMany(
-            mappedBy = "booking",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Field_Timeslot> fieldTimeslots = new ArrayList<>();
+
 
     //Constructors, getters and setters removed for brevity
 
-    public void addFieldTimeslot(Field_Timeslot fieldTimeslot) {
+    public void addFieldTimeslot(FieldTimeslot fieldTimeslot) {
         fieldTimeslots.add(fieldTimeslot);
         fieldTimeslot.setBooking(this);
     }
 
-    public void removeTimeslot(Field_Timeslot fieldTimeslot) {
+    public void removeTimeslot(FieldTimeslot fieldTimeslot) {
         fieldTimeslots.remove(fieldTimeslot);
         fieldTimeslot.setBooking(null);
     }
