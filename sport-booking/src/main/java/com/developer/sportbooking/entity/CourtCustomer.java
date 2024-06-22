@@ -7,11 +7,11 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-@Entity(name = "Court_Customer")
+@Entity(name = "CourtCustomer")
 @Table(name = "court_customer")
 @Getter
 @Setter
-public class Court_Customer {
+public class CourtCustomer {
     @EmbeddedId
     private CourtCustomerId id;
 
@@ -27,9 +27,9 @@ public class Court_Customer {
     @Column(name = "loyalty_point")
     private Float loyaltyPoint;
 
-    public Court_Customer() {}
+    public CourtCustomer() {}
 
-    public Court_Customer(Court court, Customer customer) {
+    public CourtCustomer(Court court, Customer customer) {
         this.court = court;
         this.customer = customer;
         this.id = new CourtCustomerId(court.getId(), customer.getId());
@@ -45,7 +45,7 @@ public class Court_Customer {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        Court_Customer that = (Court_Customer) o;
+        CourtCustomer that = (CourtCustomer) o;
         return Objects.equals(court, that.court) &&
                 Objects.equals(customer, that.customer);
     }

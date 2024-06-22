@@ -41,13 +41,16 @@ document
                             selectedDatesText.textContent += `${dayOfWeek[date - 1]} `
                         }
                     });
+
                     priceSummary.textContent += response.price.toString();
+                    document.getElementById("totalFee").value = response.price.toString();
+                    console.log(document.getElementById("totalFee").value);
 
                     // Display summary in popup
                     document.getElementById('overlay').style.display = 'block';
                     document.getElementById('popup').style.display = 'block';
                 } else {
-                    alert('An error occurred. Please try again.');
+                    alert(xhr.status);
                 }
             }
         };

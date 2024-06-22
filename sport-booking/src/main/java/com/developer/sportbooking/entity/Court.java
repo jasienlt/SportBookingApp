@@ -1,24 +1,18 @@
 package com.developer.sportbooking.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @Entity
 @Table(name = "court")
-
 
 public class Court {
     @Id
@@ -134,7 +128,7 @@ public class Court {
             orphanRemoval = true
     )
     @JsonIgnore
-    private List<Court_Customer> customers = new ArrayList<Court_Customer>();
+    private List<CourtCustomer> customers = new ArrayList<CourtCustomer>();
 
     public Court() {
     }

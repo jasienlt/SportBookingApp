@@ -70,7 +70,7 @@ public class Customer {
             orphanRemoval = true
     )
     @JsonIgnore
-    private List<Court_Customer> courts = new ArrayList<>();
+    private List<CourtCustomer> courts = new ArrayList<>();
 
     public Customer() {
     }
@@ -87,15 +87,15 @@ public class Customer {
     //Getters and setters omitted for brevity
 
     public void addCourt(Court court) {
-        Court_Customer courtCustomer = new Court_Customer(court, this);
+        CourtCustomer courtCustomer = new CourtCustomer(court, this);
         courts.add(courtCustomer);
         court.getCustomers().add(courtCustomer);
     }
 
     public void removeCourt(Court court) {
-        for (Iterator<Court_Customer> iterator = courts.iterator();
+        for (Iterator<CourtCustomer> iterator = courts.iterator();
              iterator.hasNext(); ) {
-            Court_Customer courtCustomer = iterator.next();
+            CourtCustomer courtCustomer = iterator.next();
 
             if (courtCustomer.getCustomer().equals(this) &&
                     courtCustomer.getCourt().equals(court)) {

@@ -1,11 +1,7 @@
 package com.developer.sportbooking.controller;
 
-import com.developer.sportbooking.entity.Field;
-import com.developer.sportbooking.entity.Field_Timeslot;
-import com.developer.sportbooking.entity.Timeslot;
-import com.developer.sportbooking.service.FieldService;
-import com.developer.sportbooking.service.FieldTimeslotService;
-import com.developer.sportbooking.service.TimeslotService;
+import com.developer.sportbooking.entity.*;
+import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,21 +10,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
 @Controller
 public class BookingController {
-    public int orderNo = 1;
+    public int bookingNo = 1;
     TimeslotService timeslotService;
     FieldService fieldService;
     FieldTimeslotService fieldTimeslotService;
+    BookingService bookingService;
+    CustomerService customerService;
+    PaymentService paymentService;
 
     @Autowired
-    public BookingController(TimeslotService timeslotService, FieldService fieldService, FieldTimeslotService fieldTimeslotService) {
+    public BookingController(TimeslotService timeslotService,
+                             FieldService fieldService,
+                             FieldTimeslotService fieldTimeslotService,
+                             BookingService bookingService,
+                             CustomerService customerService,
+                             PaymentService paymentService) {
         this.timeslotService = timeslotService;
         this.fieldService = fieldService;
         this.fieldTimeslotService = fieldTimeslotService;
+        this.bookingService = bookingService;
+        this.customerService = customerService;
+        this.paymentService = paymentService;
     }
 
     @GetMapping("/booking")
@@ -57,13 +65,13 @@ public class BookingController {
 
     @PostMapping("/booking")
     @ResponseBody
-    public Map<String, Integer> bookingSummary(@RequestParam String fields,
+    public Map<String, Float> bookingSummary(@RequestParam String fields,
                                                @RequestParam Long startBookingTime,
                                                @RequestParam Long endBookingTime,
                                                @RequestParam String dates) {
 
-        int price = 0;
-        Map<String, Integer> response = new HashMap<>();
+        float price = 0;
+        Map<String, Float> response = new HashMap<>();
 
         List<Integer> selectedDates = new ArrayList<>();
         List<Long> selectedFields = new ArrayList<>();
@@ -76,11 +84,7 @@ public class BookingController {
             selectedFields.add(Long.parseLong(s));
         }
 
-        List<Field_Timeslot> fieldTimeslots = fieldTimeslotService.findFieldTimeslotByListId(selectedFields, startBookingTime, endBookingTime, selectedDates);
-
-        for(Field_Timeslot fieldTimeslot : fieldTimeslots) {
-            price += fieldTimeslot.getPrice();
-        }
+        price = fieldTimeslotService.calculateBookingFee(selectedFields, startBookingTime, endBookingTime, selectedDates);
 
         response.put("price", price);
 
@@ -93,13 +97,14 @@ public class BookingController {
     }
 
     @PostMapping("/booking_summary")
-    public String bookingSummary(@RequestParam Integer selectedStartTimeslot,
-                                 @RequestParam Integer selectedEndTimeslot,
+    public String bookingSummary(@RequestParam Long selectedStartTimeslot,
+                                 @RequestParam Long selectedEndTimeslot,
                                  @RequestParam(name = "date") List<Integer> dates,
                                  @RequestParam(name = "selectedFields") String selectedFieldsString,
+                                 @RequestParam(name = "totalFee") String totalFee,
                                  Model model) {
         List<Integer> selectedDates = new ArrayList<>();
-        List<Integer> selectedFields = new ArrayList<>();
+        List<Long> selectedFields = new ArrayList<>();
 
         model.addAttribute("selectedStartTimeslot", selectedStartTimeslot);
         model.addAttribute("selectedEndTimeslot", selectedEndTimeslot);
@@ -114,14 +119,23 @@ public class BookingController {
         }
 
         for(String s : selectedFieldsString.split(" ")) {
-            selectedFields.add(Integer.parseInt(s));
+            selectedFields.add(Long.parseLong(s));
         }
 
         model.addAttribute("selectedDates", selectedDates);
         model.addAttribute("selectedFields", selectedFields);
+        model.addAttribute("totalFee", totalFee);
 
-        orderNo += 1;
+        List<FieldTimeslot> fieldTimeslots = fieldTimeslotService.findFieldTimeslotByListId(selectedFields, selectedStartTimeslot, selectedEndTimeslot, selectedDates);
+
+        Customer customer = customerService.getCustomerById(1L);
+        Payment payment = paymentService.findPaymentById(1L);
+
+        Booking booking = new Booking(1L, new Date(2024, 6, 19), (double) Float.parseFloat(totalFee), customer, payment, fieldTimeslots);
+        bookingService.saveBooking(booking);
+
 
         return "booking_summary";
     }
+
 }

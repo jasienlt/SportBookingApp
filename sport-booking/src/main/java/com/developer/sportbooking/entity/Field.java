@@ -4,12 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.NaturalIdCache;
 
-import java.sql.Time;
 import java.util.*;
 
 @Data
@@ -58,7 +53,7 @@ public class Field {
                 cascade = CascadeType.ALL,
                 orphanRemoval = true)
     @JsonIgnore
-    private List<Field_Timeslot> timeslots = new ArrayList<>();
+    private List<FieldTimeslot> timeslots = new ArrayList<>();
 
 //    public void addTimeslot(Timeslot timeslot) {
 //        Field_Timeslot fieldTimeslot = new Field_Timeslot(this, timeslot);
@@ -67,9 +62,9 @@ public class Field {
 //    }
 
     public void removeTimeslot(Timeslot timeslot) {
-        for (Iterator<Field_Timeslot> iterator = timeslots.iterator();
+        for (Iterator<FieldTimeslot> iterator = timeslots.iterator();
              iterator.hasNext(); ) {
-            Field_Timeslot fieldTimeslot = iterator.next();
+            FieldTimeslot fieldTimeslot = iterator.next();
 
             if (fieldTimeslot.getField().equals(this) &&
                     fieldTimeslot.getTimeslot().equals(timeslot)) {

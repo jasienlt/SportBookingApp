@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
@@ -67,5 +66,5 @@ public class Timeslot {
 
     // Can seek to change into HashMap - holding key (field,timeslot) - value as list of (startTime, endTime)
     @JsonIgnore
-    private List<Field_Timeslot> fields = new ArrayList<>();
+    private List<FieldTimeslot> fields = new ArrayList<>();
 }

@@ -50,10 +50,11 @@ CREATE TABLE customer (
     , PRIMARY KEY (id)
 );
 
-CREATE TABLE courtCustomer (
+CREATE TABLE court_customer (
                                court_id bigint NOT NULL
     , customer_id bigint NOT NULL
     , loyalty_point float NULL
+    , PRIMARY KEY (court_id, customer_id)
     , INDEX cc_court_idx (court_id)
     , FOREIGN KEY (court_id) REFERENCES court(id)
                                    ON
@@ -97,11 +98,13 @@ CREATE TABLE timeslot(
                              ON DELETE CASCADE
 );
 
-CREATE TABLE fieldTimeslot (
+CREATE TABLE field_timeslot (
                                field_id bigint NOT NULL
     , ts_id bigint NOT NULL
     , price float NOT NULL
     , day_in_week int NOT NULL
+    , booking_id bigint
+    , PRIMARY KEY (field_id, ts_id, day_in_week)
     , INDEX fts_field_id (field_id)
     , FOREIGN KEY (field_id) REFERENCES field(id)
                                    ON
@@ -129,6 +132,7 @@ CREATE TABLE booking (
     , field_id bigint
     , ts_id bigint
     , p_id bigint
+    , price float
     , PRIMARY KEY (id)
     , INDEX b_customer_id (customer_id)
     , FOREIGN KEY (customer_id) REFERENCES customer(id)
@@ -212,7 +216,7 @@ VALUES
 
 -- 5) Court_Customer
 INSERT INTO
-    courtCustomer(court_id, customer_id, loyalty_point)
+    court_customer(court_id, customer_id, loyalty_point)
 VALUES
 (1, 1, 500)
      , (1, 2, 300);
@@ -246,12 +250,20 @@ VALUES
 );
 
 -- 😎 Field - Timeslot
-INSERT INTO
-    fieldTimeslot(field_id, ts_id, price, day_in_week)
-VALUES
-(1, 1, 50000, 1)
-     , (1, 2, 50000, 1)
-     , (1, 3, 55000, 1);
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES
+     (1, 1, 50000, 1), (1, 1, 50001, 2), (1, 1, 50002, 3), (1, 1, 50003, 4), (1, 1, 50004, 5), (1, 1, 50005, 6), (1, 1, 50006, 7),
+     (1, 2, 50007, 1), (1, 2, 50008, 2), (1, 2, 50009, 3), (1, 2, 50010, 4), (1, 2, 50011, 5), (1, 2, 50012, 6), (1, 2, 50013, 7),
+     (1, 3, 50014, 1), (1, 3, 50015, 2), (1, 3, 50016, 3), (1, 3, 50017, 4), (1, 3, 50018, 5), (1, 3, 50019, 6), (1, 3, 50020, 7);
+
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES
+     (2, 1, 50021, 1), (2, 1, 50022, 2), (2, 1, 50023, 3), (2, 1, 50024, 4), (2, 1, 50025, 5), (2, 1, 50026, 6), (2, 1, 50027, 7),
+     (2, 2, 50028, 1), (2, 2, 50029, 2), (2, 2, 50030, 3), (2, 2, 50031, 4), (2, 2, 50032, 5), (2, 2, 50033, 6), (2, 2, 50034, 7),
+     (2, 3, 50035, 1), (2, 3, 50036, 2), (2, 3, 50037, 3), (2, 3, 50038, 4), (2, 3, 50039, 5), (2, 3, 50040, 6), (2, 3, 50041, 7);
+
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES
+    (3, 1, 50042, 1), (3, 1, 50043, 2), (3, 1, 50044, 3), (3, 1, 50045, 4), (3, 1, 50046, 5), (3, 1, 50047, 6), (3, 1, 50048, 7),
+    (3, 2, 50049, 1), (3, 2, 50050, 2), (3, 2, 50051, 3), (3, 2, 50052, 4), (3, 2, 50053, 5), (3, 2, 50054, 6), (3, 2, 50055, 7),
+    (3, 3, 50056, 1), (3, 3, 50057, 2), (3, 3, 50058, 3), (3, 3, 50059, 4), (3, 3, 50060, 5), (3, 3, 50061, 6), (3, 3, 50062, 7);
 
 -- 9) Payment
 INSERT INTO
@@ -262,8 +274,8 @@ VALUES
      , (1);
 
 -- 10) Booking
-INSERT INTO
-    booking(date, customer_id, field_id, ts_id, p_id)
-VALUES
-(str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 1, 1)
-     , (str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 2, 1);
+-- INSERT INTO
+--     booking(date, customer_id, field_id, ts_id, p_id)
+-- VALUES
+-- (str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 1, 1)
+--      , (str_to_date('2024-05-01', '%Y-%m-%d'), 1, 1, 2, 1);
