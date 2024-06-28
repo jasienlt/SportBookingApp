@@ -46,11 +46,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     // AWS s3 integration
-    implementation 'io.awspring.cloud:spring-cloud-aws-dependencies:3.1.1'
-    implementation 'io.awspring.cloud:spring-cloud-aws-s3:3.1.1'
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.1'
-
-
+    implementation 'software.amazon.awssdk:sdk-core:2.17.52'
+    implementation 'software.amazon.awssdk:s3:2.17.52'
+    implementation 'software.amazon.awssdk:ec2:2.17.52'
 
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'

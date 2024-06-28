@@ -23,6 +23,8 @@ public class Payment {
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
 
+    private String paymentFile;
+
     // Booking - Payment: one to one (owning side)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "payment")
     private Booking booking;
