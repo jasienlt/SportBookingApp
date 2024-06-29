@@ -20,8 +20,8 @@ function unCheckAllDayCb() {
 function updateSelectedDays() {
   for (let i = 0; i < bookingDayCb.length - 1; i++) {
     bookingDayCb[i].checked === true
-      ? selectedDays.add(i)
-      : selectedDays.delete(i);
+      ? selectedDays.add(i + 1)
+      : selectedDays.delete(i + 1);
   }
 }
 

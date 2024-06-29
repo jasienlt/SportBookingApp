@@ -1,4 +1,3 @@
-import {selectedHour} from "./hourScript.js";
 import {selectedDays} from "./dayScripts.js";
 import {selectedFields} from "./fieldScript.js";
 import {dayOfWeek} from "./utils.js"
@@ -6,7 +5,6 @@ import {dayOfWeek} from "./utils.js"
 const selectedFieldsSummary = document.getElementById("selectedFieldsSummary");
 const priceSummary = document.getElementById("priceSummary");
 const selectedDatesText = document.getElementById("bookingDates");
-const bookingTimeText = document.getElementById("bookingTime");
 
 let selectedFieldsText = "";
 
@@ -18,12 +16,10 @@ document
         const fields = document.getElementById("selectedFields").value;
         const startBookingTime = document.getElementById("selectedStartTimeslot").value;
         const endBookingTime = document.getElementById("selectedEndTimeslot").value;
-        const dates = document.querySelectorAll('input[name="date"]:checked');
-        const selectedDates = Array.from(dates).map(date => date.value);
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/booking', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
         // Handle the response
         xhr.onreadystatechange = function() {
@@ -36,13 +32,13 @@ document
                     sortedSelectedFields.forEach(key => selectedFieldsText += `Field ${key + 1} - `);
                     selectedFieldsSummary.textContent += selectedFieldsText.substring(0, selectedFieldsText.length - 3);
 
-                    selectedDates.forEach(date => {
+                    selectedDays.forEach(date => {
                         if (date !== '8') {
                             selectedDatesText.textContent += `${dayOfWeek[date - 1]} `
                         }
                     });
 
-                    priceSummary.textContent += response.price.toString();
+                    priceSummary.textContent += response.price;
                     document.getElementById("totalFee").value = response.price.toString();
                     console.log(document.getElementById("totalFee").value);
 
@@ -54,10 +50,15 @@ document
                 }
             }
         };
-        const data = `fields=${encodeURIComponent(fields)}&startBookingTime=${encodeURIComponent(startBookingTime)}
-                            &endBookingTime=${encodeURIComponent(endBookingTime)}
-                            &dates=${encodeURIComponent(selectedDates.join(" "))}`
-        xhr.send(data);
+        const data = {
+            type: "booking",
+            fields: fields,
+            startBookingTime: startBookingTime,
+            endBookingTime: endBookingTime,
+            dates: Array.from(selectedDays).join(" "),
+            bookingPeriod: document.getElementById('bookingDate').value
+        }
+        xhr.send(JSON.stringify(data));
     });
 
 function resetBookingSummary() {

@@ -35,10 +35,11 @@
 
         <h4 class="d-flex p-2">SELECT BOOKING TIME</h4>
 
-        <form method="post" action="./booking_summary" id="bookingForm">
+        <form method="post" action="./create-checkout-session" id="bookingForm">
             <div class="d-flex p-1 col-4 ms-auto">
                 <input
                         id="bookingDate"
+                        name="bookingPeriod"
                         class="form-control align-self-center"
                         type="month"
                         value="${currentDate}"
@@ -71,7 +72,7 @@
                 <input type="hidden" id="selectedFields" name="selectedFields">
                 <c:forEach items="${fields}" var="field">
                     <div class="button-overlay mx-2 my-3">
-                        <img class="fieldImg" src="../resource/image/field.png" alt="field"/>
+                        <img class="fieldImg" src="../resource/image/field.png" alt="${field.id}"/>
                         <input class="btn btn-light btn-sm fieldBtn" type="button" value="${field.id}" name="fields" disabled>
                         <small>50k/h-70k/h</small>
                     </div>

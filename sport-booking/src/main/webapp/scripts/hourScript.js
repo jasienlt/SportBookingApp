@@ -17,15 +17,11 @@ function selectRange(start, end) {
   }
 }
 
-function setDefaultExcept(except) {
+export function setDefaultExcept(except) {
   for (let i = 0; i < hourBtn.length; i++) {
     hourBtn[i].style.backgroundColor = i === except ? 'salmon' : '#0d6efd';
     hourBtn[i].style.borderColor = 'white';
   }
-}
-
-function convertToString(time) {
-  return time;
 }
 
 for (let i = 0; i < hourBtn.length; i++) {

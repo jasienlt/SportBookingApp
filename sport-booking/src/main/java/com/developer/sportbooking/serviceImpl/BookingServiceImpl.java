@@ -6,14 +6,14 @@ import com.developer.sportbooking.service.BookingService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookingServiceImp implements BookingService {
+public class BookingServiceImpl implements BookingService {
     BookingRepo bookingRepo;
 
-    public BookingServiceImp(BookingRepo bookingRepo) {
+    public BookingServiceImpl(BookingRepo bookingRepo) {
         this.bookingRepo = bookingRepo;
     }
     @Override
-    public Booking saveBooking(Booking booking) {
-        return bookingRepo.save(booking);
+    public void saveBooking(Booking booking) {
+        bookingRepo.save(booking);
     }
 }

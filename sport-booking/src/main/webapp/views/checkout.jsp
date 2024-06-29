@@ -24,11 +24,22 @@
     ></script>
 </head>
 <body>
-<section>
-    <p>
-        We appreciate your business! If you have any questions, please email
-        <a href="mailto:orders@example.com">orders@example.com</a>.
-    </p>
-</section>
+<form action='./charge' method='POST' id='checkout-form'>
+    <input type='hidden' value='${amount}' name='amount' />
+    <label>Price:<span>${amount/100}</span></label>
+    <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+    <script
+            src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            data-key="${stripePublicKey}"
+            data-amount="${amount}"
+            data-currency="${currency}"
+            data-name="Baeldung"
+            data-description="Spring course checkout"
+            data-image="https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png"
+            data-locale="auto"
+            data-zip-code="false">
+    </script>
+</form>
 </body>
 </html>

@@ -33,7 +33,7 @@ public class FieldTimeslotController {
 
     @GetMapping("/a")
     public Optional<FieldTimeslot> test() {
-        return fieldTimeslotRepo.findById(new FieldTimeslotId(1L, 1L, 1));
+        return fieldTimeslotRepo.findById(1L);
     }
     @GetMapping("/b")
     public Optional<CourtCustomer> test1() {

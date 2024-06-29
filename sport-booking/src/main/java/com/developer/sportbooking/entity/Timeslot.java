@@ -17,9 +17,9 @@ import java.util.*;
 @Entity
 @Table(name = "timeslot")
 @NaturalIdCache
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.READ_WRITE
-)
+//@org.hibernate.annotations.Cache(
+//        usage = CacheConcurrencyStrategy.READ_WRITE
+//)
 public class Timeslot {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)

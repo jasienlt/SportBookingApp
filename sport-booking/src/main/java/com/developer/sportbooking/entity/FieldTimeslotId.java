@@ -28,6 +28,7 @@ public class FieldTimeslotId implements Serializable {
         this.dayId = dayId;
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(fieldId, timeslotId, dayId);

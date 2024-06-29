@@ -5,24 +5,23 @@ import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Controller
 public class BookingController {
-    public int bookingNo = 1;
     TimeslotService timeslotService;
     FieldService fieldService;
     FieldTimeslotService fieldTimeslotService;
     BookingService bookingService;
     CustomerService customerService;
     PaymentService paymentService;
+    ReservedFieldTimeslotService reservedFieldTimeslotService;
+    DateService dateService;
 
     @Autowired
     public BookingController(TimeslotService timeslotService,
@@ -30,13 +29,17 @@ public class BookingController {
                              FieldTimeslotService fieldTimeslotService,
                              BookingService bookingService,
                              CustomerService customerService,
-                             PaymentService paymentService) {
+                             PaymentService paymentService,
+                             ReservedFieldTimeslotService reservedFieldTimeslotService,
+                             DateService dateService) {
         this.timeslotService = timeslotService;
         this.fieldService = fieldService;
         this.fieldTimeslotService = fieldTimeslotService;
         this.bookingService = bookingService;
         this.customerService = customerService;
         this.paymentService = paymentService;
+        this.reservedFieldTimeslotService = reservedFieldTimeslotService;
+        this.dateService = dateService;
     }
 
     @GetMapping("/booking")
@@ -65,28 +68,43 @@ public class BookingController {
 
     @PostMapping("/booking")
     @ResponseBody
-    public Map<String, Float> bookingSummary(@RequestParam String fields,
-                                               @RequestParam Long startBookingTime,
-                                               @RequestParam Long endBookingTime,
-                                               @RequestParam String dates) {
+    public Map<String, Object> bookingSummary(@RequestBody Map<String, Object> requestBody) {
+        String type = (String) requestBody.get("type");
+        Map<String, Object> response = new HashMap<>();
 
-        float price = 0;
-        Map<String, Float> response = new HashMap<>();
+        if("booking".equals(type)) {
+            float price = 0;
 
-        List<Integer> selectedDates = new ArrayList<>();
-        List<Long> selectedFields = new ArrayList<>();
+            List<Integer> selectedDates = new ArrayList<>();
+            List<Long> selectedFields = new ArrayList<>();
 
-        for(String s : dates.split(" ")) {
-            selectedDates.add(Integer.parseInt(s));
+            for (String s : requestBody.get("dates").toString().split(" ")) {
+                selectedDates.add(Integer.parseInt(s));
+            }
+
+            for (String s : requestBody.get("fields").toString().split(" ")) {
+                selectedFields.add(Long.parseLong(s));
+            }
+
+            price = fieldTimeslotService.calculateBookingFee(
+                    selectedFields,
+                    Long.parseLong(requestBody.get("startBookingTime").toString()),
+                    Long.parseLong(requestBody.get("endBookingTime").toString()),
+                    selectedDates,
+                    dateService.convertStringToLocalDate((String) requestBody.get("bookingPeriod")));
+
+            response.put("price", Float.toString(price));
         }
+        else if ("date".equals(type)) {
+            String date = (String) requestBody.get("date");
+            LocalDate startDate = dateService.convertStringToLocalDate(date);
+            LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
 
-        for(String s : fields.split(" ")) {
-            selectedFields.add(Long.parseLong(s));
+            List<ReservedFieldTimeslot> reservedFieldTimeslots = reservedFieldTimeslotService.getAllReservedFieldBetweenTimePeriod(Date.valueOf(startDate), Date.valueOf(endDate));
+
+            response.put("date", date);
+            response.put("reservedFieldTimeslots", reservedFieldTimeslots);
         }
-
-        price = fieldTimeslotService.calculateBookingFee(selectedFields, startBookingTime, endBookingTime, selectedDates);
-
-        response.put("price", price);
 
         return response;
     }
@@ -96,46 +114,8 @@ public class BookingController {
         return "homepage";
     }
 
-    @PostMapping("/booking_summary")
-    public String bookingSummary(@RequestParam Long selectedStartTimeslot,
-                                 @RequestParam Long selectedEndTimeslot,
-                                 @RequestParam(name = "date") List<Integer> dates,
-                                 @RequestParam(name = "selectedFields") String selectedFieldsString,
-                                 @RequestParam(name = "totalFee") String totalFee,
-                                 Model model) {
-        List<Integer> selectedDates = new ArrayList<>();
-        List<Long> selectedFields = new ArrayList<>();
-
-        model.addAttribute("selectedStartTimeslot", selectedStartTimeslot);
-        model.addAttribute("selectedEndTimeslot", selectedEndTimeslot);
-
-        if(dates.contains(8)) {
-            for(int i = 1; i < 8; i++) {
-                selectedDates.add(i);
-            }
-        }
-        else {
-            selectedDates = dates;
-        }
-
-        for(String s : selectedFieldsString.split(" ")) {
-            selectedFields.add(Long.parseLong(s));
-        }
-
-        model.addAttribute("selectedDates", selectedDates);
-        model.addAttribute("selectedFields", selectedFields);
-        model.addAttribute("totalFee", totalFee);
-
-        List<FieldTimeslot> fieldTimeslots = fieldTimeslotService.findFieldTimeslotByListId(selectedFields, selectedStartTimeslot, selectedEndTimeslot, selectedDates);
-
-        Customer customer = customerService.getCustomerById(1L);
-        Payment payment = paymentService.findPaymentById(1L);
-
-        Booking booking = new Booking(1L, new Date(2024, 6, 19), (double) Float.parseFloat(totalFee), customer, payment, fieldTimeslots);
-        bookingService.saveBooking(booking);
-
-
-        return "booking_summary";
+    @GetMapping("/success")
+    public String getSuccess() {
+        return "success";
     }
-
 }

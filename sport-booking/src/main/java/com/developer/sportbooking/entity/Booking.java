@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,12 +18,9 @@ import java.util.List;
 @Table(name = "booking")
 public class Booking {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "date", nullable = false)
-    private Date date;
 
     @Column(name = "price", nullable = false)
     private Double price;
@@ -30,10 +28,11 @@ public class Booking {
     // Customer - Booking: one to many (child side)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JsonIgnore
     private Customer customer;
 
     // Payment - Booking: one to one
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "p_id", referencedColumnName = "id")
     private Payment payment;
 
@@ -43,31 +42,31 @@ public class Booking {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<FieldTimeslot> fieldTimeslots = new ArrayList<>();
+    @JsonIgnore
+    private List<ReservedFieldTimeslot> reservedFieldTimeslots = new ArrayList<>();
+    public Booking(Double price, Customer customer, Payment payment) {
+        this.price = price;
+        this.customer = customer;
+        this.payment = payment;
+    }
+    public void addReservedFieldTimeslot(ReservedFieldTimeslot reservedFieldTimeslot) {
+        reservedFieldTimeslots.add(reservedFieldTimeslot);
+        reservedFieldTimeslot.setBooking(this);
+    }
+
+    public void removeReservedFieldTimeslot(ReservedFieldTimeslot reservedFieldTimeslot) {
+        reservedFieldTimeslots.remove(reservedFieldTimeslot);
+        reservedFieldTimeslot.setBooking(null);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Booking )) return false;
         return id != null && id.equals(((Booking) o).getId());
     }
-
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
-
-
-
     //Constructors, getters and setters removed for brevity
-
-    public void addFieldTimeslot(FieldTimeslot fieldTimeslot) {
-        fieldTimeslots.add(fieldTimeslot);
-        fieldTimeslot.setBooking(this);
-    }
-
-    public void removeTimeslot(FieldTimeslot fieldTimeslot) {
-        fieldTimeslots.remove(fieldTimeslot);
-        fieldTimeslot.setBooking(null);
-    }
-
 }
