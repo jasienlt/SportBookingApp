@@ -47,9 +47,7 @@ public class CustomerController {
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("currentCustomer") CustomerDto customerDto, Model model) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(customerDto.getPassword());
-        customerDto.setPassword(encodedPassword);
+        
         Customer customer = customerService.validateCustomer(customerDto.getEmail(),customerDto.getPassword());
         System.out.println("ABC");
         if (Objects.isNull(customer)) {
