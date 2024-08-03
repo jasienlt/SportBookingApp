@@ -3,6 +3,8 @@ package com.developer.sportbooking.serviceImpl;
 import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.FieldTimeslot;
 import com.developer.sportbooking.entity.ReservedFieldTimeslot;
+import com.developer.sportbooking.enumType.BookingStatus;
+import com.developer.sportbooking.repository.FieldTimeslotRepo;
 import com.developer.sportbooking.repository.ReservedFieldTimeslotRepo;
 import com.developer.sportbooking.service.ReservedFieldTimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,9 @@ import java.time.Month;
 import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReservedFieldTimeslotServiceImpl implements ReservedFieldTimeslotService {
@@ -53,7 +57,31 @@ public class ReservedFieldTimeslotServiceImpl implements ReservedFieldTimeslotSe
     }
 
     @Override
-    public List<ReservedFieldTimeslot> getAllReservedFieldBetweenTimePeriod(Date firstDate, Date lastDate) {
-        return reservedFieldTimeslotRepo.findReservedFieldTimeslotByBookingDateBetween(firstDate, lastDate);
+    public HashMap<BookingStatus, List<ReservedFieldTimeslot>> getAllReservedFieldBetweenTimePeriod(Date firstDate, Date lastDate) {
+        HashMap<BookingStatus, List<ReservedFieldTimeslot>> bookingStatusListMap = new HashMap<>();
+
+        bookingStatusListMap.put(BookingStatus.PENDING, new ArrayList<>());
+        bookingStatusListMap.put(BookingStatus.COMPLETED, new ArrayList<>());
+
+        List<ReservedFieldTimeslot> reservedFieldTimeslots = reservedFieldTimeslotRepo.findReservedFieldTimeslotByBookingDateBetween(firstDate, lastDate);
+
+        for (ReservedFieldTimeslot reservedFieldTimeslot : reservedFieldTimeslots) {
+            BookingStatus bookingStatus = reservedFieldTimeslot.getBooking().getStatus();
+            bookingStatusListMap.get(bookingStatus).add(reservedFieldTimeslot);
+        }
+
+        return bookingStatusListMap;
+    }
+
+    @Override
+    public void removeReservedFieldByBooking(Booking booking) {
+        List<ReservedFieldTimeslot> reservedFieldTimeslots = reservedFieldTimeslotRepo.findReservedFieldTimeslotByBooking(booking);
+
+        for (ReservedFieldTimeslot reservedFieldTimeslot : reservedFieldTimeslots) {
+            booking.removeReservedFieldTimeslot(reservedFieldTimeslot);
+            reservedFieldTimeslot.getFieldTimeslot().removeReservedFieldTimeslot(reservedFieldTimeslot);
+
+            reservedFieldTimeslotRepo.delete(reservedFieldTimeslot);
+        }
     }
 }

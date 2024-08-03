@@ -1,3 +1,6 @@
+<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,12 +53,24 @@
                                 class="btn btn-primary mx-1 my-3 hourBtn align-self-center  text-white"
                                 type="button"
                         >
-                            Booking
+                            <spring:message key="booking"/>
                         </button>
                     </a>
                 </div>
             </div>
         </div>
+
+        <div class="language-selector">
+            <label for="locales"><spring:message key="lang.change"/></label>
+            <select id="locales">
+                <option value=""></option>
+                <option value="en">English</option>
+                <option value="vi">Tiếng Việt</option>
+                <!-- Add more language options as needed -->
+            </select>
+        </div>
     </div>
+</div>
+<script type="module" src="../scripts/locale.js"></script>
 </body>
 </html>

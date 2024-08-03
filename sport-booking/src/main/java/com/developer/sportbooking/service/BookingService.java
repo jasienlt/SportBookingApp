@@ -3,9 +3,21 @@ package com.developer.sportbooking.service;
 import com.developer.sportbooking.entity.Booking;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface BookingService {
     void saveBooking(Booking booking);
+
+    void saveBookingSummary(Long selectedStartTimeslot,
+                                   Long selectedEndTimeslot,
+                                   List<Integer> dates,
+                                   String selectedFieldsString,
+                                   String totalFee,
+                                   String bookingPeriodString,
+                                   String sessionId);
+
+    Booking getBookingBySessionId(String sessionId);
 
 //    List<Booking> findAllBooking();
 //

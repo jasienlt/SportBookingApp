@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ReservedFieldTimeslotRepo extends JpaRepository<ReservedFieldTimeslot, Long> {
-    public List<ReservedFieldTimeslot> findReservedFieldTimeslotByBookingDateBetween(Date firstDate, Date lastDate);
+    List<ReservedFieldTimeslot> findReservedFieldTimeslotByBookingDateBetween(Date firstDate, Date lastDate);
+    List<ReservedFieldTimeslot> findReservedFieldTimeslotByBooking(Booking booking);
 }

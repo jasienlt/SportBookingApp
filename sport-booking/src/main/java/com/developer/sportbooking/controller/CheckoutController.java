@@ -1,15 +1,13 @@
 package com.developer.sportbooking.controller;
 
-import com.developer.sportbooking.dto.ChargeRequest;
+import com.developer.sportbooking.service.BookingService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -21,7 +19,12 @@ public class CheckoutController {
     private String stripePublicKey;
     @Value("${STRIPE_SECRET_KEY}")
     private String stripeSecretKey;
+    private final BookingService bookingService;
     private static final String YOUR_DOMAIN = "http://localhost:8080";
+
+    public CheckoutController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @PostMapping("/create-checkout-session")
     public String createCheckoutSession(@RequestParam Long selectedStartTimeslot,
@@ -33,20 +36,10 @@ public class CheckoutController {
                                         ) throws StripeException {
         Stripe.apiKey = stripeSecretKey;
 
-        String selectedStartTimeslotStr = selectedStartTimeslot.toString();
-        String selectedEndTimeslotStr = selectedEndTimeslot.toString();
-        String datesStr = dates.stream().map(String::valueOf).collect(Collectors.joining(","));
-
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setSuccessUrl(YOUR_DOMAIN + "/success")
                 .setCancelUrl(YOUR_DOMAIN + "/cancel")
-                .putMetadata("selectedStartTimeslot", selectedStartTimeslotStr)
-                .putMetadata("selectedEndTimeslot", selectedEndTimeslotStr)
-                .putMetadata("dates", datesStr)
-                .putMetadata("selectedFields", selectedFieldsString)
-                .putMetadata("totalFee", totalFee)
-                .putMetadata("bookingPeriod", bookingPeriodString)
                 .addLineItem(
                         SessionCreateParams.LineItem.builder()
                                 .setQuantity(1L)
@@ -63,6 +56,8 @@ public class CheckoutController {
                 .build();
 
         Session session = Session.create(params);
+
+        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, session.getId());
 
         return "redirect:" + session.getUrl();
     }

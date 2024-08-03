@@ -28,7 +28,7 @@
 <div class="container">
     <h2 class="mb-3">Home Page</h2>
     <%-- Check if user is logged in --%>
-    <sec:authorize access = "isAuthenticated()"> Welcome <sec:authentication property="principal.username" />
+    <sec:authorize access = "isAuthenticated()"> Welcome ${customerDetail.customer.id} <sec:authentication property="principal.username" />
     </sec:authorize>
     <sec:authorize access = "!isAuthenticated()"> <p> Please log in to access.  <a href="login">Login</a> </p></sec:authorize>
 

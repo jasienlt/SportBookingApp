@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.EscapeUnicode
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
@@ -9,6 +11,16 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(ProcessResources).configureEach {
+    filesMatching('**/*.properties') {
+        filter EscapeUnicode
+    }
 }
 
 configurations {

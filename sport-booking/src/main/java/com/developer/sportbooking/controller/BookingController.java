@@ -1,6 +1,7 @@
 package com.developer.sportbooking.controller;
 
 import com.developer.sportbooking.entity.*;
+import com.developer.sportbooking.enumType.BookingStatus;
 import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -100,10 +101,11 @@ public class BookingController {
             LocalDate startDate = dateService.convertStringToLocalDate(date);
             LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
 
-            List<ReservedFieldTimeslot> reservedFieldTimeslots = reservedFieldTimeslotService.getAllReservedFieldBetweenTimePeriod(Date.valueOf(startDate), Date.valueOf(endDate));
+            HashMap<BookingStatus, List<ReservedFieldTimeslot>> bookingStatusListHashMap = reservedFieldTimeslotService.getAllReservedFieldBetweenTimePeriod(Date.valueOf(startDate), Date.valueOf(endDate));
 
             response.put("date", date);
-            response.put("reservedFieldTimeslots", reservedFieldTimeslots);
+            response.put("reservedFieldTimeslots", bookingStatusListHashMap.get(BookingStatus.COMPLETED));
+            response.put("pendingFieldTimeslots", bookingStatusListHashMap.get(BookingStatus.PENDING));
         }
 
         return response;
@@ -112,10 +114,5 @@ public class BookingController {
     @GetMapping("/homepage")
     public String getHomepage() {
         return "homepage";
-    }
-
-    @GetMapping("/success")
-    public String getSuccess() {
-        return "success";
     }
 }

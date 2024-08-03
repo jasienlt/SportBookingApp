@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.developer.sportbooking.enumType.BookingStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,11 +45,26 @@ public class Booking {
     )
     @JsonIgnore
     private List<ReservedFieldTimeslot> reservedFieldTimeslots = new ArrayList<>();
+
+    @Column(name = "status", nullable = false)
+    private BookingStatus status;
+
+    @Column(name = "stripe_session_id", nullable = false)
+    private String sessionId;
     public Booking(Double price, Customer customer, Payment payment) {
         this.price = price;
         this.customer = customer;
         this.payment = payment;
     }
+
+    public Booking(Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+        this.price = price;
+        this.customer = customer;
+        this.payment = payment;
+        this.status = status;
+        this.sessionId = sessionId;
+    }
+
     public void addReservedFieldTimeslot(ReservedFieldTimeslot reservedFieldTimeslot) {
         reservedFieldTimeslots.add(reservedFieldTimeslot);
         reservedFieldTimeslot.setBooking(this);

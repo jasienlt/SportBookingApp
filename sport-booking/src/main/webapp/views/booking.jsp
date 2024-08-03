@@ -1,4 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,13 +30,13 @@
 <div class="container">
     <div class="row">
         <div class="d-flex flex-row align-items-center justify-content-center">
-            <h1 class="">BOOKING PAGE</h1>
+            <h1 class=""><spring:message key="booking.title"/></h1>
             <a href="./homepage" class="backBtn">
                 <button class="btn text-white">Back</button>
             </a>
         </div>
 
-        <h4 class="d-flex p-2">SELECT BOOKING TIME</h4>
+        <h4 class="d-flex p-2"><spring:message key="booking.selectTime"/></h4>
 
         <form method="post" action="./create-checkout-session" id="bookingForm">
             <div class="d-flex p-1 col-4 ms-auto">
@@ -55,12 +58,12 @@
                 </c:forEach>
             </div>
 
-            <h4 class="d-flex p-2 my-2">SELECT BOOKING DATE</h4>
+            <h4 class="d-flex p-2 my-2"><spring:message key="booking.selectDate"/></h4>
 
             <div id="dateInWeek"></div>
 
             <div class="d-flex">
-                <h5 class="my-2">SELECT FIELD</h5>
+                <h5 class="my-2"><spring:message key="booking.selectField"/></h5>
                 <a
                         class="align-self-center ms-auto text-white link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
                         href="#"
@@ -81,33 +84,33 @@
             <input type="hidden" name="totalFee" id="totalFee">
             <form>
                 <div class="form-group">
-                    <label for="emailInput">Email Address</label>
+                    <label for="emailInput"><spring:message key="booking.email"/></label>
                     <input
                             type="email"
                             class="form-control"
                             id="emailInput"
                             aria-describedby="emailHelp"
-                            placeholder="Enter email"
+                            placeholder="<spring:message key="booking.emailPlaceholder"/>"
                             required
                     />
                 </div>
                 <div class="form-group">
-                    <label for="customerNameInput">Customer Name</label>
+                    <label for="customerNameInput"><spring:message key="booking.customerName"/></label>
                     <input
                             type="text"
                             class="form-control"
                             id="customerNameInput"
-                            placeholder="Customer Name"
+                            placeholder="<spring:message key="booking.customerNamePlaceholder"/>"
                             required
                     />
                 </div>
                 <div class="form-group">
-                    <label for="bookingNoteInput">Note</label>
+                    <label for="bookingNoteInput"><spring:message key="booking.note"/></label>
                     <textarea
                             class="form-control"
                             id="bookingNoteInput"
                             rows="3"
-                            placeholder="Please put your note here"
+                            placeholder="<spring:message key="booking.notePlaceHolder"/>"
                     ></textarea>
                 </div>
             </form>
@@ -127,9 +130,20 @@
                 <button id="closePopup" class="btn btn-dark btn-lg submitBtn my-2">Back to booking</button>
             </div>
         </form>
+
+        <div class="language-selector">
+            <label for="locales"><spring:message key="lang.change"/></label>
+            <select id="locales">
+                <option value=""></option>
+                <option value="en">English</option>
+                <option value="vi">Tiếng Việt</option>
+                <!-- Add more language options as needed -->
+            </select>
+        </div>
     </div>
 </div>
 
+<script type="module" src="../scripts/locale.js"></script>
 <script type="module" src="../scripts/utils.js"></script>
 <script type="module" src="../scripts/generateScript.js"></script>
 <script type="module" src="../scripts/dayScripts.js"></script>

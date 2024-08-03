@@ -130,6 +130,8 @@ CREATE TABLE booking (
     , customer_id bigint
     , p_id bigint
     , price float
+    , status ENUM('COMPLETED', 'PENDING', 'CANCELED') NOT NULL
+    , stripe_session_id text NOT NULL
     , PRIMARY KEY (id)
     , INDEX b_customer_id (customer_id)
     , FOREIGN KEY (customer_id) REFERENCES customer(id)

@@ -131,6 +131,15 @@ body {
     cursor: pointer;
 }
 
+.language-selector {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
 #fields {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));

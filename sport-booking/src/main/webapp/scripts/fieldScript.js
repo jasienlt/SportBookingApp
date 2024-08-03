@@ -6,6 +6,7 @@ const selectedDay = document.getElementById("bookingDate");
 const fieldsBtn = document.getElementsByClassName('fieldBtn');
 const submitBookingBtn = document.getElementById("submitBtn");
 let reservedFieldTimeslots = [];
+let pendingFieldTimeslots = [];
 export let selectedFields = new Set();
 var dateInput = document.getElementById('bookingDate');
 
@@ -21,7 +22,9 @@ function retrieveBookedFieldsFromDb() {
             var response = JSON.parse(xhr.responseText);
             if (response.reservedFieldTimeslots) {
                 reservedFieldTimeslots = response.reservedFieldTimeslots;
+                pendingFieldTimeslots = response.pendingFieldTimeslots;
                 console.log(reservedFieldTimeslots);
+                console.log(pendingFieldTimeslots);
                 setDefaultExcept(-1);
                 disableFieldSelected();
             } else {
@@ -41,8 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('pageshow', retrieveBookedFieldsFromDb);
 });
 
-function getAllBookedFields() {
+function getAllBookedAndPendingFields() {
     const bookedFields = new Set();
+    const pendingFields = new Set();
     console.log(selectedDays);
     reservedFieldTimeslots.forEach(reservedFieldTimeslot => {
        if(selectedDays.has(dayOfWeek.indexOf(reservedFieldTimeslot.fieldTimeslot.day) + 1) && selectedHour.has(reservedFieldTimeslot.fieldTimeslot.timeslot.id)) {
@@ -50,22 +54,34 @@ function getAllBookedFields() {
        }
     });
 
-    return bookedFields
+    pendingFieldTimeslots.forEach(pendingFieldTimeslot => {
+        if(selectedDays.has(dayOfWeek.indexOf(pendingFieldTimeslot.fieldTimeslot.day) + 1) && selectedHour.has(pendingFieldTimeslot.fieldTimeslot.timeslot.id)) {
+            pendingFields.add(pendingFieldTimeslot.fieldTimeslot.field.id)
+        }
+    });
+
+    return [bookedFields, pendingFields]
 }
 
 
 
 export function enableFieldSelected() {
-    const bookedFields = getAllBookedFields();
+    const [bookedFields, pendingFields] = getAllBookedAndPendingFields();
 
     console.log(bookedFields);
 
     for (let i = 0; i < fieldsBtn.length; i++) {
-        if(!bookedFields.has(i + 1)) {
+        if(!bookedFields.has(i + 1) && !pendingFields.has(i + 1)) {
             fieldsBtn[i].disabled = false;
         }
-        else {
+        else if(bookedFields.has(i + 1)){
             fieldsBtn[i].style.backgroundColor = '#ff8c8c';
+            fieldsBtn[i].style.color = 'white';
+            const imgElement = document.querySelector(`img[alt="${(i + 1).toString()}"]`);
+            imgElement.style.opacity = "0.5";
+        }
+        else {
+            fieldsBtn[i].style.backgroundColor = '#ade0ff';
             fieldsBtn[i].style.color = 'white';
             const imgElement = document.querySelector(`img[alt="${(i + 1).toString()}"]`);
             imgElement.style.opacity = "0.5";
