@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface PaymentService {
-//    Payment savePayment(Payment payment);
+    Payment savePayment(Payment payment);
 
 //    List<Payment> findAllPayment();
 

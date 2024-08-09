@@ -23,11 +23,37 @@ public class Payment {
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
 
-    // Booking - Payment: one to one (owning side)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "payment")
-    private Booking booking;
+    @Column(name="payment_evidence")
+    private String paymentFile;
+
+    @Column(name="payment_stts")
+    private String paymentStatus;
+
+    @Column(name="booking_id")
+    private Long bookingId;
 
     public Payment(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Payment(String paymentType, String paymentStatus) {
+        this.paymentType = paymentType;
+        this.paymentFile = null;
+        this.paymentStatus = paymentStatus;
+        this.bookingId = null;
+    }
+
+    public Payment(String paymentType, String paymentFile, String paymentStatus) {
+        this.paymentType = paymentType;
+        this.paymentFile = paymentFile;
+        this.paymentStatus = paymentStatus;
+        this.bookingId = null;
+    }
+
+    public Payment(String paymentType, String paymentFile, String paymentStatus, Long bookingId) {
+        this.paymentType = paymentType;
+        this.paymentFile = paymentFile;
+        this.paymentStatus = paymentStatus;
+        this.bookingId = bookingId;
     }
 }
