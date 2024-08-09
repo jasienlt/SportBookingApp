@@ -56,7 +56,7 @@
             if (firstName == null) {
         %>
         <!-- Login Form -->
-        <form class="form-login" method="post" action="./home">
+        <form class="form-login" method="post" action="<c:url value='/perform_login'/>">
             <h2 class="mb-3"><spring:message key="login.login"/></h2>
             <% if (request.getParameter("error") != null) { %>
                 <div class="alert alert-danger" role="alert">

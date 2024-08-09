@@ -14,9 +14,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        return new CustomCustomerDetailsService();
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -27,7 +28,7 @@ public class SecurityConfig {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -50,11 +51,12 @@ public class SecurityConfig {
                 .formLogin(login ->
                         login
                                 .loginPage("/login")
-                                .loginProcessingUrl("/home")
-                                .usernameParameter("email")
-                                .defaultSuccessUrl("/home")
+                                .loginProcessingUrl("/perform_login")
+                                .usernameParameter("username")
+                                .passwordParameter("password")
+                                .defaultSuccessUrl("/home", true)
                                 .permitAll()
-//                                .failureUrl("/login?error=True")
+                                .failureUrl("/login?error=True")
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/").permitAll()
                 );

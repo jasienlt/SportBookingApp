@@ -13,4 +13,6 @@ public interface CustomerRepo extends JpaRepository<Customer, Long>{
 
     @Query("SELECT u FROM Customer u WHERE u.email = ?1")
     public Customer findByEmail(String email);
+
+    Customer findCustomerByEmail(String email);
 }

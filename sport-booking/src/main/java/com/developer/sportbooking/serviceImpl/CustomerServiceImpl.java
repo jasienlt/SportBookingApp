@@ -5,6 +5,7 @@ import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.repository.CustomerRepo;
 import com.developer.sportbooking.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,6 @@ import java.util.*;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     public CustomerServiceImpl(CustomerRepo customerRepo) {
         super();
@@ -24,6 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer saveCustomer(CustomerDto customerDto) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Customer customer = new Customer(customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhone(),customerDto.getEmail(), passwordEncoder.encode(customerDto.getPassword()));
         return customerRepo.save(customer);
     }
@@ -56,5 +56,9 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
+    @Override
+    public Customer findByEmail(String email) {
+        return customerRepo.findCustomerByEmail(email);
+    }
 
 }
