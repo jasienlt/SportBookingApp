@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CourtRepo extends JpaRepository<Court, Long>{
-
+    @Query("SELECT u FROM Court u WHERE u.name = ?1")
+    public Court findByName(String name);
 }

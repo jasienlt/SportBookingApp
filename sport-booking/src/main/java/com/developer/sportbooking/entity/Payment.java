@@ -28,8 +28,37 @@ public class Payment {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Booking booking;
+    @Column(name="payment_evidence")
+    private String paymentFile;
+
+    @Column(name="payment_stts")
+    private String paymentStatus;
+
+    @Column(name="booking_id")
+    private Long bookingId;
 
     public Payment(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Payment(String paymentType, String paymentStatus) {
+        this.paymentType = paymentType;
+        this.paymentFile = null;
+        this.paymentStatus = paymentStatus;
+        this.bookingId = null;
+    }
+
+    public Payment(String paymentType, String paymentFile, String paymentStatus) {
+        this.paymentType = paymentType;
+        this.paymentFile = paymentFile;
+        this.paymentStatus = paymentStatus;
+        this.bookingId = null;
+    }
+
+    public Payment(String paymentType, String paymentFile, String paymentStatus, Long bookingId) {
+        this.paymentType = paymentType;
+        this.paymentFile = paymentFile;
+        this.paymentStatus = paymentStatus;
+        this.bookingId = bookingId;
     }
 }

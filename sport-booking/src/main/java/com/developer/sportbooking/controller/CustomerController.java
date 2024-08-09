@@ -42,25 +42,22 @@ public class CustomerController {
 
     @GetMapping("/login")
     public String login(@ModelAttribute CustomerDto customerDto) {
-        System.out.println("and");
         return "login";
     }
 
-    @PostMapping("/home")
-    public String processLogin(@RequestParam String username,
-                               @RequestParam String password,
-                               Model model) {
+    @PostMapping("/login")
+    public String processLogin(@ModelAttribute("currentCustomer") CustomerDto customerDto, Model model) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(password);
-        Customer customer = customerService.validateCustomer(username,password);
-        System.out.println(username);
-        System.out.println(encodedPassword);
+        String encodedPassword = encoder.encode(customerDto.getPassword());
+        customerDto.setPassword(encodedPassword);
+        Customer customer = customerService.validateCustomer(customerDto.getEmail(),customerDto.getPassword());
+        System.out.println("ABC");
         if (Objects.isNull(customer)) {
             // Return an error--?
             return "registration";
         } else {
-//            customerService.saveCustomer(customerDto);
-//            model.addAttribute("currentCustomer", customer);
+            customerService.saveCustomer(customerDto);
+            model.addAttribute("currentCustomer", customer);
             return "home";
         }
     }
