@@ -1,6 +1,9 @@
 package com.developer.sportbooking.controller;
 
+import com.developer.sportbooking.entity.Payment;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.service.BookingService;
+import com.developer.sportbooking.service.PaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -20,10 +23,12 @@ public class CheckoutController {
     @Value("${STRIPE_SECRET_KEY}")
     private String stripeSecretKey;
     private final BookingService bookingService;
+    private final PaymentService paymentService;
     private static final String YOUR_DOMAIN = "http://localhost:8080";
 
-    public CheckoutController(BookingService bookingService) {
+    public CheckoutController(BookingService bookingService, PaymentService paymentService) {
         this.bookingService = bookingService;
+        this.paymentService = paymentService;
     }
 
     @PostMapping("/create-checkout-session")

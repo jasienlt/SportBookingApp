@@ -22,7 +22,7 @@ public class RoleConverter implements AttributeConverter<Role, String> {
         try {
             return Role.valueOf(dbData);
         } catch (IllegalArgumentException ex) {
-            throw new RuntimeException("Invalid value for DayOfWeek: " + dbData, ex);
+            throw new RuntimeException("Invalid value for Role: " + dbData, ex);
         }
     }
 }

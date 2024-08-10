@@ -126,7 +126,7 @@ CREATE TABLE payment(
     , booking_id bigint
     , payment_type int NOT NULL
     , payment_evidence varchar(5000)
-    , payment_stts varchar(100)
+    , payment_stts ENUM('SUCCESSFUL','PENDING', 'CANCELED') NOT NULL
     , PRIMARY KEY (id)
 );
 

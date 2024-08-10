@@ -5,13 +5,20 @@ import com.developer.sportbooking.repository.PaymentRepo;
 import com.developer.sportbooking.service.PaymentService;
 import org.springframework.stereotype.Service;
 
+
 @Service
-public class PaymentServiceImp implements PaymentService {
+public class PaymentServiceImpl implements PaymentService {
     PaymentRepo paymentRepo;
 
-    public PaymentServiceImp(PaymentRepo paymentRepo) {
+    public PaymentServiceImpl(PaymentRepo paymentRepo) {
         this.paymentRepo = paymentRepo;
     }
+
+    @Override
+    public Payment savePayment(Payment payment) {
+        return paymentRepo.save(payment);
+    }
+
     @Override
     public Payment findPaymentById(Long id) {
         if(paymentRepo.findById(id).isPresent()) {

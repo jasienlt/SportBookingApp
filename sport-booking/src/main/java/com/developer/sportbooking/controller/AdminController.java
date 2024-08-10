@@ -51,7 +51,7 @@ public class AdminController {
             String someMessage = "Customer not exist. Would you like to register?";
             model.addAttribute("someMessage", someMessage);
             return "courtLogin";
-        } else if (customer.getRole()!="CUSTOMER"){
+        } else if (customer.getRole().getValue() < 3){
 
             customerService.saveCustomer(customerDto);
             model.addAttribute("currentAdmin", customer);

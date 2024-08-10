@@ -5,6 +5,7 @@ import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.entity.FieldTimeslot;
 import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.BookingStatus;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
 import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,8 +76,10 @@ public class BookingServiceImpl implements BookingService {
         Payment payment = paymentService.findPaymentById(2L); // Adjust accordingly
 
         Booking booking = new Booking((double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
+        Payment paymentObj = new Payment("Stripe", sessionId, PaymentStatus.PENDING, booking.getId());
 
         this.saveBooking(booking);
+        paymentService.savePayment(paymentObj);
         reservedFieldTimeslotService.saveReservedFieldTimeslots(booking, fieldTimeslots, bookingPeriod);
 
     }

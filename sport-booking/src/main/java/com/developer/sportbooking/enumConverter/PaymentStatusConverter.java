@@ -1,13 +1,13 @@
 package com.developer.sportbooking.enumConverter;
 
-import com.developer.sportbooking.enumType.BookingStatus;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class BookingStatusConverter implements AttributeConverter<BookingStatus, String> {
+public class PaymentStatusConverter implements AttributeConverter<PaymentStatus, String> {
     @Override
-    public String convertToDatabaseColumn(BookingStatus bookingStatus) {
+    public String convertToDatabaseColumn(PaymentStatus bookingStatus) {
         if (bookingStatus == null) {
             return null;
         }
@@ -15,14 +15,14 @@ public class BookingStatusConverter implements AttributeConverter<BookingStatus,
     }
 
     @Override
-    public BookingStatus convertToEntityAttribute(String dbData) {
+    public PaymentStatus convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.isEmpty()) {
             return null;
         }
         try {
-            return BookingStatus.valueOf(dbData);
+            return PaymentStatus.valueOf(dbData);
         } catch (IllegalArgumentException ex) {
-            throw new RuntimeException("Invalid value for BookingStatus: " + dbData, ex);
+            throw new RuntimeException("Invalid value for Payment: " + dbData, ex);
         }
     }
 }

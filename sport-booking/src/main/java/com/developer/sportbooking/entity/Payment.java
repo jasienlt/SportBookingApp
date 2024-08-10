@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,11 +29,12 @@ public class Payment {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Booking booking;
+
     @Column(name="payment_evidence")
     private String paymentFile;
 
     @Column(name="payment_stts")
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
     @Column(name="booking_id")
     private Long bookingId;
@@ -41,21 +43,21 @@ public class Payment {
         this.paymentType = paymentType;
     }
 
-    public Payment(String paymentType, String paymentStatus) {
+    public Payment(String paymentType, PaymentStatus paymentStatus) {
         this.paymentType = paymentType;
         this.paymentFile = null;
         this.paymentStatus = paymentStatus;
         this.bookingId = null;
     }
 
-    public Payment(String paymentType, String paymentFile, String paymentStatus) {
+    public Payment(String paymentType, String paymentFile, PaymentStatus paymentStatus) {
         this.paymentType = paymentType;
         this.paymentFile = paymentFile;
         this.paymentStatus = paymentStatus;
         this.bookingId = null;
     }
 
-    public Payment(String paymentType, String paymentFile, String paymentStatus, Long bookingId) {
+    public Payment(String paymentType, String paymentFile, PaymentStatus paymentStatus, Long bookingId) {
         this.paymentType = paymentType;
         this.paymentFile = paymentFile;
         this.paymentStatus = paymentStatus;
