@@ -17,4 +17,6 @@ public interface CourtService {
     Court updateCourtById(Court court, Long id);
 
     void deleteCourtById(Long id);
+
+    Court findCourtByName(String name);
 }
