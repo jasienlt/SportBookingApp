@@ -126,7 +126,8 @@
                 <p id="bookingTime"><span>Time: </span></p>
                 <p id="bookingDates"><span>Dates: </span></p>
                 <p id="priceSummary"><span>Price: </span></p>
-                <button type="submit" id="checkout" class="btn btn-dark btn-lg submitBtn my-2">Checkout</button>
+                <button type="submit" id="checkoutStripe" class="btn btn-dark btn-lg submitBtn my-2">Checkout By Card</button>
+                <button type="submit" id="checkoutTransfer" class="btn btn-dark btn-lg submitBtn my-2">Checkout By Transfer</button>
                 <button id="closePopup" class="btn btn-dark btn-lg submitBtn my-2">Back to booking</button>
             </div>
         </form>
@@ -150,5 +151,6 @@
 <script type="module" src="../scripts/hourScript.js"></script>
 <script type="module" src="../scripts/fieldScript.js"></script>
 <script type="module" src="../scripts/bookingSummary.js"></script>
+<script type="module" src="../scripts/setCheckoutFormAction.js"></script>
 </body>
 </html>

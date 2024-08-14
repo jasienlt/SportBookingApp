@@ -12,6 +12,11 @@ public class PaymentServiceImp implements PaymentService {
     public PaymentServiceImp(PaymentRepo paymentRepo) {
         this.paymentRepo = paymentRepo;
     }
+
+    @Override
+    public Payment savePayment(Payment payment) {
+        return paymentRepo.save(payment);
+    }
     @Override
     public Payment findPaymentById(Long id) {
         if(paymentRepo.findById(id).isPresent()) {

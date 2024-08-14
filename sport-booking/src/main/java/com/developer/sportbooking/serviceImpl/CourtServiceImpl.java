@@ -74,4 +74,9 @@ public class CourtServiceImpl implements CourtService {
     public void deleteCourtById(Long id) {
         courtRepo.deleteById(id);
     }
+
+    @Override
+    public Court findCourtByName(String name) {
+        return courtRepo.findByName(name);
+    }
 }

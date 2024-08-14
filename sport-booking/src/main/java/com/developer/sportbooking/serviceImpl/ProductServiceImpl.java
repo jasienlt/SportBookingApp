@@ -2,8 +2,9 @@ package com.developer.sportbooking.serviceImpl;
 
 import com.developer.sportbooking.dto.ProductDto;
 import com.developer.sportbooking.entity.Product;
-import com.developer.sportbooking.persistence.repository.CourtRepo;
-import com.developer.sportbooking.persistence.repository.ProductRepo;
+import com.developer.sportbooking.repository.CourtRepo;
+import com.developer.sportbooking.repository.ProductRepo;
+import com.developer.sportbooking.repository.ProductRepo;
 import com.developer.sportbooking.service.CourtService;
 import com.developer.sportbooking.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

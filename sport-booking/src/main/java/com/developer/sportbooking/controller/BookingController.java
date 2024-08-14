@@ -115,4 +115,10 @@ public class BookingController {
     public String getHomepage() {
         return "homepage";
     }
+
+    @GetMapping("/test")
+    public String getTest() {return "test";}
+
+    @GetMapping("/getClubDetails")
+    public String getClubDetails() {return "getClubDetails";}
 }

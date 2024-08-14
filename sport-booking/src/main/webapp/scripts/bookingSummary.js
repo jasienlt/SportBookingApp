@@ -86,10 +86,6 @@ document.getElementById('overlay').addEventListener('click', function () {
     document.getElementById('popup').style.display = 'none';
 });
 
-document.getElementById("checkout").addEventListener('click', function () {
-    document.getElementById("bookingForm").submit();
-})
-
 window.addEventListener('pageshow', function(event) {
     const navEntries = performance.getEntriesByType('navigation');
     if (navEntries.length > 0 && (navEntries[0].type === 'back_forward' || event.persisted)) {

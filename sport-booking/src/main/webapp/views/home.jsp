@@ -31,9 +31,6 @@
     <sec:authorize access = "isAuthenticated()"> Welcome ${customerDetail.customer.id} <sec:authentication property="principal.username" />
     </sec:authorize>
     <sec:authorize access = "!isAuthenticated()"> <p> Please log in to access.  <a href="login">Login</a> </p></sec:authorize>
-
-
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

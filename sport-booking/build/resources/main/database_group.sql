@@ -10,6 +10,7 @@ CREATE TABLE sportgroup (
     , PRIMARY KEY (id)
 );
 
+
 CREATE TABLE court(
                       id bigint NOT NULL AUTO_INCREMENT
     , name varchar(100) NOT NULL
@@ -47,6 +48,7 @@ CREATE TABLE customer (
     , phone varchar(15) NULL
     , email varchar(1000) NULL
     , password varchar(1000) NULL
+    , role ENUM('OWNER', 'ADMIN', 'CUSTOMER') NOT NULL
     , PRIMARY KEY (id)
 );
 
@@ -121,7 +123,10 @@ CREATE TABLE field_timeslot (
 
 CREATE TABLE payment(
                         id bigint NOT NULL AUTO_INCREMENT
+    , booking_id bigint
     , payment_type int NOT NULL
+    , payment_evidence varchar(5000)
+    , payment_stts varchar(100)
     , PRIMARY KEY (id)
 );
 
@@ -166,6 +171,31 @@ CREATE TABLE reserved_field_timeslot (
             CASCADE
         ON DELETE CASCADE
 );
+
+CREATE TABLE feedback (
+                         id bigint NOT NULL AUTO_INCREMENT
+    , date date
+    , customer_id bigint
+    , court_id bigint
+    , feedback varchar(5000)
+    , rating tinyint
+
+    , PRIMARY KEY (id)
+    , INDEX fe_customer_id (customer_id)
+    , FOREIGN KEY (customer_id) REFERENCES customer(id)
+                             ON
+                                 UPDATE
+                                 CASCADE
+                             ON DELETE CASCADE
+    , INDEX fe_court_id (court_id)
+    , FOREIGN KEY (court_id) REFERENCES court(id)
+                             ON
+                                 UPDATE
+                                 CASCADE
+                             ON DELETE CASCADE
+
+);
+
 -- insert for each table
 
 -- 1) Group
