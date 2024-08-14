@@ -5,6 +5,8 @@ import {dayOfWeek} from "./utils.js"
 const selectedFieldsSummary = document.getElementById("selectedFieldsSummary");
 const priceSummary = document.getElementById("priceSummary");
 const selectedDatesText = document.getElementById("bookingDates");
+const selectedUser = document.getElementById("selectedUser");
+const selectedEmail = document.getElementById("selectedEmail");
 
 let selectedFieldsText = "";
 
@@ -41,6 +43,9 @@ document
                     priceSummary.textContent += response.price;
                     document.getElementById("totalFee").value = response.price.toString();
                     console.log(document.getElementById("totalFee").value);
+
+                    selectedUser.textContent = document.getElementById("customerNameInput");
+                    selectedEmail.textContent = document.getElementById("emailInput");
 
                     // Display summary in popup
                     document.getElementById('overlay').style.display = 'block';

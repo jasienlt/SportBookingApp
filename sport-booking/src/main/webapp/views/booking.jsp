@@ -122,11 +122,13 @@
             <div id="overlay"></div>
             <div id="popup">
                 <h1>Booking Summary</h1>
+                <p id="selectedUser"><span>Customer Name: </span></p>
                 <p id="selectedFieldsSummary"><span>Fields: </span></p>
                 <p id="bookingTime"><span>Time: </span></p>
                 <p id="bookingDates"><span>Dates: </span></p>
                 <p id="priceSummary"><span>Price: </span></p>
-                <button type="submit" id="checkout" class="btn btn-dark btn-lg submitBtn my-2">Checkout</button>
+                <button type="submit" id="checkout" class="btn btn-dark btn-lg submitBtn my-2" name="Stripe">Checkout via Stripe</button>
+                <button type="submit" formaction="/finishBooking" formmethod="post" class="btn btn-dark btn-lg submitBtn my-2" name="QR">Checkout via QR Transfer</button>
                 <button id="closePopup" class="btn btn-dark btn-lg submitBtn my-2">Back to booking</button>
             </div>
         </form>

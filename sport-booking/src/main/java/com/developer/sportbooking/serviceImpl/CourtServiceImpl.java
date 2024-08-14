@@ -79,4 +79,9 @@ public class CourtServiceImpl implements CourtService {
     public Court findCourtByName(String name) {
         return courtRepo.findByName(name);
     }
+
+    @Override
+    public Court findCourtByField(Long fieldId) {
+        return courtRepo.findByField(fieldId);
+    }
 }

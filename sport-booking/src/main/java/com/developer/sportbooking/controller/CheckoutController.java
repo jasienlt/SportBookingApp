@@ -23,12 +23,10 @@ public class CheckoutController {
     @Value("${STRIPE_SECRET_KEY}")
     private String stripeSecretKey;
     private final BookingService bookingService;
-    private final PaymentService paymentService;
     private static final String YOUR_DOMAIN = "http://localhost:8080";
 
-    public CheckoutController(BookingService bookingService, PaymentService paymentService) {
+    public CheckoutController(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.paymentService = paymentService;
     }
 
     @PostMapping("/create-checkout-session")
@@ -62,7 +60,7 @@ public class CheckoutController {
 
         Session session = Session.create(params);
 
-        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, session.getId());
+        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, session.getId(), "Stripe");
 
         return "redirect:" + session.getUrl();
     }

@@ -51,7 +51,8 @@ public class BookingServiceImpl implements BookingService {
                                    String selectedFieldsString,
                                    String totalFee,
                                    String bookingPeriodString,
-                                   String sessionId) {
+                                   String sessionId,
+                                   String method) {
 
         List<Integer> selectedDates = new ArrayList<>();
         List<Long> selectedFields = new ArrayList<>();
@@ -76,7 +77,7 @@ public class BookingServiceImpl implements BookingService {
         Payment payment = paymentService.findPaymentById(2L); // Adjust accordingly
 
         Booking booking = new Booking((double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
-        Payment paymentObj = new Payment("Stripe", sessionId, PaymentStatus.PENDING, booking.getId());
+        Payment paymentObj = new Payment(method, sessionId, PaymentStatus.PENDING, booking.getId());
 
         this.saveBooking(booking);
         paymentService.savePayment(paymentObj);

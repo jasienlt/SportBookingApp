@@ -15,6 +15,7 @@ import java.util.*;
 
 @Controller
 public class BookingController {
+    private final CourtService courtService;
     TimeslotService timeslotService;
     FieldService fieldService;
     FieldTimeslotService fieldTimeslotService;
@@ -32,7 +33,7 @@ public class BookingController {
                              CustomerService customerService,
                              PaymentService paymentService,
                              ReservedFieldTimeslotService reservedFieldTimeslotService,
-                             DateService dateService) {
+                             DateService dateService, CourtService courtService) {
         this.timeslotService = timeslotService;
         this.fieldService = fieldService;
         this.fieldTimeslotService = fieldTimeslotService;
@@ -41,6 +42,7 @@ public class BookingController {
         this.paymentService = paymentService;
         this.reservedFieldTimeslotService = reservedFieldTimeslotService;
         this.dateService = dateService;
+        this.courtService = courtService;
     }
 
     @GetMapping("/booking")
@@ -78,6 +80,7 @@ public class BookingController {
 
             List<Integer> selectedDates = new ArrayList<>();
             List<Long> selectedFields = new ArrayList<>();
+            Court court = null;
 
             for (String s : requestBody.get("dates").toString().split(" ")) {
                 selectedDates.add(Integer.parseInt(s));
@@ -85,7 +88,12 @@ public class BookingController {
 
             for (String s : requestBody.get("fields").toString().split(" ")) {
                 selectedFields.add(Long.parseLong(s));
+                court = courtService.findCourtByField(Long.parseLong(s));
             }
+            if (court != null) {
+                response.put("court", Long.toString(court.getId()));
+            }
+
 
             price = fieldTimeslotService.calculateBookingFee(
                     selectedFields,

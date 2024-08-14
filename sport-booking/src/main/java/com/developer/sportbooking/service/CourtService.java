@@ -19,4 +19,6 @@ public interface CourtService {
     void deleteCourtById(Long id);
 
     Court findCourtByName(String name);
+
+    Court findCourtByField(Long fieldId);
 }
