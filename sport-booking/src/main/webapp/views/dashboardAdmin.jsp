@@ -15,14 +15,6 @@
     <meta charset="ISO-8859-1">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        #charts { display: flex; justify-content: space-around; }
-        .chart-container { width: 45%; }
-    </style>
-
     <style>
         body {
             background-color: #f8f9fa;
@@ -32,9 +24,67 @@
             max-width: 600px;
         }
     </style>
+
+    <script type="text/javascript">
+        window.onload = function() {
+
+            var dataPoints = [];
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Number of booking based on Status within 7 days"
+                },
+                axisY: {
+                    title: "Number of bookings",
+                    minimum: 0
+                },
+                data: [{
+                    type: "column",
+                    yValueFormatString: "#,##0",
+                    indexLabel: "{y}",
+                    dataPoints: dataPoints
+                }]
+            });
+
+            var yValue;
+            var label;
+
+            <c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
+            <c:forEach items="${dataPoints}" var="dataPoint">
+            yValue = parseFloat("${dataPoint.y}");
+            label = parseInt("${dataPoint.label}");
+            dataPoints.push({
+                x : label,
+                y : yValue,
+            });
+            </c:forEach>
+            </c:forEach>
+
+            chart.render();
+
+            function updateChart() {
+                var boilerColor, deltaY, yVal;
+                var dps = chart.options.data[0].dataPoints;
+                for (var i = 0; i < dps.length; i++) {
+                    deltaY = Math.round(20 + Math.random() *(-20-20));
+                    yVal = Math.max(deltaY + dps[i].y, 700);
+                    boilerColor = yVal > 1500 ? "#DF7970" : yVal >= 1100 ? "#51CDA0" : "#4D91DF";
+                    dps[i] = {label: "Furnace "+(i+1) , y: yVal, color: boilerColor};
+                }
+                chart.options.data[0].dataPoints = dps;
+                chart.render();
+            };
+            updateChart();
+
+            setInterval(function() {updateChart()}, 1000);
+
+        }
+    </script>
 </head>
 <body>
-<div class="container">
+
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+<%--<div class="container">
 
 <%--    &lt;%&ndash; Check if user is logged in &ndash;%&gt;--%>
 <%--    <sec:authorize access = "isAuthenticated()">--%>
@@ -44,125 +94,34 @@
 <%--    </sec:authorize>--%>
 <%--    <sec:authorize access = "!isAuthenticated()"> <p> Please log in to access.  <a href="login">Login</a> </p></sec:authorize>--%>
 
-<h1>Dashboard</h1>
-<div id="charts">
-    <div class="chart-container">
-        <h2>Pie Chart</h2>
-        <canvas id="pieChart"></canvas>
-    </div>
-    <div class="chart-container">
-        <h2>Line Chart</h2>
-        <canvas id="lineChart"></canvas>
-    </div>
-</div>
-<div>
-    <h2>Feedback</h2>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Review</th>
-        </tr>
-        </thead>
-        <tbody id="feedbacksTable">
-        <!-- Dynamic Content -->
-        </tbody>
-    </table>
-</div>
-<div>
-    <h2>Bookings</h2>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Booking</th>
-        </tr>
-        </thead>
-        <tbody id="bookingsTable">
-        <!-- Dynamic Content -->
-        </tbody>
-    </table>
-</div>
+    <!-- Tab links -->
+<%--    <div class="tab">--%>
+<%--        <button class="tablinks" onclick="openTab("c", 'London')">London</button>--%>
+<%--        <button class="tablinks" onclick="openTab(event, 'Paris')">Paris</button>--%>
+<%--        <button class="tablinks" onclick="openTab(event, 'Tokyo')">Tokyo</button>--%>
+<%--    </div>--%>
 
-<script>
-    function fetchData() {
-        $.ajax({
-            url: 'reviews',
-            method: 'GET',
-            success: function(data) {
-                var feedbacksTable = $('#feedbacksTable');
-                feedbacksTable.empty();
-                data.forEach(review => {
-                    feedbacksTable.append(`<tr><td>${feedback.id}</td>
-                                            <td>${feedback.feedback}</td>
-                                            <td>${feedback.rating}</td></tr>`);
-                });
-            }
-        });
+<%--    <!-- Tab content -->--%>
+<%--    <div id="London" class="tabcontent">--%>
+<%--        <h3>London</h3>--%>
+<%--        <p>London is the capital city of England.</p>--%>
+<%--    </div>--%>
 
-        $.ajax({
-            url: 'bookings',
-            method: 'GET',
-            success: function(data) {
-                var bookingsTable = $('#bookingsTable');
-                bookingsTable.empty();
-                data.forEach(booking => {
-                    bookingsTable.append(`<tr>
-                                            <td>${booking.date}</td>
-                                            <td>${booking.status}</td></tr>`);
-                });
-            }
-        });
+<%--    <div id="Paris" class="tabcontent">--%>
+<%--        <h3>Paris</h3>--%>
+<%--        <p>Paris is the capital of France.</p>--%>
+<%--    </div>--%>
 
-        // Fetch Pie Chart Data
-        $.ajax({
-            url: 'pieChartData',
-            method: 'GET',
-            success: function(data) {
-                var ctx = document.getElementById('pieChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: Object.keys(data),
-                        datasets: [{
-                            data: Object.values(data),
-                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-                        }]
-                    }
-                });
-            }
-        });
-
-        // Fetch Line Chart Data
-        $.ajax({
-            url: 'lineChartData',
-            method: 'GET',
-            success: function(data) {
-                var ctx = document.getElementById('lineChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: Object.keys(data),
-                        datasets: [{
-                            data: Object.values(data),
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    }
-                });
-            }
-        });
-    }
-
-    $(document).ready(function() {
-        fetchData();
-        setInterval(fetchData, 5000); // Refresh every 5 seconds
-    });
-</script>
+<%--    <div id="Tokyo" class="tabcontent">--%>
+<%--        <h3>Tokyo</h3>--%>
+<%--        <p>Tokyo is the capital of Japan.</p>--%>
+<%--    </div>--%>
 
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </body>
 </html>

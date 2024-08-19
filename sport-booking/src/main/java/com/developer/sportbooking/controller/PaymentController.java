@@ -7,9 +7,7 @@ import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -46,13 +44,16 @@ public class PaymentController {
     }
 
     @PostMapping("/finishBooking")
+    @ResponseBody
     public String QRPayment(Model model, @ModelAttribute("courtId") String courtId,
                             @RequestParam Long selectedStartTimeslot,
                             @RequestParam Long selectedEndTimeslot,
                             @RequestParam(name = "date") List<Integer> dates,
                             @RequestParam(name = "selectedFields") String selectedFieldsString,
                             @RequestParam(name = "totalFee") String totalFee,
-                            @RequestParam(name = "bookingPeriod") String bookingPeriodString) {
+                            @RequestParam(name = "bookingPeriod") String bookingPeriodString,
+                            @RequestParam(name = "customerEmail") String customerEmail,
+                            @RequestParam(name = "customerName") String customerName) {
 
         String message = "";
         String file = "";
@@ -67,8 +68,9 @@ public class PaymentController {
         model.addAttribute("totalFee", totalFee);
         model.addAttribute("message", message);
         model.addAttribute("imgAsBase64", file);
+        model.addAttribute("customerName", customerName);
 
-        return "redirect:/paymentReceipt";
+        return "paymentReceipt";
 
 
     }

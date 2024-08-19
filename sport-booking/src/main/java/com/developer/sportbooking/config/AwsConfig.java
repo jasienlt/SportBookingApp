@@ -170,6 +170,7 @@ public class AwsConfig {
 
 
         String key = folderDir + "/" + fileName;
+        System.out.println(key);
         GetObjectRequest request = GetObjectRequest.builder()
                 .bucket(BUCKET)
                 .key(key)

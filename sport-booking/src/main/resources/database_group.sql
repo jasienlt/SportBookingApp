@@ -17,6 +17,7 @@ CREATE TABLE court(
     , address varchar(1000) NULL
     , phone varchar(10) NULL
     , sportgroup_id bigint
+    , managedBy bigint
     , PRIMARY KEY (id)
     , INDEX sportgroup_idx (sportgroup_id)
     , FOREIGN KEY (sportgroup_id) REFERENCES sportgroup(id)
@@ -132,6 +133,7 @@ CREATE TABLE payment(
 
 CREATE TABLE booking (
     id bigint NOT NULL AUTO_INCREMENT
+    , created_date date
     , customer_id bigint
     , p_id bigint
     , price float
@@ -207,18 +209,20 @@ VALUES
 
 -- 2) Court
 INSERT INTO
-    court(name, address, phone, sportgroup_id)
+    court(name, address, phone, sportgroup_id, managedBy)
 VALUES
 (
     'Dung Cau Long - Chi nhanh 1'
 , 'abc xyz'
 , '0123456789'
 , 1
+, 1
 )
      , (
          'Dung Cau Long - Chi nhanh 2'
        , 'def ghi'
        , '0987654321'
+       , 1
        , 1
 );
 
@@ -301,13 +305,13 @@ INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES
     (3, 3, 50056, 'MONDAY'), (3, 3, 50057, 'TUESDAY'), (3, 3, 50058, 'WEDNESDAY'), (3, 3, 50059, 'THURSDAY'), (3, 3, 50060, 'FRIDAY'), (3, 3, 50061, 'SATURDAY'), (3, 3, 50062, 'SUNDAY');
 
 
--- 9) Payment
-INSERT INTO
-    payment(payment_type)
-VALUES
-(1)
-     , (2)
-     , (1);
+-- -- 9) Payment
+-- INSERT INTO
+--     payment(payment_type)
+-- VALUES
+-- (1)
+--      , (2)
+--      , (1);
 
 -- 10) Booking
 -- INSERT INTO

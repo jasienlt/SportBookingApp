@@ -70,6 +70,16 @@
             </select>
         </div>
         <div class="mb-3">
+            <label for="managedBy" class="form-label">Sportgroup</label>
+
+            <select id="managedBy" name="managedBy" class="form-select" required>
+                <c:forEach var="admin" items="${listAdmin}">
+                    <option value="${admin.name}"></option>
+                </c:forEach>
+
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="paymentImg" class="form-label">Payment QR Code:</label>
             <p> Please name the file under this format: CourtName. E.g: DungCauLong, VuongBongRo...</p>
             <input type="file" id="paymentImg" name="paymentImg" required />

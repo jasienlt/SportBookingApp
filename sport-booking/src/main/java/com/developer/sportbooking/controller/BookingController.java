@@ -75,12 +75,16 @@ public class BookingController {
         String type = (String) requestBody.get("type");
         Map<String, Object> response = new HashMap<>();
 
+
+
         if("booking".equals(type)) {
             float price = 0;
 
             List<Integer> selectedDates = new ArrayList<>();
             List<Long> selectedFields = new ArrayList<>();
             Court court = null;
+
+
 
             for (String s : requestBody.get("dates").toString().split(" ")) {
                 selectedDates.add(Integer.parseInt(s));
@@ -103,6 +107,9 @@ public class BookingController {
                     dateService.convertStringToLocalDate((String) requestBody.get("bookingPeriod")));
 
             response.put("price", Float.toString(price));
+
+            response.put("customerEmail", requestBody.get("customerEmail"));
+            response.put("customerName", requestBody.get("customerName"));
         }
         else if ("date".equals(type)) {
             String date = (String) requestBody.get("date");

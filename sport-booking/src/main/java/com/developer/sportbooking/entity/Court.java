@@ -29,13 +29,19 @@ public class Court {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-
     // Sportgroup - Court: one to many (child side)
     @Getter
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "sportgroup_id", referencedColumnName = "id")
     @JsonIgnore
     private Sportgroup sportgroup;
+
+    // Customer/Admin - Court: one to many (child side)
+    @Getter
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "managedBy", referencedColumnName = "id")
+    @JsonIgnore
+    private Customer managedBy;
 
     //Constructors, getters and setters removed for brevity
 
@@ -133,12 +139,13 @@ public class Court {
     public Court() {
     }
 
-    public Court(Long id, String name, String address, String phone, Sportgroup sportgroup) {
+    public Court(Long id, String name, String address, String phone, Sportgroup sportgroup, Customer managedBy) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.sportgroup = sportgroup;
+        this.managedBy = managedBy;
     }
 
 

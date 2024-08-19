@@ -4,9 +4,12 @@ import com.developer.sportbooking.dto.CourtDto;
 import com.developer.sportbooking.entity.Court;
 import com.developer.sportbooking.entity.Sportgroup;
 import com.developer.sportbooking.repository.CourtRepo;
+import com.developer.sportbooking.repository.CustomerRepo;
 import com.developer.sportbooking.repository.SportgroupRepo;
 import com.developer.sportbooking.service.CourtService;
+import com.developer.sportbooking.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,10 @@ public class CourtServiceImpl implements CourtService {
     private CourtRepo courtRepo;
     @Autowired
     private SportgroupRepo sportgroupRepo;
+    @Autowired
+    private CustomerRepo customerRepo;
+    @Autowired
+    private CustomerService customerService;
 
 //    @Override
 //    public Sportgroup saveSportgroup(Sportgroup sportgroup) {
@@ -34,9 +41,9 @@ public class CourtServiceImpl implements CourtService {
             boolean sportgroupExist = sportgroupRepo.existsById(courtDto.getSportgroupId());
             if (sportgroupExist) {
                 sportgroup = sportgroupRepo.getById(courtDto.getSportgroupId());
-                court = new Court(courtDto.getId(),courtDto.getName(), court.getAddress(), courtDto.getPhone(),sportgroup);
+                court = new Court(courtDto.getId(),courtDto.getName(), court.getAddress(), courtDto.getPhone(),sportgroup, customerService.getCustomerById(courtDto.getManagedBy()));
             } else {
-                court = new Court(courtDto.getId(),courtDto.getName(), court.getAddress(), courtDto.getPhone(),null);
+                court = new Court(courtDto.getId(),courtDto.getName(), court.getAddress(), courtDto.getPhone(),null,customerService.getCustomerById(courtDto.getManagedBy()));
             }
         }
         return courtRepo.save(court);
@@ -83,5 +90,10 @@ public class CourtServiceImpl implements CourtService {
     @Override
     public Court findCourtByField(Long fieldId) {
         return courtRepo.findByField(fieldId);
+    }
+
+    @Override
+    public List<Court> findCourtByAdmin(Long adminId) {
+        return courtRepo.findByManagedBy(adminId);
     }
 }

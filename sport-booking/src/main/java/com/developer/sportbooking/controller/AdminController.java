@@ -55,7 +55,7 @@ public class AdminController {
 
             customerService.saveCustomer(customerDto);
             model.addAttribute("currentAdmin", customer);
-            return "home";
+            return "redirect:/dashboardAdmin";
         } else {
             String someMessage = "This page is for admin. Would you like to login as customer?";
             model.addAttribute("someMessage", someMessage);

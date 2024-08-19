@@ -6,6 +6,8 @@ import com.developer.sportbooking.dto.CourtDto;
 import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.entity.Sportgroup;
+import com.developer.sportbooking.enumConverter.RoleConverter;
+import com.developer.sportbooking.enumType.Role;
 import com.developer.sportbooking.repository.CustomerRepo;
 import com.developer.sportbooking.repository.SportgroupRepo;
 import com.developer.sportbooking.service.CourtService;
@@ -31,6 +33,10 @@ public class CourtController {
     private CourtService courtService;
     @Autowired
     private SportgroupRepo sportgroupRepo;
+    @Autowired
+    private CustomerRepo customerRepo;
+
+    RoleConverter roleConverter;
 
 
     public CourtController(CourtService courtService) {
@@ -40,7 +46,9 @@ public class CourtController {
     @GetMapping("/register")
     public String register(@ModelAttribute CustomerDto customerDto, Model model) {
         List<Sportgroup> listSportgroup = sportgroupRepo.findAll();
+        List<Customer> listAdmin = customerRepo.findAllByRole(Role.ADMIN);
         model.addAttribute("listSportgroup", listSportgroup);
+        model.addAttribute("listAdmin", listAdmin);
         return "courtRegistration";
     }
 

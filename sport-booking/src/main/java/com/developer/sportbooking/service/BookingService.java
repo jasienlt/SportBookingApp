@@ -1,6 +1,7 @@
 package com.developer.sportbooking.service;
 
 import com.developer.sportbooking.entity.Booking;
+import com.developer.sportbooking.entity.Court;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

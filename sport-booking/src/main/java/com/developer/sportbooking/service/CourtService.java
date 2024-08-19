@@ -21,4 +21,6 @@ public interface CourtService {
     Court findCourtByName(String name);
 
     Court findCourtByField(Long fieldId);
+
+    List<Court> findCourtByAdmin(Long adminId);
 }

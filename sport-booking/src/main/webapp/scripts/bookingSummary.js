@@ -5,8 +5,6 @@ import {dayOfWeek} from "./utils.js"
 const selectedFieldsSummary = document.getElementById("selectedFieldsSummary");
 const priceSummary = document.getElementById("priceSummary");
 const selectedDatesText = document.getElementById("bookingDates");
-const selectedUser = document.getElementById("selectedUser");
-const selectedEmail = document.getElementById("selectedEmail");
 
 let selectedFieldsText = "";
 
@@ -18,6 +16,7 @@ document
         const fields = document.getElementById("selectedFields").value;
         const startBookingTime = document.getElementById("selectedStartTimeslot").value;
         const endBookingTime = document.getElementById("selectedEndTimeslot").value;
+
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/booking', true);
@@ -44,9 +43,6 @@ document
                     document.getElementById("totalFee").value = response.price.toString();
                     console.log(document.getElementById("totalFee").value);
 
-                    selectedUser.textContent = document.getElementById("customerNameInput");
-                    selectedEmail.textContent = document.getElementById("emailInput");
-
                     // Display summary in popup
                     document.getElementById('overlay').style.display = 'block';
                     document.getElementById('popup').style.display = 'block';
@@ -61,7 +57,9 @@ document
             startBookingTime: startBookingTime,
             endBookingTime: endBookingTime,
             dates: Array.from(selectedDays).join(" "),
-            bookingPeriod: document.getElementById('bookingDate').value
+            bookingPeriod: document.getElementById('bookingDate').value,
+            customerName: document.getElementById("customerNameInput").value,
+            customerEmail: document.getElementById("emailInput").value
         }
         xhr.send(JSON.stringify(data));
     });
@@ -90,10 +88,6 @@ document.getElementById('overlay').addEventListener('click', function () {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('popup').style.display = 'none';
 });
-
-document.getElementById("checkout").addEventListener('click', function () {
-    document.getElementById("bookingForm").submit();
-})
 
 window.addEventListener('pageshow', function(event) {
     const navEntries = performance.getEntriesByType('navigation');
