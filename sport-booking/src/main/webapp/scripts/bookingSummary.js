@@ -5,6 +5,8 @@ import {dayOfWeek} from "./utils.js"
 const selectedFieldsSummary = document.getElementById("selectedFieldsSummary");
 const priceSummary = document.getElementById("priceSummary");
 const selectedDatesText = document.getElementById("bookingDates");
+const customerNameText = document.getElementById("customerName");
+const customerEmailText = document.getElementById("customerEmail");
 
 let selectedFieldsText = "";
 
@@ -28,6 +30,9 @@ document
                 if (xhr.status === 200) {
                     // Parse the JSON response
                     const response = JSON.parse(xhr.responseText);
+
+                    customerNameText.textContent += response.customerName;
+                    customerEmailText.textContent += response.customerEmail;
 
                     let sortedSelectedFields = new Set([...selectedFields].sort())
                     sortedSelectedFields.forEach(key => selectedFieldsText += `Field ${key + 1} - `);

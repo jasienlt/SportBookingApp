@@ -23,7 +23,7 @@ public class Booking {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "createdDate")
+    @Column(name = "created_date")
     private Date createdDate;
 
     @Column(name = "price", nullable = false)

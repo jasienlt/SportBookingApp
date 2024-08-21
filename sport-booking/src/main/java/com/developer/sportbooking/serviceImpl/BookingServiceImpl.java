@@ -82,7 +82,7 @@ public class BookingServiceImpl implements BookingService {
         Payment payment = paymentService.findPaymentById(2L); // Adjust accordingly
 
         Booking booking = new Booking(Date.valueOf(LocalDate.now()),(double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
-        Payment paymentObj = new Payment(method, sessionId, PaymentStatus.PENDING, booking.getId());
+        Payment paymentObj = new Payment(Date.valueOf(LocalDate.now()), method, sessionId, PaymentStatus.PENDING, booking.getId());
 
         this.saveBooking(booking);
         paymentService.savePayment(paymentObj);

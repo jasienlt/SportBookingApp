@@ -123,6 +123,7 @@
             <div id="popup">
                 <h1>Booking Summary</h1>
                 <p id="customerName"><span>Customer Name: </span></p>
+                <p id="customerEmail"><span>Customer Email: </span></p>
                 <p id="selectedFieldsSummary"><span>Fields: </span></p>
                 <p id="bookingTime"><span>Time: </span></p>
                 <p id="bookingDates"><span>Dates: </span></p>

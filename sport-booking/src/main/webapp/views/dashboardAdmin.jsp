@@ -1,5 +1,5 @@
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
-<%@ page import="com.developer.sportbooking.persistence.repository.CustomerRepo" %>
+<%@ page import="com.developer.sportbooking.repository.CustomerRepo" %>
 <%@ page import="com.developer.sportbooking.entity.Customer" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
@@ -37,45 +37,64 @@
                     title: "Number of bookings",
                     minimum: 0
                 },
-                data: [{
-                    type: "column",
-                    yValueFormatString: "#,##0",
-                    indexLabel: "{y}",
-                    dataPoints: dataPoints
-                }]
+                data: [
+                    {
+                        type: "stackedBar",
+                        name: "Completed",
+                        showInLegend: "true",
+                        dataPoints: [] // Will be populated with AJAX call
+                    },
+                    {
+                        type: "stackedBar",
+                        name: "Pending",
+                        showInLegend: "true",
+                        dataPoints: [] // Will be populated with AJAX call
+                    },
+                    {
+                        type: "stackedBar",
+                        name: "Canceled",
+                        showInLegend: "true",
+                        dataPoints: [] // Will be populated with AJAX call
+                    }
+                ]
             });
 
             var yValue;
-            var label;
+            var xValue;
 
             <c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
-            <c:forEach items="${dataPoints}" var="dataPoint">
-            yValue = parseFloat("${dataPoint.y}");
-            label = parseInt("${dataPoint.label}");
-            dataPoints.push({
-                x : label,
-                y : yValue,
-            });
+                <c:forEach items="${dataPoints}" var="dataPoint">
+                yValue = parseFloat("${dataPoint.y}");
+                xValue = parseString("${dataPoint.x}");
+                dataPoints.push({
+                    x : xValue,
+                    y : yValue,
+                });
             </c:forEach>
             </c:forEach>
 
             chart.render();
 
             function updateChart() {
-                var boilerColor, deltaY, yVal;
-                var dps = chart.options.data[0].dataPoints;
-                for (var i = 0; i < dps.length; i++) {
-                    deltaY = Math.round(20 + Math.random() *(-20-20));
-                    yVal = Math.max(deltaY + dps[i].y, 700);
-                    boilerColor = yVal > 1500 ? "#DF7970" : yVal >= 1100 ? "#51CDA0" : "#4D91DF";
-                    dps[i] = {label: "Furnace "+(i+1) , y: yVal, color: boilerColor};
-                }
-                chart.options.data[0].dataPoints = dps;
-                chart.render();
-            };
-            updateChart();
+                $.ajax({
+                    url: "/dashboardAdmin/updateChartData",
+                    method: "GET",
+                    success: function (data) {
+                        chart.options.data[0].dataPoints = data[0]; // Update Completed
+                        chart.options.data[1].dataPoints = data[1]; // Update Pending
+                        chart.options.data[2].dataPoints = data[2]; // Update Canceled
+                        chart.render();
+                    },
+                    error: function (error) {
+                        console.log("Error fetching data: ", error);
+                    }
+                });
+            }
 
-            setInterval(function() {updateChart()}, 1000);
+            updateChart(); // Initial chart load
+
+            // Refresh the chart every 30 minutes (1800000 milliseconds)
+            setInterval(updateChart, 1800000);
 
         }
     </script>

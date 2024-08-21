@@ -14,8 +14,13 @@ import java.util.List;
 public interface BookingRepo extends JpaRepository<Booking, Long>{
     Booking findBookingBySessionId(String sessionId);
 
-    @Query("SELECT new com.developer.sportbooking.chartDto.BookingCount(c.createdDate, c.status, count(*)) "
-            + "FROM Booking as c WHERE c.createdDate >= :cutoffDate "
-            + "group by c.createdDate, c.status order by c.createdDate, c.status")
-    List<BookingCount> findByStatus(Date cutoffDate);
+    @Query("SELECT new com.developer.sportbooking.chartDto.BookingCount(b.createdDate, b.status, count(*)) "
+            + "FROM Booking b JOIN b.reservedFieldTimeslots rs JOIN rs.fieldTimeslot fts JOIN fts.field f JOIN f.court c "
+            + "WHERE b.createdDate >= :cutoffDate AND c.id = :courtId "
+            + "group by b.createdDate, b.status")
+    List<BookingCount> findByCourtAndStatus(Long courtId, Date cutoffDate);
+
+    @Query("SELECT b FROM Booking b JOIN b.reservedFieldTimeslots rs JOIN rs.fieldTimeslot fts JOIN fts.field f JOIN f.court c "
+            + "WHERE c.id = :courtId ")
+    List<Booking> findBookingsByCourt(Long courtId);
 }

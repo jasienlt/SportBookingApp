@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.developer.sportbooking.chartDto.BookingCount;
 import com.developer.sportbooking.dto.CustomerDto;
+import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.Court;
 import com.developer.sportbooking.entity.DataPointModel;
 import com.developer.sportbooking.enumType.BookingStatus;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -40,16 +42,32 @@ public class CanvasjsChartController {
         try {
             List<List<DataPointModel>> statusChart = bookingStatusStackedBar(courtService.findCourtById(1L));
             modelMap.addAttribute("dataPointsList", statusChart);
+
+            List<Booking> statusTable = bookingStatusTable(courtService.findCourtByField(1L));
+            modelMap.addAttribute("statusTable", statusTable);
+
         } catch (NullPointerException e) {
             modelMap.addAttribute("message", "No booking found");
         }
         return "stackedBar";
     }
 
+    @RequestMapping(value = "/updateChartData", method = RequestMethod.GET)
+    @ResponseBody
+    public List<List<DataPointModel>> updateChartData(CustomerDto customerDto) {
+        List<Court> managedCourt = courtService.findCourtByAdmin(customerDto.getId());
+        try {
+            return bookingStatusStackedBar(courtService.findCourtById(1L));
+        } catch (NullPointerException e) {
+            return new ArrayList<>(); // Return empty list if there's an error
+        }
+    }
+
     private List<List<DataPointModel>> bookingStatusStackedBar(Court court) {
 
         // To be added with Court ID for filtering in future
-        List<BookingCount> dataOutput = bookingRepo.findByStatus(Date.valueOf(LocalDate.now()));
+        List<BookingCount> dataOutput = bookingRepo.findByCourtAndStatus(1L, Date.valueOf(LocalDate.now().minusDays(7)));
+        System.out.println(dataOutput.toString());
         HashMap<String, List<DataPointModel>> datasets = new HashMap<>();
 
         List<DataPointModel> set1 = new ArrayList<>();
@@ -72,6 +90,10 @@ public class CanvasjsChartController {
         datasets.put("set3", set3);
 
         return canvasjsChartService.getCanvasjsTwoAxis(datasets);
+    }
+
+    private List<Booking> bookingStatusTable(Court court) {
+        return bookingRepo.findBookingsByCourt(court.getId());
     }
 
 }
