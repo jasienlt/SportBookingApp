@@ -39,7 +39,7 @@
 <body>
 <div class="container">
     <!-- Login Form -->
-    <form class="form-registration" method="post" action="/court/register" enctype = "multipart/form-data">
+    <form class="form-registration" method="post" action="./register" enctype = "multipart/form-data">
         <h2 class="mb-3">Register</h2>
         <c:if test="${not empty someMessage}">
             <div class="alert alert-danger" role="alert">
@@ -64,17 +64,17 @@
 
             <select id="sportgroup" name="sportgroup" class="form-select" required>
                 <c:forEach var="sportgroup" items="${listSportgroup}">
-                    <option value="${sportgroup.name}"></option>
+                    <option value="${sportgroup.id}">${sportgroup.name}</option>
                 </c:forEach>
 
             </select>
         </div>
         <div class="mb-3">
-            <label for="managedBy" class="form-label">Sportgroup</label>
+            <label for="managedBy" class="form-label">Admin</label>
 
             <select id="managedBy" name="managedBy" class="form-select" required>
                 <c:forEach var="admin" items="${listAdmin}">
-                    <option value="${admin.name}"></option>
+                    <option value="${admin.id}">${admin.firstName} ${admin.lastName}</option>
                 </c:forEach>
 
             </select>

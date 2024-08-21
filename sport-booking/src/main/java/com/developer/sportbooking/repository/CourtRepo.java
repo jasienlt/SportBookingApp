@@ -18,4 +18,7 @@ public interface CourtRepo extends JpaRepository<Court, Long>{
 
     @Query("SELECT u FROM Court u WHERE u.managedBy = ?1 ")
     List<Court> findByManagedBy(Long adminId);
+
+    @Query("SELECT u FROM Court u WHERE u.name = :courtName AND u.phone = :phone")
+    Court findByNameAndPhone(String courtName, String phone);
 }

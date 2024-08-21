@@ -44,7 +44,6 @@ public class PaymentController {
     }
 
     @PostMapping("/finishBooking")
-    @ResponseBody
     public String QRPayment(Model model, @ModelAttribute("courtId") String courtId,
                             @RequestParam Long selectedStartTimeslot,
                             @RequestParam Long selectedEndTimeslot,
@@ -68,15 +67,13 @@ public class PaymentController {
         model.addAttribute("totalFee", totalFee);
         model.addAttribute("message", message);
         model.addAttribute("imgAsBase64", file);
-        model.addAttribute("customerName", customerName);
+        model.addAttribute("custName", customerName);
 
         return "paymentReceipt";
-
-
     }
 
     @PostMapping("/finishPayment")
-    public String QRPayment(Model model, ModelAttribute modelAttribute,
+    public String QRPayment(Model model,
                             @RequestParam Long selectedStartTimeslot,
                             @RequestParam Long selectedEndTimeslot,
                             @RequestParam(name = "date") List<Integer> dates,

@@ -4,6 +4,7 @@ import com.developer.sportbooking.config.AwsConfig;
 import com.developer.sportbooking.config.CustomCustomerDetails;
 import com.developer.sportbooking.dto.CourtDto;
 import com.developer.sportbooking.dto.CustomerDto;
+import com.developer.sportbooking.entity.Court;
 import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.entity.Sportgroup;
 import com.developer.sportbooking.enumConverter.RoleConverter;
@@ -12,6 +13,7 @@ import com.developer.sportbooking.repository.CustomerRepo;
 import com.developer.sportbooking.repository.SportgroupRepo;
 import com.developer.sportbooking.service.CourtService;
 import com.developer.sportbooking.service.CustomerService;
+import com.developer.sportbooking.service.SportgroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,9 +34,9 @@ public class CourtController {
     @Autowired
     private CourtService courtService;
     @Autowired
-    private SportgroupRepo sportgroupRepo;
+    private SportgroupService sportgroupService;
     @Autowired
-    private CustomerRepo customerRepo;
+    private CustomerService customerService;
 
     RoleConverter roleConverter;
 
@@ -45,15 +47,18 @@ public class CourtController {
 
     @GetMapping("/register")
     public String register(@ModelAttribute CustomerDto customerDto, Model model) {
-        List<Sportgroup> listSportgroup = sportgroupRepo.findAll();
-        List<Customer> listAdmin = customerRepo.findAllByRole(Role.ADMIN);
+        List<Sportgroup> listSportgroup = sportgroupService.findAllSportgroup();
+        List<Customer> listAdmin = customerService.findByRole(Role.ADMIN);
         model.addAttribute("listSportgroup", listSportgroup);
         model.addAttribute("listAdmin", listAdmin);
         return "courtRegistration";
     }
 
     @PostMapping("/register")
-    public String processRegister(@ModelAttribute CourtDto courtDto, Model model, @RequestParam("file") MultipartFile multipart) {
+    public String processRegister(@ModelAttribute CourtDto courtDto, Model model,
+                                  @RequestParam("sportgroup") Long sportgroupId,
+                                  @RequestParam("managedBy") Long managedById,
+                                  @RequestParam("paymentImg") MultipartFile multipart) {
 
         if (courtService.findCourtByName(courtDto.getName()) != null) {
             String someMessage = "Court name needs to be unique! Please change to a different name!";
@@ -63,7 +68,10 @@ public class CourtController {
 
 
         try {
-            String folderName = courtDto.getId().toString();
+            CourtDto courtDto1 = new CourtDto(courtDto.getName(), courtDto.getAddress(), courtDto.getPhone(), sportgroupService.findSportgroupById(sportgroupId), customerService.getCustomerById(managedById));
+            courtService.saveCourt(courtDto1);
+            Court court = courtService.findCourtByNameAndPhone(courtDto.getName(), courtDto.getPhone());
+            String folderName = court.getId().toString();
             AwsConfig.uploadFile(folderName, multipart.getInputStream(),"court_url");
 
             // For each court, store separate folder in each category
@@ -79,9 +87,6 @@ public class CourtController {
             model.addAttribute("someMessage", someMessage);
             return "courtRegistration";
         }
-
-
-        courtService.saveCourt(courtDto);
 
         String someMessage = "Registered new court successfully.";
         model.addAttribute("someMessage", someMessage);

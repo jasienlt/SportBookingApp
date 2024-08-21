@@ -32,21 +32,21 @@ public class CourtServiceImpl implements CourtService {
 //    }
 
     @Override
-    public Court saveCourt(CourtDto courtDto) {
+    public void saveCourt(CourtDto courtDto) {
         Court court = null;
 
         // If court belongs to a sportgroup
-        if (courtDto.getSportgroupId() != 0) {
+        if (courtDto.getSportgroupId().getId() != 0) {
             Sportgroup sportgroup = null;
-            boolean sportgroupExist = sportgroupRepo.existsById(courtDto.getSportgroupId());
+            boolean sportgroupExist = sportgroupRepo.existsById(courtDto.getSportgroupId().getId());
             if (sportgroupExist) {
-                sportgroup = sportgroupRepo.getById(courtDto.getSportgroupId());
-                court = new Court(courtDto.getId(),courtDto.getName(), court.getAddress(), courtDto.getPhone(),sportgroup, customerService.getCustomerById(courtDto.getManagedBy()));
+                sportgroup = sportgroupRepo.getById(courtDto.getSportgroupId().getId());
+                court = new Court(courtDto.getName(), courtDto.getAddress(), courtDto.getPhone(),sportgroup, customerService.getCustomerById(courtDto.getManagedBy().getId()));
             } else {
-                court = new Court(courtDto.getId(),courtDto.getName(), court.getAddress(), courtDto.getPhone(),null,customerService.getCustomerById(courtDto.getManagedBy()));
+                court = new Court(courtDto.getName(), courtDto.getAddress(), courtDto.getPhone(),null,customerService.getCustomerById(courtDto.getManagedBy().getId()));
             }
         }
-        return courtRepo.save(court);
+        courtRepo.save(court);
     }
 
 
@@ -95,5 +95,10 @@ public class CourtServiceImpl implements CourtService {
     @Override
     public List<Court> findCourtByAdmin(Long adminId) {
         return courtRepo.findByManagedBy(adminId);
+    }
+
+    @Override
+    public Court findCourtByNameAndPhone(String name, String phone) {
+        return courtRepo.findByNameAndPhone(name,phone);
     }
 }

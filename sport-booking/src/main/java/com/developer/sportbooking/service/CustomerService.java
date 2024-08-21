@@ -2,6 +2,7 @@ package com.developer.sportbooking.service;
 
 import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Customer;
+import com.developer.sportbooking.enumType.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface CustomerService {
     Customer getCustomerById(Long id);
 
     Customer findByEmail(String email);
+
+    List<Customer> findByRole(Role role);
 
 }

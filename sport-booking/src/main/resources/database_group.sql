@@ -17,7 +17,7 @@ CREATE TABLE court(
     , address varchar(1000) NULL
     , phone varchar(10) NULL
     , sportgroup_id bigint
-    , managedBy bigint
+    , managed_by bigint
     , PRIMARY KEY (id)
     , INDEX sportgroup_idx (sportgroup_id)
     , FOREIGN KEY (sportgroup_id) REFERENCES sportgroup(id)
@@ -208,39 +208,6 @@ VALUES
 ('Dung Cau Long')
      , ('Vuong Bong Ro');
 
--- 2) Court
-INSERT INTO
-    court(name, address, phone, sportgroup_id, managedBy)
-VALUES
-(
-    'Dung Cau Long - Chi nhanh 1'
-, 'abc xyz'
-, '0123456789'
-, 1
-, 3
-)
-     , (
-         'Dung Cau Long - Chi nhanh 2'
-       , 'def ghi'
-       , '0987654321'
-       , 1
-       , 3
-),
-('Central Park Court', '123 Central Park, New York, NY', '1234567890', 1L, 3L),
-('Lakeside Arena', '456 Lakeside Dr, Chicago, IL', '0987654321', 1L, 3L),
-('Sunset Sports Complex', '789 Sunset Blvd, Los Angeles, CA', '5551234567', 2L, 6L),
-('Riverside Court', '321 Riverside Ave, Austin, TX', '5559876543', 2L, 6L),
-('Mountain View Field', '654 Mountain Rd, Denver, CO', '5551112222', 2L, 6L);
-
-
--- 3) Product
-INSERT INTO
-    product(name, price, amount, court_id)
-VALUES
-('Sting Dau', 8000, 1, 1)
-     , ('Pepsi', 10000, 1, 1)
-     , ('7Up', 10500, 1, 1);
-
 -- 4) Customer
 INSERT INTO customer (first_name, last_name, phone, email, password, role) VALUES
     ('John', 'Doe', '1234567890', 'johndoe@example.com', 'password123', 'CUSTOMER'),
@@ -257,6 +224,39 @@ INSERT INTO customer (first_name, last_name, phone, email, password, role) VALUE
     ('Jack', 'White', '5557181920', 'jack.white@example.com', 'password343536', 'ADMIN'),
     ('Karen', 'Harris', '5551415161', 'karen.harris@example.com', 'password373839', 'OWNER'),
     ('Liam', 'Clark', '5558192021', 'liam.clark@example.com', 'password404142', 'CUSTOMER');
+
+-- 2) Court
+INSERT INTO
+    court(name, address, phone, sportgroup_id, managed_by)
+VALUES
+    (
+      'Dung Cau Long - Chi nhanh 1'
+    , 'abc xyz'
+    , '0123456789'
+    , 1
+    , 3
+    )
+        , (
+            'Dung Cau Long - Chi nhanh 2'
+          , 'def ghi'
+          , '0987654321'
+          , 1
+          , 3
+    ),
+    ('Central Park Court', '123 Central Park, New York, NY', '1234567890', 1, 3),
+    ('Lakeside Arena', '456 Lakeside Dr, Chicago, IL', '0987654321', 1, 3),
+    ('Sunset Sports Complex', '789 Sunset Blvd, Los Angeles, CA', '5551234567', 2, 6),
+    ('Riverside Court', '321 Riverside Ave, Austin, TX', '5559876543', 2, 6),
+    ('Mountain View Field', '654 Mountain Rd, Denver, CO', '5551112222', 2, 6);
+
+
+-- 3) Product
+INSERT INTO
+    product(name, price, amount, court_id)
+VALUES
+('Sting Dau', 8000, 1, 1)
+     , ('Pepsi', 10000, 1, 1)
+     , ('7Up', 10500, 1, 1);
 
 -- 5) Court_Customer
 INSERT INTO

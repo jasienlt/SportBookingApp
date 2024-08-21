@@ -5,12 +5,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "court")
 
@@ -39,7 +41,7 @@ public class Court {
     // Customer/Admin - Court: one to many (child side)
     @Getter
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "managedBy", referencedColumnName = "id")
+    @JoinColumn(name = "managed_by", referencedColumnName = "id")
     @JsonIgnore
     private Customer managedBy;
 
@@ -136,11 +138,8 @@ public class Court {
     @JsonIgnore
     private List<CourtCustomer> customers = new ArrayList<CourtCustomer>();
 
-    public Court() {
-    }
 
-    public Court(Long id, String name, String address, String phone, Sportgroup sportgroup, Customer managedBy) {
-        this.id = id;
+    public Court(String name, String address, String phone, Sportgroup sportgroup, Customer managedBy) {
         this.name = name;
         this.address = address;
         this.phone = phone;

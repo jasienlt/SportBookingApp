@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface CourtService {
-    Court saveCourt(CourtDto courtDto);
+    void saveCourt(CourtDto courtDto);
 
     List<Court> findAllCourt();
 
@@ -23,4 +23,6 @@ public interface CourtService {
     Court findCourtByField(Long fieldId);
 
     List<Court> findCourtByAdmin(Long adminId);
+
+    Court findCourtByNameAndPhone(String name, String phone);
 }

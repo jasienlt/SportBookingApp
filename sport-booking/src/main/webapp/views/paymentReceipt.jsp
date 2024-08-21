@@ -25,8 +25,6 @@
 </head>
 <body>
 <form action="./finishPayment" method="post">
-    <h1>Booking ID: ${bookingId}</h1>
-    <input type="text" name="bookingId" value=${bookingId} hidden=true>
     <h2>Customer Name: ${custName}</h2>
     <input type="text" name="custName" value=${custName} hidden=true>
     <h2>Total Fee: ${totalFee}</h2>
