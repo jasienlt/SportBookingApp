@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -74,6 +76,7 @@ public class PaymentController {
 
     @PostMapping("/finishPayment")
     public String QRPayment(Model model,
+                            @ModelAttribute("custName") String custName,
                             @RequestParam Long selectedStartTimeslot,
                             @RequestParam Long selectedEndTimeslot,
                             @RequestParam(name = "date") List<Integer> dates,
@@ -82,7 +85,7 @@ public class PaymentController {
                             @RequestParam(name = "bookingPeriod") String bookingPeriodString,
                             @RequestParam(name = "receiptImg") MultipartFile multipart) {
 
-        String fileName = multipart.getOriginalFilename();
+        String fileName = custName + Date.valueOf(LocalDate.now()).toString();
 
         String message = "";
 
@@ -96,6 +99,9 @@ public class PaymentController {
 
         model.addAttribute("message", message);
         bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, fileName, "Bank Transfer");
+
+        Payment payment = new Payment(Date.valueOf(LocalDate.now()),"Bank Transfer",fileName,PaymentStatus.PENDING,bookingService.getBookingBySessionId(fileName).getId());
+        paymentService.savePayment(payment);
 
         return "success";
     }

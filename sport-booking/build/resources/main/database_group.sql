@@ -267,7 +267,7 @@ VALUES
 
 -- 6) Field
 INSERT INTO field (name, sport_type, court_id) VALUES
-        ('Field A', 'Soccer', 1);
+        ('Field A', 'Soccer', 1),
         ('Field B', 'Basketball', 2),
         ('Field C', 'Tennis', 3),
         ('Field D', 'Volleyball', 4),
