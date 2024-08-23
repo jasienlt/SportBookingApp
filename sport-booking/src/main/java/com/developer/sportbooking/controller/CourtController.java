@@ -21,7 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.awscore.exception.AwsServiceException;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,8 +40,6 @@ public class CourtController {
     @Autowired
     private CustomerService customerService;
 
-    RoleConverter roleConverter;
-
 
     public CourtController(CourtService courtService) {
         this.courtService = courtService;
@@ -54,6 +54,16 @@ public class CourtController {
         return "courtRegistration";
     }
 
+    @GetMapping("/register?name={name}")
+    @ResponseBody
+    public String register(@PathVariable("name") String courtName, Model model) {
+        Court existingCourt = courtService.findCourtByName(courtName);
+        if (existingCourt == null) {
+            return "YES";
+        }
+        return "NO";
+    }
+
     @PostMapping("/register")
     public String processRegister(@ModelAttribute CourtDto courtDto, Model model,
                                   @RequestParam("sportgroup") Long sportgroupId,
@@ -61,16 +71,16 @@ public class CourtController {
                                   @RequestParam("paymentImg") MultipartFile multipart) {
 
         if (courtService.findCourtByName(courtDto.getName()) != null) {
-            String someMessage = "Court name needs to be unique! Please change to a different name!";
+            String someMessage = "Court name needs to be unique! If you have registered, plese login.";
             model.addAttribute("someMessage", someMessage);
             return "courtRegistration";
         }
 
+        CourtDto courtDto1 = new CourtDto(courtDto.getName(), courtDto.getAddress(), courtDto.getPhone(), sportgroupService.findSportgroupById(sportgroupId), customerService.getCustomerById(managedById));
+        courtService.saveCourt(courtDto1);
+        Court court = courtService.findCourtByNameAndPhone(courtDto.getName(), courtDto.getPhone());
 
         try {
-            CourtDto courtDto1 = new CourtDto(courtDto.getName(), courtDto.getAddress(), courtDto.getPhone(), sportgroupService.findSportgroupById(sportgroupId), customerService.getCustomerById(managedById));
-            courtService.saveCourt(courtDto1);
-            Court court = courtService.findCourtByNameAndPhone(courtDto.getName(), courtDto.getPhone());
             String folderName = court.getId().toString();
             AwsConfig.uploadFile(folderName, multipart.getInputStream(),"court_url");
 
@@ -78,14 +88,18 @@ public class CourtController {
             AwsConfig.createFolder(folderName,"payment_screenshots/rejected");
             AwsConfig.createFolder(folderName,"payment_screenshots/approved");
             AwsConfig.createFolder(folderName,"payment_screenshots/pending");
+        }
 
-            String someMessage = "Your file and folder has been uploaded successfully!";
-            model.addAttribute("someMessage", someMessage);
+        catch (AwsServiceException ex) {
+            courtService.deleteCourtById(court.getId());
+            String someMessage = "Error uploading file: " + ex.getMessage();
+            model.addAttribute("someMessage1", someMessage);
+            return "forward:/register";
         }
         catch (Exception ex) {
-            String someMessage = "Error uploading file: " + ex.getMessage();
-            model.addAttribute("someMessage", someMessage);
-            return "courtRegistration";
+            String someMessage = "Error: " + ex.getMessage();
+            model.addAttribute("someMessage1", someMessage);
+            return "forward:/register";
         }
 
         String someMessage = "Registered new court successfully.";

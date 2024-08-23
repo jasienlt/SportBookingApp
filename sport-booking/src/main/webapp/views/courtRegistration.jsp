@@ -39,17 +39,23 @@
 <body>
 <div class="container">
     <!-- Login Form -->
-    <form class="form-registration" method="post" action="./register" enctype = "multipart/form-data">
+    <form name= "court-register" class="form-registration" method="post" action="./register" enctype = "multipart/form-data" onsubmit="return validate()">
         <h2 class="mb-3">Register</h2>
         <c:if test="${not empty someMessage}">
             <div class="alert alert-danger" role="alert">
-                    ${someMessage} <a href="login">Login</a> here.
+                    ${someMessage} <a href="/admin/login">Login</a> here.
+            </div>
+        </c:if>
+        <c:if test="${not empty someMessage1}">
+            <div class="alert alert-danger" role="alert">
+                    ${someMessage1}
             </div>
         </c:if>
 
         <div class="mb-3">
             <label for="name" class="form-label">Court Name</label>
-            <input type="text" id="name" name="name" class="form-control" required>
+            <input type="text" id="name" name="name" class="form-control" onblur="checkUniqueness()" required>
+            <span id ="eMsg" style="color: red"></span>
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">Address</label>
@@ -91,5 +97,6 @@
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="../scripts/registration.js"></script>
 </body>
 </html>
