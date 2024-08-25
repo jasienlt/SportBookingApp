@@ -12,17 +12,18 @@ import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.Court;
 import com.developer.sportbooking.entity.DataPointModel;
+import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.BookingStatus;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
 import com.developer.sportbooking.service.CanvasjsChartService;
 import com.developer.sportbooking.service.CourtService;
+import com.developer.sportbooking.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -35,6 +36,8 @@ public class CanvasjsChartController {
     private CourtService courtService;
     @Autowired
     private BookingRepo bookingRepo;
+    @Autowired
+    private PaymentService paymentService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String springMVC(ModelMap modelMap, CustomerDto customerDto) {
@@ -50,6 +53,33 @@ public class CanvasjsChartController {
             modelMap.addAttribute("message", "No booking found");
         }
         return "stackedBar";
+    }
+
+    @RequestMapping(value = "/approvePayment", method = RequestMethod.GET)
+    public String showPendingPayment(ModelMap modelMap) {
+        List<Payment> listPayment = paymentService.findPaymentByStatus(PaymentStatus.PENDING);
+        System.out.println(listPayment.toString());
+        modelMap.addAttribute("listPayment", listPayment);
+        return "approvePayment";
+    }
+
+    @RequestMapping(value = "/approvePayment", method = RequestMethod.POST, params = "action=success")
+    @ResponseBody
+    public Map<String, String> approvePayment(@RequestBody Map<String, Long> requestBody) {
+        Map<String, String> response = new HashMap<>();
+        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.SUCCESSFUL);
+        response.put("message", "Payment is successful. Booking is confirmed");
+        return response;
+    }
+
+    @RequestMapping(value = "/approvePayment", method = RequestMethod.POST, params = "action=cancelled")
+    @ResponseBody
+    public Map<String, String> cancelPayment(@RequestBody Map<String, Long> requestBody) {
+        Map<String, String> response = new HashMap<>();
+        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.CANCELED);
+
+        response.put("message", "Payment is cancelled. Booking is revoked.");
+        return response;
     }
 
     @RequestMapping(value = "/updateChartData", method = RequestMethod.GET)

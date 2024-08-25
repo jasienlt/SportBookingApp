@@ -56,12 +56,12 @@ public class CourtController {
 
     @GetMapping("/register?name={name}")
     @ResponseBody
-    public String register(@PathVariable("name") String courtName, Model model) {
+    public void register(@PathVariable("name") String courtName, Model model) {
         Court existingCourt = courtService.findCourtByName(courtName);
         if (existingCourt == null) {
-            return "YES";
+            System.out.println("YES");
         }
-        return "NO";
+        System.out.println("NO");
     }
 
     @PostMapping("/register")
@@ -73,7 +73,7 @@ public class CourtController {
         if (courtService.findCourtByName(courtDto.getName()) != null) {
             String someMessage = "Court name needs to be unique! If you have registered, plese login.";
             model.addAttribute("someMessage", someMessage);
-            return "courtRegistration";
+            return "redirect:/admin/court/register";
         }
 
         CourtDto courtDto1 = new CourtDto(courtDto.getName(), courtDto.getAddress(), courtDto.getPhone(), sportgroupService.findSportgroupById(sportgroupId), customerService.getCustomerById(managedById));
@@ -90,16 +90,15 @@ public class CourtController {
             AwsConfig.createFolder(folderName,"payment_screenshots/pending");
         }
 
-        catch (AwsServiceException ex) {
-            courtService.deleteCourtById(court.getId());
-            String someMessage = "Error uploading file: " + ex.getMessage();
-            model.addAttribute("someMessage1", someMessage);
-            return "forward:/register";
-        }
         catch (Exception ex) {
+            courtService.deleteCourtById(court.getId());
             String someMessage = "Error: " + ex.getMessage();
             model.addAttribute("someMessage1", someMessage);
-            return "forward:/register";
+            List<Sportgroup> listSportgroup = sportgroupService.findAllSportgroup();
+            List<Customer> listAdmin = customerService.findByRole(Role.ADMIN);
+            model.addAttribute("listSportgroup", listSportgroup);
+            model.addAttribute("listAdmin", listAdmin);
+            return "courtRegistration";
         }
 
         String someMessage = "Registered new court successfully.";
