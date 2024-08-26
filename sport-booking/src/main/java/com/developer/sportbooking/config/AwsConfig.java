@@ -157,7 +157,7 @@ public class AwsConfig {
 
     // GET
 
-    public static String getImage(String fileName, Integer folderNum)
+    public static String getImage(String fileName, String folderDir)
             throws AwsServiceException, SdkClientException, IOException {
 
 
@@ -169,7 +169,8 @@ public class AwsConfig {
 
 
 
-        String key = folderDirect(folderNum) + "/" + fileName;
+        String key = folderDir + "/" + fileName;
+        System.out.println(key);
         GetObjectRequest request = GetObjectRequest.builder()
                 .bucket(BUCKET)
                 .key(key)

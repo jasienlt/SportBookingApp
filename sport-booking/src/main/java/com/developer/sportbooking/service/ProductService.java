@@ -1,11 +1,12 @@
 package com.developer.sportbooking.service;
 
+import com.developer.sportbooking.dto.ProductDto;
 import com.developer.sportbooking.entity.Product;
 
 import java.util.List;
 
 public interface ProductService {
-    Product saveProduct(Product product);
+    Product saveProduct(ProductDto productDto);
 
     List<Product> findAllProduct();
 

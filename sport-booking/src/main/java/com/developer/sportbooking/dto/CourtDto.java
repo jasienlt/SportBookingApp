@@ -1,5 +1,7 @@
 package com.developer.sportbooking.dto;
 
+import com.developer.sportbooking.entity.Customer;
+import com.developer.sportbooking.entity.Sportgroup;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -19,10 +21,10 @@ public class CourtDto {
     private String phone;
 
     @Nullable
-    private Long sportgroupId;
+    private Sportgroup sportgroupId;
 
     @Nullable
-    private Long managedBy;
+    private Customer managedBy;
 
     public CourtDto(String name, String address, String phone) {
         this.name = name;
@@ -33,7 +35,7 @@ public class CourtDto {
     }
 
 
-    public CourtDto(String name, String address, String phone, Long sportgroupId, Long managedBy) {
+    public CourtDto(String name, String address, String phone, Sportgroup sportgroupId, Customer managedBy) {
         this.name = name;
         this.address = address;
         this.phone = phone;

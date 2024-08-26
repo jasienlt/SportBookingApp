@@ -2,6 +2,8 @@ package com.developer.sportbooking.serviceImpl;
 
 import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Customer;
+import com.developer.sportbooking.enumConverter.RoleConverter;
+import com.developer.sportbooking.enumType.Role;
 import com.developer.sportbooking.repository.CustomerRepo;
 import com.developer.sportbooking.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findByEmail(String email) {
         return customerRepo.findCustomerByEmail(email);
+    }
+
+    @Override
+    public List<Customer> findByRole(Role role) {
+        return customerRepo.findAllByRole(role);
     }
 
 }

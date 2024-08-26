@@ -86,4 +86,5 @@ public class FieldTimeslotImpl implements FieldTimeslotService {
 
         return fieldTimeslots;
     }
+
 }

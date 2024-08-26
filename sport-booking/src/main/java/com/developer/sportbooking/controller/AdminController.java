@@ -38,6 +38,7 @@ public class AdminController {
         return "dashboardOwner";
     }
 
+
     @GetMapping("/login")
     public String login(@ModelAttribute CustomerDto customerDto) {
         return "courtLogin";
@@ -51,11 +52,11 @@ public class AdminController {
             String someMessage = "Customer not exist. Would you like to register?";
             model.addAttribute("someMessage", someMessage);
             return "courtLogin";
-        } else if (customer.getRole()!="CUSTOMER"){
+        } else if (customer.getRole().getValue() < 3){
 
             customerService.saveCustomer(customerDto);
             model.addAttribute("currentAdmin", customer);
-            return "home";
+            return "redirect:/dashboardAdmin";
         } else {
             String someMessage = "This page is for admin. Would you like to login as customer?";
             model.addAttribute("someMessage", someMessage);

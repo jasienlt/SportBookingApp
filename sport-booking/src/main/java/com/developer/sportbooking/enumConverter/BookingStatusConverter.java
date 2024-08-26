@@ -1,7 +1,6 @@
 package com.developer.sportbooking.enumConverter;
 
 import com.developer.sportbooking.enumType.BookingStatus;
-import com.developer.sportbooking.enumType.DayOfWeek;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
@@ -23,7 +22,7 @@ public class BookingStatusConverter implements AttributeConverter<BookingStatus,
         try {
             return BookingStatus.valueOf(dbData);
         } catch (IllegalArgumentException ex) {
-            throw new RuntimeException("Invalid value for DayOfWeek: " + dbData, ex);
+            throw new RuntimeException("Invalid value for BookingStatus: " + dbData, ex);
         }
     }
 }

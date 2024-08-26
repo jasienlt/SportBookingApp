@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class FeedbackServiceImp implements FeedbackService {
+public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
     private FeedbackRepo feedbackRepo;
 

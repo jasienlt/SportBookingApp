@@ -20,7 +20,7 @@ public class S3Controller {
     @PostMapping("/upload")
     public String handleUploadForm(Model model, String description,
                                    @RequestParam("file") MultipartFile multipart) {
-        String fileName = multipart.getOriginalFilename();
+        String fileName = description;
 
         System.out.println("Description: " + description);
         System.out.println("filename: " + fileName);
@@ -35,9 +35,19 @@ public class S3Controller {
             message = "Error uploading file: " + ex.getMessage();
         }
 
-        model.addAttribute("message", message);
+        String file = "";
+        try {
+            file = AwsConfig.getImage(fileName, "payment_screenshots");
+            message = "Your file has been retrieved successfully!";
+        }
+        catch (Exception ex) {
+            message = "Error retrieving file: " + ex.getMessage();
+        }
 
-        return "uploadMessage";
+        model.addAttribute("message", message);
+        model.addAttribute("imgAsBase64", file);
+
+        return "imageRetrieval";
     }
 
 }
