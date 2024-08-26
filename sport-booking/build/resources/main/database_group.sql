@@ -267,16 +267,27 @@ VALUES
 
 -- 6) Field
 INSERT INTO field (name, sport_type, court_id) VALUES
-        ('Field A', 'Soccer', 1),
-        ('Field B', 'Basketball', 2),
-        ('Field C', 'Tennis', 3),
-        ('Field D', 'Volleyball', 4),
-        ('Field E', 'Badminton', 5),
-        ('Field F', 'Soccer', 1),
-        ('Field G', 'Basketball', 2),
-        ('Field H', 'Tennis', 3),
-        ('Field I', 'Volleyball', 4),
-        ('Field J', 'Badminton', 5);
+    ('Field A1', 'Soccer', 1),
+    ('Field A2', 'Soccer', 1),
+    ('Field B1', 'Basketball', 1),
+    ('Field B2', 'Basketball', 1),
+    ('Field C1', 'Tennis', 1),
+    ('Field C2', 'Tennis', 1),
+    ('Field D1', 'Badminton', 1),
+    ('Field D2', 'Badminton', 1),
+    ('Field E1', 'Volleyball', 1),
+    ('Field E2', 'Volleyball', 1),
+    ('Field F1', 'Squash', 1),
+    ('Field F2', 'Squash', 1),
+    ('Field G1', 'Hockey', 1),
+    ('Field G2', 'Hockey', 1),
+    ('Field H1', 'Cricket', 1),
+    ('Field H2', 'Cricket', 1),
+    ('Field I1', 'Rugby', 1),
+    ('Field I2', 'Rugby', 1),
+    ('Field J1', 'Baseball', 1),
+    ('Field J2', 'Baseball', 1);
+
 
 
 -- 7) Time Slot
@@ -298,6 +309,26 @@ VALUES
        , str_to_date('0630', '%h%i')
        , 1
 );
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('08:00:00', '09:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('09:00:00', '10:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('10:00:00', '11:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('11:00:00', '12:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('12:00:00', '13:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('13:00:00', '14:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('14:00:00', '15:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('15:00:00', '16:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('16:00:00', '17:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('17:00:00', '18:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('18:00:00', '19:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('19:00:00', '20:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('20:00:00', '21:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('21:00:00', '22:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('22:00:00', '23:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('23:00:00', '00:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('00:00:00', '01:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('01:00:00', '02:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('02:00:00', '03:00:00', 1);
+INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('03:00:00', '04:00:00', 1);
 
 -- 😎 Field - Timeslot
 INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES
@@ -315,6 +346,27 @@ INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES
     (3, 2, 50049, 'MONDAY'), (3, 2, 50050, 'TUESDAY'), (3, 2, 50051, 'WEDNESDAY'), (3, 2, 50052, 'THURSDAY'), (3, 2, 50053, 'FRIDAY'), (3, 2, 50054, 'SATURDAY'), (3, 2, 50055, 'SUNDAY'),
     (3, 3, 50056, 'MONDAY'), (3, 3, 50057, 'TUESDAY'), (3, 3, 50058, 'WEDNESDAY'), (3, 3, 50059, 'THURSDAY'), (3, 3, 50060, 'FRIDAY'), (3, 3, 50061, 'SATURDAY'), (3, 3, 50062, 'SUNDAY');
 
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (1, 1, 25.00, 'MONDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (2, 2, 30.00, 'TUESDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (3, 3, 20.00, 'WEDNESDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (4, 4, 27.50, 'THURSDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (5, 5, 22.00, 'FRIDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (6, 6, 35.00, 'SATURDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (7, 7, 40.00, 'SUNDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (8, 8, 18.00, 'MONDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (9, 9, 26.00, 'TUESDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (10, 10, 33.00, 'WEDNESDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (11, 1, 28.00, 'THURSDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (12, 2, 32.50, 'FRIDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (13, 3, 29.00, 'SATURDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (14, 4, 31.00, 'SUNDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (15, 5, 23.50, 'MONDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (1, 6, 36.00, 'TUESDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (2, 7, 45.00, 'WEDNESDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (3, 8, 19.50, 'THURSDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (4, 9, 27.00, 'FRIDAY');
+INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (5, 10, 34.00, 'SATURDAY');
+
 -- 8.5) Reserved Field - Timeslot
 INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES
      (1, 1, '2024-08-21'),
@@ -327,6 +379,26 @@ INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES
     (8, 8, '2024-08-28'),
     (9, 9, '2024-08-29'),
     (1, 10, '2024-08-30');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (1, 1, '2024-08-01');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (2, 2, '2024-08-02');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (3, 3, '2024-08-03');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (4, 4, '2024-08-04');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (5, 5, '2024-08-05');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (6, 6, '2024-08-06');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (7, 7, '2024-08-07');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (8, 8, '2024-08-08');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (9, 9, '2024-08-09');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (10, 10, '2024-08-10');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (11, 11, '2024-08-11');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (12, 12, '2024-08-12');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (13, 13, '2024-08-13');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (14, 14, '2024-08-14');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (15, 15, '2024-08-15');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (1, 16, '2024-08-16');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (2, 17, '2024-08-17');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (3, 18, '2024-08-18');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (4, 19, '2024-08-19');
+INSERT INTO reserved_field_timeslot (fts_id, booking_id, booking_date) VALUES (5, 20, '2024-08-20');
 
 
 -- 9) Payment
@@ -374,3 +446,24 @@ INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_sess
         ('2024-08-21', 9, 18, 245.99, 'PENDING', 'd4b27425-5c47-4650-840e-06dbed18306a'),
         ('2024-08-21', 5, 19, 350.60, 'COMPLETED', 'b9e0f46a-baae-44ed-85b6-5e2526a939ff'),
         ('2024-08-21', 6, 20, 299.99, 'CANCELED', 'a9f11d4f-0e2c-4144-bb2f-7b8c0d9b4817');
+
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-01', 1, 1, 100.00, 'COMPLETED', 'session_1');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-02', 2, 2, 150.00, 'PENDING', 'session_2');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-03', 3, 3, 200.00, 'CANCELED', 'session_3');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-04', 4, 4, 120.00, 'COMPLETED', 'session_4');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-05', 5, 5, 130.00, 'PENDING', 'session_5');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-06', 6, 6, 110.00, 'CANCELED', 'session_6');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-07', 7, 7, 140.00, 'COMPLETED', 'session_7');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-08', 8, 8, 160.00, 'PENDING', 'session_8');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-09', 9, 9, 170.00, 'CANCELED', 'session_9');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-10', 10, 10, 125.00, 'COMPLETED', 'session_10');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-11', 11, 11, 135.00, 'PENDING', 'session_11');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-12', 12, 12, 145.00, 'CANCELED', 'session_12');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-13', 13, 13, 155.00, 'COMPLETED', 'session_13');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-14', 14, 14, 165.00, 'PENDING', 'session_14');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-15', 15, 15, 175.00, 'CANCELED', 'session_15');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-16', 16, 16, 185.00, 'COMPLETED', 'session_16');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-17', 17, 17, 195.00, 'PENDING', 'session_17');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-18', 18, 18, 205.00, 'CANCELED', 'session_18');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-19', 19, 19, 215.00, 'COMPLETED', 'session_19');
+INSERT INTO booking (created_date, customer_id, p_id, price, status, stripe_session_id) VALUES ('2024-08-20', 20, 20, 225.00, 'PENDING', 'session_20');

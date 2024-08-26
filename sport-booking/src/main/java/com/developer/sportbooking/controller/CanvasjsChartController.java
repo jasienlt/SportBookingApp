@@ -57,8 +57,9 @@ public class CanvasjsChartController {
 
     @RequestMapping(value = "/approvePayment", method = RequestMethod.GET)
     public String showPendingPayment(ModelMap modelMap) {
+
+        // to be changed to include courtId
         List<Payment> listPayment = paymentService.findPaymentByStatus(PaymentStatus.PENDING);
-        System.out.println(listPayment.toString());
         modelMap.addAttribute("listPayment", listPayment);
         return "approvePayment";
     }
