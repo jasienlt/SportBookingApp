@@ -86,7 +86,7 @@ public class CourtServiceImpl implements CourtService {
     public Court findCourtByName(String name) {
         return courtRepo.findByName(name);
     }
-
+  
     @Override
     public Court findCourtByField(Long fieldId) {
         return courtRepo.findByField(fieldId);
@@ -101,4 +101,5 @@ public class CourtServiceImpl implements CourtService {
     public Court findCourtByNameAndPhone(String name, String phone) {
         return courtRepo.findByNameAndPhone(name,phone);
     }
+
 }
