@@ -10,6 +10,7 @@ CREATE TABLE sportgroup (
     , PRIMARY KEY (id)
 );
 
+
 CREATE TABLE court(
                       id bigint NOT NULL AUTO_INCREMENT
     , name varchar(100) NOT NULL
@@ -256,25 +257,6 @@ VALUES
 ('Sting Dau', 8000, 1, 1)
      , ('Pepsi', 10000, 1, 1)
      , ('7Up', 10500, 1, 1);
-
--- 4) Customer
-INSERT INTO
-    customer(first_name, last_name, phone, email, password)
-VALUES
-(
-    'Dung'
-, 'Nguyen'
-, 0112349395
-, 'dung.nguyen@yahoo.com'
-, 'dung_nguyen'
-)
-     , (
-         'Vuong'
-       , 'Tran'
-       , 0482039493
-       , 'vuong.tran@hotmail.com'
-       , 'vuong_tran'
-);
 
 -- 5) Court_Customer
 INSERT INTO
