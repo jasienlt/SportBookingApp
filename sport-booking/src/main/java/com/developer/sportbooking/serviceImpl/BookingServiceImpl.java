@@ -5,11 +5,13 @@ import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.entity.FieldTimeslot;
 import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.BookingStatus;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
 import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

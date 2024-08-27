@@ -98,7 +98,7 @@ public class PaymentController {
         }
 
         model.addAttribute("message", message);
-        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, fileName, "Bank Transfer");
+        //bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, fileName, "Bank Transfer");
 
         Payment payment = new Payment(Date.valueOf(LocalDate.now()),"Bank Transfer",fileName,PaymentStatus.PENDING,bookingService.getBookingBySessionId(fileName).getId());
         paymentService.savePayment(payment);
