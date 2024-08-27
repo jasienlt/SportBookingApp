@@ -5,12 +5,13 @@ import {dayOfWeek} from "./utils.js"
 const selectedFieldsSummary = document.getElementById("selectedFieldsSummary");
 const priceSummary = document.getElementById("priceSummary");
 const selectedDatesText = document.getElementById("bookingDates");
+const customerNameText = document.getElementById("customerName");
+const submitBtn = document.getElementById("submitBtn");
 
 let selectedFieldsText = "";
 
-document
-    .getElementById('bookingForm')
-    .addEventListener('submit', function (event) {
+submitBtn
+    .addEventListener('click', function (event) {
         event.preventDefault(); // Prevent default form submission
 
         const fields = document.getElementById("selectedFields").value;
@@ -27,6 +28,8 @@ document
                 if (xhr.status === 200) {
                     // Parse the JSON response
                     const response = JSON.parse(xhr.responseText);
+
+                    customerNameText.textContent += document.getElementById('customerNameInput').value;
 
                     let sortedSelectedFields = new Set([...selectedFields].sort())
                     sortedSelectedFields.forEach(key => selectedFieldsText += `Field ${key + 1} - `);
@@ -56,7 +59,8 @@ document
             startBookingTime: startBookingTime,
             endBookingTime: endBookingTime,
             dates: Array.from(selectedDays).join(" "),
-            bookingPeriod: document.getElementById('bookingDate').value
+            bookingPeriod: document.getElementById('bookingDate').value,
+            customerName: document.getElementById('customerNameInput').value
         }
         xhr.send(JSON.stringify(data));
     });

@@ -54,7 +54,7 @@ public class SecurityConfig {
                                 .loginProcessingUrl("/perform_login")
                                 .usernameParameter("username")
                                 .passwordParameter("password")
-                                .defaultSuccessUrl("/home", true)
+                                .defaultSuccessUrl("/homepage", true)
                                 .permitAll()
                                 .failureUrl("/login?error=True")
                 )

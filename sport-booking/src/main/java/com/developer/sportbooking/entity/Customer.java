@@ -88,7 +88,10 @@ public class Customer {
 //        this.roles = roles;
     }
 
-    //Getters and setters omitted for brevity
+    public Customer(String email) {
+        this.email = email;
+    }
+//Getters and setters omitted for brevity
 
     public void addCourt(Court court) {
         CourtCustomer courtCustomer = new CourtCustomer(court, this);

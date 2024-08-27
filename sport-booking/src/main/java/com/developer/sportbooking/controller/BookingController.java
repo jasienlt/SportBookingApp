@@ -44,9 +44,13 @@ public class BookingController {
     }
 
     @GetMapping("/booking")
-    public String booking(Model model) {
-        List<Timeslot> timeslots = timeslotService.findAllTimeslot();
-        List<Field> fields = fieldService.findAllField();
+    public String booking(Model model, @RequestParam(required = false) String courtId) {
+        if (courtId == null) {
+            return "redirect:/homepage";
+        }
+
+        List<Timeslot> timeslots = timeslotService.findAllTimeslotByCourtId(Long.valueOf(courtId));
+        List<Field> fields = fieldService.findAllFieldByCourtId(Long.valueOf(courtId));
         List<String> timeslotStartTime = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
 
@@ -110,15 +114,4 @@ public class BookingController {
 
         return response;
     }
-
-    @GetMapping("/homepage")
-    public String getHomepage() {
-        return "homepage";
-    }
-
-    @GetMapping("/test")
-    public String getTest() {return "test";}
-
-    @GetMapping("/getClubDetails")
-    public String getClubDetails() {return "getClubDetails";}
 }

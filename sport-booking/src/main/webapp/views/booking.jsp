@@ -38,7 +38,7 @@
 
         <h4 class="d-flex p-2"><spring:message key="booking.selectTime"/></h4>
 
-        <form method="post" action="./create-checkout-session" id="bookingForm">
+        <form method="post" id="bookingForm">
             <div class="d-flex p-1 col-4 ms-auto">
                 <input
                         id="bookingDate"
@@ -82,38 +82,40 @@
                 </c:forEach>
             </div>
             <input type="hidden" name="totalFee" id="totalFee">
-            <form>
-                <div class="form-group">
-                    <label for="emailInput"><spring:message key="booking.email"/></label>
-                    <input
-                            type="email"
-                            class="form-control"
-                            id="emailInput"
-                            aria-describedby="emailHelp"
-                            placeholder="<spring:message key="booking.emailPlaceholder"/>"
-                            required
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="customerNameInput"><spring:message key="booking.customerName"/></label>
-                    <input
-                            type="text"
-                            class="form-control"
-                            id="customerNameInput"
-                            placeholder="<spring:message key="booking.customerNamePlaceholder"/>"
-                            required
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="bookingNoteInput"><spring:message key="booking.note"/></label>
-                    <textarea
-                            class="form-control"
-                            id="bookingNoteInput"
-                            rows="3"
-                            placeholder="<spring:message key="booking.notePlaceHolder"/>"
-                    ></textarea>
-                </div>
-            </form>
+
+            <div class="form-group">
+                <label for="emailInput"><spring:message key="booking.email"/></label>
+                <input
+                        type="email"
+                        class="form-control"
+                        id="emailInput"
+                        name="customerEmail"
+                        aria-describedby="emailHelp"
+                        placeholder="<spring:message key="booking.emailPlaceholder"/>"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <label for="customerNameInput"><spring:message key="booking.customerName"/></label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="customerNameInput"
+                        name="customerName"
+                        placeholder="<spring:message key="booking.customerNamePlaceholder"/>"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <label for="bookingNoteInput"><spring:message key="booking.note"/></label>
+                <textarea
+                        class="form-control"
+                        id="bookingNoteInput"
+                        rows="3"
+                        placeholder="<spring:message key="booking.notePlaceHolder"/>"
+                ></textarea>
+            </div>
+
             <div>
                 <button type="submit" id="submitBtn" class="btn btn-dark btn-lg submitBtn my-2" form="bookingForm" disabled>
                     <span>Submit</span>
@@ -122,6 +124,7 @@
             <div id="overlay"></div>
             <div id="popup">
                 <h1>Booking Summary</h1>
+                <p id="customerName"><span>Customer Name: </span></p>
                 <p id="selectedFieldsSummary"><span>Fields: </span></p>
                 <p id="bookingTime"><span>Time: </span></p>
                 <p id="bookingDates"><span>Dates: </span></p>
