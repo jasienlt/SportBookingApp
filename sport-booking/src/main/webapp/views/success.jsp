@@ -26,9 +26,45 @@
 <body>
 <section>
     <p>
+        Thanks ${customerName} <br/>
         We appreciate your business! If you have any questions, please email
         <a href="mailto:orders@example.com">orders@example.com</a>.
     </p>
 </section>
+
+<div id="map"></div>
+
+<script>
+    let map;
+
+    function initMap() {
+        // The location of Uluru
+        const position = { lat: -25.344, lng: 131.031 };
+
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 4, center: position });
+        var marker = new google.maps.Marker({ position: position, map: map });
+        // Request needed libraries.
+        //@ts-ignore
+        // const { Map } = google.maps.importLibrary("maps");
+        // const { AdvancedMarkerElement } = google.maps.importLibrary("marker");
+        //
+        // // The map, centered at Uluru
+        // map = new Map(document.getElementById("map"), {
+        //     zoom: 4,
+        //     center: position,
+        //     mapId: "DEMO_MAP_ID",
+        // });
+        //
+        // // The marker, positioned at Uluru
+        // const marker = new AdvancedMarkerElement({
+        //     map: map,
+        //     position: position,
+        //     title: "Uluru",
+        // });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCKURs_tLLjghrsjLMcoh-xqtaA2KDmlQ&loading=async&callback=initMap" defer></script>
+
 </body>
 </html>

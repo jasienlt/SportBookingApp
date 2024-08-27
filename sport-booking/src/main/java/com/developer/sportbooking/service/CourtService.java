@@ -4,13 +4,14 @@ import com.developer.sportbooking.dto.CourtDto;
 import com.developer.sportbooking.entity.Court;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public interface CourtService {
     void saveCourt(CourtDto courtDto);
 
-    List<Court> findAllCourt();
+    ArrayList<Court> findAllCourt();
 
     Court findCourtById(Long id);
 

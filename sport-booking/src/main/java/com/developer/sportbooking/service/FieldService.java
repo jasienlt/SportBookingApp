@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface FieldService {
     List<Field> findAllField();
+
+    List<Field> findAllFieldByCourtId(Long courtId);
 }

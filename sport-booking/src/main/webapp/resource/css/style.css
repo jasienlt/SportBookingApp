@@ -83,7 +83,7 @@ body {
 }
 
 .courtImg {
-    height: 40%;
+    height: 30%;
     width: 100%;
 }
 
@@ -294,6 +294,12 @@ body {
     background: white;
     border-radius: 29%;
     border: none;
+}
+
+#map {
+    height: 200px; /* The height is 400 pixels */
+    width: 100%; /* The width is the width of the web page */
+    color: red;
 }
 
 /* Style the tab */

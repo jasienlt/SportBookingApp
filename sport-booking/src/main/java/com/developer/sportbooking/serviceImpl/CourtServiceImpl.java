@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,8 +52,8 @@ public class CourtServiceImpl implements CourtService {
 
 
     @Override
-    public List<Court> findAllCourt() {
-        return (List<Court>) courtRepo.findAll();
+    public ArrayList<Court> findAllCourt() {
+        return (ArrayList<Court>) courtRepo.findAll();
     }
 
 
@@ -84,7 +85,7 @@ public class CourtServiceImpl implements CourtService {
 
     @Override
     public Court findCourtByName(String name) {
-        return courtRepo.findByName(name);
+        return courtRepo.findCourtByName(name);
     }
   
     @Override

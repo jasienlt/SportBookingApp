@@ -38,7 +38,7 @@
 
         <h4 class="d-flex p-2"><spring:message key="booking.selectTime"/></h4>
 
-        <form method="post" action="./create-checkout-session" id="bookingForm">
+        <form method="post" id="bookingForm">
             <div class="d-flex p-1 col-4 ms-auto">
                 <input
                         id="bookingDate"
@@ -82,6 +82,7 @@
                 </c:forEach>
             </div>
             <input type="hidden" name="totalFee" id="totalFee">
+
             <div class="form-group">
                 <label for="emailInput"><spring:message key="booking.email"/></label>
                 <input
@@ -114,6 +115,7 @@
                         placeholder="<spring:message key="booking.notePlaceHolder"/>"
                 ></textarea>
             </div>
+
             <div>
                 <button type="submit" id="submitBtn" class="btn btn-dark btn-lg submitBtn my-2" form="bookingForm" disabled>
                     <span>Submit</span>

@@ -5,20 +5,19 @@ import {dayOfWeek} from "./utils.js"
 const selectedFieldsSummary = document.getElementById("selectedFieldsSummary");
 const priceSummary = document.getElementById("priceSummary");
 const selectedDatesText = document.getElementById("bookingDates");
-const customerNameText = document.getElementById("customerName");
 const customerEmailText = document.getElementById("customerEmail");
+const customerNameText = document.getElementById("customerName");
+const submitBtn = document.getElementById("submitBtn");
 
 let selectedFieldsText = "";
 
-document
-    .getElementById('bookingForm')
-    .addEventListener('submit', function (event) {
+submitBtn
+    .addEventListener('click', function (event) {
         event.preventDefault(); // Prevent default form submission
 
         const fields = document.getElementById("selectedFields").value;
         const startBookingTime = document.getElementById("selectedStartTimeslot").value;
         const endBookingTime = document.getElementById("selectedEndTimeslot").value;
-
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/booking', true);

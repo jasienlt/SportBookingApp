@@ -21,10 +21,11 @@
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"
     ></script>
+    <script type="module" src="../scripts/map.js"></script>
     <link href="../resource/css/style.css" rel="stylesheet" />
 </head>
 <body>
-git
+<input id="googleMapApi" type="hidden" value="${googleMapApi}">
 <!-- Search Bar -->
 <div class="container">
     <div class="search-bar d-flex justify-content-between">
@@ -36,16 +37,13 @@ git
     <div class="main-content">
         <!-- Club List -->
         <div class="club-list">
-            <div class="club-item" onclick="showClubDetails(1)">
-                <img src="resource/image/logo.png" alt="Club Logo 1">
-                <strong>CLB Cầu Lông 18B Cộng Hòa</strong><br>
-                18B Cộng Hòa, Phường 4, Tân Bình, TP Hồ Chí Minh
-            </div>
-            <div class="club-item" onclick="showClubDetails(2)">
-                <img src="resource/image/logo.png" alt="Club Logo 2">
-                <strong>272 Badminton</strong><br>
-                Lô A4 Chung Cư Ngô Quyền, TP Đà Lạt, Lâm Đồng
-            </div>
+            <c:forEach items="${courts}" var="court">
+                <div class="club-item" onclick="showClubDetails(${court.id}, '${court.address}')">
+                    <img src="resource/image/logo.png" alt="Club Logo 1">
+                    <strong>${court.name}</strong><br>
+                    ${court.address}
+                </div>
+            </c:forEach>
         </div>
 
         <!-- Club Details -->
@@ -74,19 +72,7 @@ git
     </div>
 </div>
 
-<script>
-    function showClubDetails(clubId) {
-        // Send AJAX request to fetch club details
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'getClubDetails?clubId=' + clubId, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById('club-details').innerHTML = xhr.responseText;
-            }
-        };
-        xhr.send();
-    }
-</script>
+<script src="../scripts/map.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

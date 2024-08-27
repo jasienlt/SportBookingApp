@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CourtRepo extends JpaRepository<Court, Long>{
+    public Court findCourtByName(String name);
     @Query("SELECT u FROM Court u WHERE u.name = ?1")
     public Court findByName(String name);
 

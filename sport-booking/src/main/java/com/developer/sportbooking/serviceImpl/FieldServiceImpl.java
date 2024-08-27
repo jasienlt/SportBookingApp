@@ -16,4 +16,9 @@ public class FieldServiceImpl implements FieldService {
     public List<Field> findAllField() {
         return fieldRepo.findAll();
     }
+
+    @Override
+    public List<Field> findAllFieldByCourtId(Long courtId) {
+        return fieldRepo.findAllByCourt_Id(courtId);
+    }
 }

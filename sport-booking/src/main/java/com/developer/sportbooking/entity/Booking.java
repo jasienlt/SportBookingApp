@@ -30,7 +30,10 @@ public class Booking {
     private Double price;
 
     // Customer - Booking: one to many (child side)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @JsonIgnore
     private Customer customer;
