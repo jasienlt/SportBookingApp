@@ -51,6 +51,7 @@ public class BookingServiceImpl implements BookingService {
                                    String totalFee,
                                    String bookingPeriodString,
                                    String sessionId,
+                                   String method,
                                    Customer customer) {
 
         List<Integer> selectedDates = new ArrayList<>();
@@ -74,10 +75,12 @@ public class BookingServiceImpl implements BookingService {
 
         Payment payment = paymentService.findPaymentById(2L); // Adjust accordingly
 
-        Booking booking = new Booking((double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
+        Booking booking = new Booking(Date.valueOf(LocalDate.now()),(double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
+        Payment paymentObj = new Payment(Date.valueOf(LocalDate.now()), method, sessionId, PaymentStatus.PENDING, booking.getId());
 
         customer.addBooking(booking);
         this.saveBooking(booking);
+        paymentService.savePayment(paymentObj);
         reservedFieldTimeslotService.saveReservedFieldTimeslots(booking, fieldTimeslots, bookingPeriod);
 
     }
