@@ -64,6 +64,14 @@ public class Booking {
         this.payment = payment;
     }
 
+    public Booking(Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+        this.price = price;
+        this.customer = customer;
+        this.payment = payment;
+        this.status = status;
+        this.sessionId = sessionId;
+    }
+
     public Booking(Date createdDate, Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
         this.createdDate = createdDate;
         this.price = price;
