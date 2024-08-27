@@ -1,10 +1,13 @@
 package com.developer.sportbooking.controller;
 
 import com.developer.sportbooking.config.AwsConfig;
+import com.developer.sportbooking.config.CustomCustomerDetails;
+import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,13 +50,9 @@ public class PaymentController {
 
     @PostMapping("/finishBooking")
     public String QRPayment(Model model, @ModelAttribute("courtId") String courtId,
-                            @RequestParam Long selectedStartTimeslot,
-                            @RequestParam Long selectedEndTimeslot,
-                            @RequestParam(name = "date") List<Integer> dates,
-                            @RequestParam(name = "selectedFields") String selectedFieldsString,
                             @RequestParam(name = "totalFee") String totalFee,
-                            @RequestParam(name = "bookingPeriod") String bookingPeriodString,
                             @RequestParam(name = "customerEmail") String customerEmail,
+                            @AuthenticationPrincipal CustomCustomerDetails customerDetails,
                             @RequestParam(name = "customerName") String customerName) {
 
         String message = "";
@@ -70,6 +69,7 @@ public class PaymentController {
         model.addAttribute("message", message);
         model.addAttribute("imgAsBase64", file);
         model.addAttribute("custName", customerName);
+        model.addAttribute("custEmail", customerEmail);
 
         return "paymentReceipt";
     }
@@ -77,13 +77,15 @@ public class PaymentController {
     @PostMapping("/finishPayment")
     public String QRPayment(Model model,
                             @ModelAttribute("custName") String custName,
+                            @ModelAttribute("custEmail") String custEmail,
                             @RequestParam Long selectedStartTimeslot,
                             @RequestParam Long selectedEndTimeslot,
                             @RequestParam(name = "date") List<Integer> dates,
                             @RequestParam(name = "selectedFields") String selectedFieldsString,
                             @RequestParam(name = "totalFee") String totalFee,
                             @RequestParam(name = "bookingPeriod") String bookingPeriodString,
-                            @RequestParam(name = "receiptImg") MultipartFile multipart) {
+                            @RequestParam(name = "receiptImg") MultipartFile multipart,
+                            @AuthenticationPrincipal CustomCustomerDetails customerDetails) {
 
         String fileName = custName + Date.valueOf(LocalDate.now()).toString();
 
@@ -98,7 +100,8 @@ public class PaymentController {
         }
 
         model.addAttribute("message", message);
-        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, fileName, "Bank Transfer");
+        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, fileName, "Bank Transfer",
+                customerDetails == null ? new Customer(custEmail) : customerDetails.getCustomer());
 
         Payment payment = new Payment(Date.valueOf(LocalDate.now()),"Bank Transfer",fileName,PaymentStatus.PENDING,bookingService.getBookingBySessionId(fileName).getId());
         paymentService.savePayment(payment);
