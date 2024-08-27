@@ -78,6 +78,7 @@ public class CheckoutController {
                 totalFee,
                 bookingPeriodString,
                 session.getId(),
+                "Stripe",
                 customerDetails == null ? new Customer(customerEmail) : customerDetails.getCustomer());
 
         return "redirect:" + session.getUrl();
