@@ -19,6 +19,7 @@ public interface BookingService {
                             String totalFee,
                             String bookingPeriodString,
                             String sessionId,
+                            String method,
                             Customer customer);
 
     Booking getBookingBySessionId(String sessionId);
