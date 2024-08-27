@@ -23,6 +23,9 @@ public class Booking {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "created_date")
+    private Date createdDate;
+
     @Column(name = "price", nullable = false)
     private Double price;
 
@@ -51,13 +54,15 @@ public class Booking {
 
     @Column(name = "stripe_session_id", nullable = false)
     private String sessionId;
+
     public Booking(Double price, Customer customer, Payment payment) {
         this.price = price;
         this.customer = customer;
         this.payment = payment;
     }
 
-    public Booking(Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+    public Booking(Date createdDate, Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+        this.createdDate = createdDate;
         this.price = price;
         this.customer = customer;
         this.payment = payment;

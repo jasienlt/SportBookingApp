@@ -25,17 +25,15 @@
 </head>
 <body>
 <form action="./finishPayment" method="post">
-    <h1>Booking ID: ${bookingId}</h1>
-    <input type="text" name="bookingId" value=${bookingId} hidden=true>
     <h2>Customer Name: ${custName}</h2>
     <input type="text" name="custName" value=${custName} hidden=true>
     <h2>Total Fee: ${totalFee}</h2>
     <input type="text" name="totalFee" value=${totalFee} hidden=true>
     <h2>Scan here to transfer:</h2><br>
-    <img src="data:image/png;base64,${imgAsBase64}" />
+    <img src="data:image/png;base64,${imgAsBase64}" /><br>
 
-    <label for="receiptImg" class="form-label">Payment Screnshot:</label>
-    <input type="file" id="receiptImg" name="receiptImg" required />
+    <label for="receiptImg" class="form-label">Payment Screnshot:</label><br>
+    <input type="file" id="receiptImg" name="receiptImg" required /><br>
 
     <div>
         <button type="submit" id="submitBtn" class="btn btn-dark btn-lg submitBtn my-2">

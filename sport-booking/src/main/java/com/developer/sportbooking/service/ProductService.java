@@ -6,7 +6,7 @@ import com.developer.sportbooking.entity.Product;
 import java.util.List;
 
 public interface ProductService {
-    Product saveProduct(ProductDto product);
+    Product saveProduct(ProductDto productDto);
 
     List<Product> findAllProduct();
 

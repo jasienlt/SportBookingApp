@@ -1,6 +1,9 @@
 package com.developer.sportbooking.controller;
 
+import com.developer.sportbooking.entity.Payment;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.service.BookingService;
+import com.developer.sportbooking.service.PaymentService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -57,7 +60,7 @@ public class CheckoutController {
 
         Session session = Session.create(params);
 
-        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, session.getId());
+        bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, session.getId(), "Stripe");
 
         return "redirect:" + session.getUrl();
     }

@@ -8,6 +8,6 @@ stripeBtn.addEventListener('click', () => {
 });
 
 transferBtn.addEventListener('click', () => {
-    bookingForm.action = "./test";
+    bookingForm.action = "./finishBooking";
     bookingForm.submit();
 });

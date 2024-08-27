@@ -5,18 +5,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "court")
 
 public class Court {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -29,13 +31,19 @@ public class Court {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-
     // Sportgroup - Court: one to many (child side)
     @Getter
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "sportgroup_id", referencedColumnName = "id")
     @JsonIgnore
     private Sportgroup sportgroup;
+
+    // Customer/Admin - Court: one to many (child side)
+    @Getter
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "managed_by", referencedColumnName = "id")
+    @JsonIgnore
+    private Customer managedBy;
 
     //Constructors, getters and setters removed for brevity
 
@@ -130,15 +138,13 @@ public class Court {
     @JsonIgnore
     private List<CourtCustomer> customers = new ArrayList<CourtCustomer>();
 
-    public Court() {
-    }
 
-    public Court(Long id, String name, String address, String phone, Sportgroup sportgroup) {
-        this.id = id;
+    public Court(String name, String address, String phone, Sportgroup sportgroup, Customer managedBy) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.sportgroup = sportgroup;
+        this.managedBy = managedBy;
     }
 
 

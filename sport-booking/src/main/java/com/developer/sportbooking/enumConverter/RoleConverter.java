@@ -5,7 +5,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class RoleConverter implements AttributeConverter<Role, String> {
+public class  RoleConverter implements AttributeConverter<Role, String> {
     @Override
     public String convertToDatabaseColumn(Role role) {
         if (role == null) {
@@ -22,7 +22,7 @@ public class RoleConverter implements AttributeConverter<Role, String> {
         try {
             return Role.valueOf(dbData);
         } catch (IllegalArgumentException ex) {
-            throw new RuntimeException("Invalid value for DayOfWeek: " + dbData, ex);
+            throw new RuntimeException("Invalid value for Role: " + dbData, ex);
         }
     }
 }
