@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface CourtService {
+public interface git CourtService {
     Court saveCourt(CourtDto courtDto);
 
     List<Court> findAllCourt();
