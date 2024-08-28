@@ -19,7 +19,6 @@ public class CustomCustomerDetails implements UserDetails {
         this.customer = customer;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

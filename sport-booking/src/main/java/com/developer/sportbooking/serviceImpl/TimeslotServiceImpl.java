@@ -17,4 +17,9 @@ public class TimeslotServiceImpl implements TimeslotService {
     public List<Timeslot> findAllTimeslot() {
         return timeslotRepo.findAll();
     }
+
+    @Override
+    public List<Timeslot> findAllTimeslotByCourtId(Long courtId) {
+        return timeslotRepo.findAllByCourt_Id(courtId);
+    }
 }

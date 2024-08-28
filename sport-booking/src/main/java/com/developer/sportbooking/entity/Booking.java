@@ -23,11 +23,17 @@ public class Booking {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "created_date")
+    private Date createdDate;
+
     @Column(name = "price", nullable = false)
     private Double price;
 
     // Customer - Booking: one to many (child side)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     @JsonIgnore
     private Customer customer;
@@ -51,6 +57,7 @@ public class Booking {
 
     @Column(name = "stripe_session_id", nullable = false)
     private String sessionId;
+
     public Booking(Double price, Customer customer, Payment payment) {
         this.price = price;
         this.customer = customer;
@@ -58,6 +65,15 @@ public class Booking {
     }
 
     public Booking(Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+        this.price = price;
+        this.customer = customer;
+        this.payment = payment;
+        this.status = status;
+        this.sessionId = sessionId;
+    }
+
+    public Booking(Date createdDate, Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+        this.createdDate = createdDate;
         this.price = price;
         this.customer = customer;
         this.payment = payment;

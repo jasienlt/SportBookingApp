@@ -3,6 +3,7 @@ package com.developer.sportbooking.controller;
 import com.developer.sportbooking.config.CustomCustomerDetails;
 import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Customer;
+import com.developer.sportbooking.enumType.Role;
 import com.developer.sportbooking.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,11 +52,11 @@ public class AdminController {
             String someMessage = "Customer not exist. Would you like to register?";
             model.addAttribute("someMessage", someMessage);
             return "courtLogin";
-        } else if (customer.getRole()!="CUSTOMER"){
+        } else if (customer.getRole() != Role.CUSTOMER){
 
             customerService.saveCustomer(customerDto);
             model.addAttribute("currentAdmin", customer);
-            return "home";
+            return "redirect:/dashboardAdmin";
         } else {
             String someMessage = "This page is for admin. Would you like to login as customer?";
             model.addAttribute("someMessage", someMessage);

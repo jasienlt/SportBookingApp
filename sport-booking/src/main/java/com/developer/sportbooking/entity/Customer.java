@@ -1,5 +1,6 @@
 package com.developer.sportbooking.entity;
 
+import com.developer.sportbooking.enumType.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,9 @@ public class Customer {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "role")
+    private Role role;
 
     // Security config
 //    private boolean isEnabled = false;
@@ -84,7 +88,10 @@ public class Customer {
 //        this.roles = roles;
     }
 
-    //Getters and setters omitted for brevity
+    public Customer(String email) {
+        this.email = email;
+    }
+//Getters and setters omitted for brevity
 
     public void addCourt(Court court) {
         CourtCustomer courtCustomer = new CourtCustomer(court, this);

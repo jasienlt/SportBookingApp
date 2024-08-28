@@ -5,11 +5,13 @@ import com.developer.sportbooking.entity.Customer;
 import com.developer.sportbooking.entity.FieldTimeslot;
 import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.BookingStatus;
+import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
 import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,9 @@ public class BookingServiceImpl implements BookingService {
                                    String selectedFieldsString,
                                    String totalFee,
                                    String bookingPeriodString,
-                                   String sessionId) {
+                                   String sessionId,
+                                   String method,
+                                   Customer customer) {
 
         List<Integer> selectedDates = new ArrayList<>();
         List<Long> selectedFields = new ArrayList<>();
@@ -71,12 +75,14 @@ public class BookingServiceImpl implements BookingService {
 
         List<FieldTimeslot> fieldTimeslots = fieldTimeslotService.findFieldTimeslotByListId(selectedFields, selectedStartTimeslot, selectedEndTimeslot, selectedDates);
 
-        Customer customer = customerService.getCustomerById(1L); // Ideally, get customer by session or ID
         Payment payment = paymentService.findPaymentById(2L); // Adjust accordingly
 
-        Booking booking = new Booking((double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
+        Booking booking = new Booking(Date.valueOf(LocalDate.now()),(double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
+        Payment paymentObj = new Payment(Date.valueOf(LocalDate.now()), method, sessionId, PaymentStatus.PENDING, booking.getId());
 
+        customer.addBooking(booking);
         this.saveBooking(booking);
+        paymentService.savePayment(paymentObj);
         reservedFieldTimeslotService.saveReservedFieldTimeslots(booking, fieldTimeslots, bookingPeriod);
 
     }

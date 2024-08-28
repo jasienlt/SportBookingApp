@@ -9,6 +9,8 @@ public interface TimeslotService {
 
     List<Timeslot> findAllTimeslot();
 
+    List<Timeslot> findAllTimeslotByCourtId(Long courtId);
+
 //    Timeslot findTimeslotById(Long id);
 //
 //    Timeslot findTimeslotByCourtId(Long id);
