@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class CheckoutController {
                                         @RequestParam(name = "selectedFields") String selectedFieldsString,
                                         @RequestParam(name = "totalFee") String totalFee,
                                         @RequestParam(name = "bookingPeriod") String bookingPeriodString,
+                                        @RequestParam(name = "customerName") String customerName,
                                         @RequestParam(name = "customerEmail") String customerEmail,
                                         @AuthenticationPrincipal CustomCustomerDetails customerDetails
                                         ) throws StripeException {
@@ -51,6 +53,7 @@ public class CheckoutController {
                 .setSuccessUrl(YOUR_DOMAIN + "/success")
                 .setCancelUrl(YOUR_DOMAIN + "/homepage")
                 .setCustomerEmail(customerEmail)
+                .setExpiresAt(System.currentTimeMillis() / 1000L + 1800)
                 .setPaymentIntentData(SessionCreateParams.PaymentIntentData.builder()
                         .setReceiptEmail(customerEmail)
                         .build())
@@ -71,6 +74,8 @@ public class CheckoutController {
 
         Session session = Session.create(params);
 
+        String[] parts = customerName.split(" ");
+
         bookingService.saveBookingSummary(selectedStartTimeslot,
                 selectedEndTimeslot,
                 dates,
@@ -79,7 +84,7 @@ public class CheckoutController {
                 bookingPeriodString,
                 session.getId(),
                 "Stripe",
-                customerDetails == null ? new Customer(customerEmail) : customerDetails.getCustomer());
+                customerDetails == null ? new Customer(parts[0], parts[parts.length - 1], customerEmail) : customerDetails.getCustomer());
 
         return "redirect:" + session.getUrl();
     }

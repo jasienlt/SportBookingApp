@@ -5,6 +5,8 @@ import {dayOfWeek} from "./utils.js";
 const selectedDay = document.getElementById("bookingDate");
 const fieldsBtn = document.getElementsByClassName('fieldBtn');
 const submitBookingBtn = document.getElementById("submitBtn");
+const customerName = document.getElementById("customerNameInput").value;
+const customerEmail = document.getElementById("customerEmail").value;
 let reservedFieldTimeslots = [];
 let pendingFieldTimeslots = [];
 export let selectedFields = new Set();
@@ -106,7 +108,7 @@ for (let i = 0; i < fieldsBtn.length; i++) {
     fieldsBtn[i].style.backgroundColor =
       fieldsBtn[i].style.backgroundColor === 'salmon' ? 'white' : 'salmon';
     fieldsBtn[i].style.backgroundColor === 'salmon' ? selectedFields.add(i) : selectedFields.delete(i)
-    submitBookingBtn.disabled = !(selectedHour.size === 2 && selectedDays.size > 0 && selectedFields.size > 0 && selectedDay.value !== "");
+    submitBookingBtn.disabled = !(selectedHour.size === 2 && selectedDays.size > 0 && selectedFields.size > 0 && selectedDay.value !== "" && customerName !== null && customerEmail !== null);
   });
 }
 

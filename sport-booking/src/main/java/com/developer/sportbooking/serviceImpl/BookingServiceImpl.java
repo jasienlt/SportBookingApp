@@ -11,8 +11,9 @@ import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+//import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,8 +78,8 @@ public class BookingServiceImpl implements BookingService {
 
         Payment payment = paymentService.findPaymentById(2L); // Adjust accordingly
 
-        Booking booking = new Booking(Date.valueOf(LocalDate.now()),(double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
-        Payment paymentObj = new Payment(Date.valueOf(LocalDate.now()), method, sessionId, PaymentStatus.PENDING, booking.getId());
+        Booking booking = new Booking(LocalDateTime.now(),(double) Float.parseFloat(totalFee), customer, payment, BookingStatus.PENDING, sessionId);
+        Payment paymentObj = new Payment(LocalDateTime.now(), method, sessionId, PaymentStatus.PENDING, booking.getId());
 
         customer.addBooking(booking);
         this.saveBooking(booking);

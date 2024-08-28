@@ -62,15 +62,15 @@
 <div class="footer">
     <div class="footer-item" onclick="window.location.href='test'">
         <i class="bi bi-list-task"></i><br>
-        Danh sách
+        Clubs
     </div>
-    <div class="footer-item" onclick="window.location.href='featured.jsp'">
+    <div class="footer-item" onclick="window.location.href='featured'">
         <i class="bi bi-star-fill"></i><br>
-        Nổi bật
+        Highlight
     </div>
-    <div class="footer-item" onclick="window.location.href='login'">
+    <div class="footer-item" onclick="window.location.href='account'">
         <i class="bi bi-person-square"></i><br>
-        Tài khoản
+        Account
     </div>
 </div>
 

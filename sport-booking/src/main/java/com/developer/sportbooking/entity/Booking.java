@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Date;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,7 +25,7 @@ public class Booking {
     private Long id;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "price", nullable = false)
     private Double price;
@@ -72,7 +73,7 @@ public class Booking {
         this.sessionId = sessionId;
     }
 
-    public Booking(Date createdDate, Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
+    public Booking(LocalDateTime createdDate, Double price, Customer customer, Payment payment, BookingStatus status, String sessionId) {
         this.createdDate = createdDate;
         this.price = price;
         this.customer = customer;

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -100,7 +101,7 @@ public class PaymentController {
         model.addAttribute("message", message);
         //bookingService.saveBookingSummary(selectedStartTimeslot, selectedEndTimeslot, dates, selectedFieldsString, totalFee, bookingPeriodString, fileName, "Bank Transfer");
 
-        Payment payment = new Payment(Date.valueOf(LocalDate.now()),"Bank Transfer",fileName,PaymentStatus.PENDING,bookingService.getBookingBySessionId(fileName).getId());
+        Payment payment = new Payment(LocalDateTime.now(),"Bank Transfer",fileName,PaymentStatus.PENDING,bookingService.getBookingBySessionId(fileName).getId());
         paymentService.savePayment(payment);
 
         return "success";

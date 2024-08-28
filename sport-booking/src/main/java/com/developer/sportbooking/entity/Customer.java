@@ -91,7 +91,14 @@ public class Customer {
     public Customer(String email) {
         this.email = email;
     }
-//Getters and setters omitted for brevity
+
+    public Customer(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    //Getters and setters omitted for brevity
 
     public void addCourt(Court court) {
         CourtCustomer courtCustomer = new CourtCustomer(court, this);

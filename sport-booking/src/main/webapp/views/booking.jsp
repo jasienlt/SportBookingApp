@@ -136,15 +136,15 @@
             </div>
         </form>
 
-        <div class="language-selector">
-            <label for="locales"><spring:message key="lang.change"/></label>
-            <select id="locales">
-                <option value=""></option>
-                <option value="en">English</option>
-                <option value="vi">Tiếng Việt</option>
-                <!-- Add more language options as needed -->
-            </select>
-        </div>
+<%--        <div class="language-selector">--%>
+<%--            <label for="locales"><spring:message key="lang.change"/></label>--%>
+<%--            <select id="locales">--%>
+<%--                <option value=""></option>--%>
+<%--                <option value="en">English</option>--%>
+<%--                <option value="vi">Tiếng Việt</option>--%>
+<%--                <!-- Add more language options as needed -->--%>
+<%--            </select>--%>
+<%--        </div>--%>
     </div>
 </div>
 
