@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class Court {
 
 
     // Sportgroup - Court: one to many (child side)
+    @ToString.Exclude
     @Getter
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "sportgroup_id", referencedColumnName = "id")
@@ -38,6 +40,7 @@ public class Court {
     private Sportgroup sportgroup;
 
     // Customer/Admin - Court: one to many (child side)
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "managed_by", referencedColumnName = "id")
     @JsonIgnore
@@ -73,6 +76,7 @@ public class Court {
 //    }
 
     // Court - Product: one to many (parent side)
+    @ToString.Exclude
     @OneToMany(
             mappedBy = "court",
             cascade = CascadeType.ALL,
@@ -92,6 +96,7 @@ public class Court {
     }
 
     // Court - Field: one to many (parent side)
+    @ToString.Exclude
     @OneToMany(
             mappedBy = "court",
             cascade = CascadeType.ALL,
@@ -110,6 +115,7 @@ public class Court {
     }
 
     // Court - Timeslot: one to many (parent side)
+    @ToString.Exclude
     @OneToMany(
             mappedBy = "court",
             cascade = CascadeType.ALL,
@@ -128,6 +134,7 @@ public class Court {
     }
 
     // Court - Customer: Many to many
+    @ToString.Exclude
     @OneToMany(
             mappedBy = "court",
             cascade = CascadeType.ALL,
