@@ -28,11 +28,11 @@ public class AwsConfig {
     private static final String folderName1 = "payment_screenshots";
     private static final String folderName2 = "court_url";
 
-    //@Value("${aws.accessKeyId}")
-    private static String accessKeyId = "";
+//    @Value("${aws.accessKeyId}")
+    private static final String accessKeyId = "AKIAZI2LE3ZNY7LK2LXN";
 
-    //@Value("${aws.secretAccessKey}")
-    private static String secretAccessKey = "";
+//    @Value("${aws.secretAccessKey}")
+    private static final String secretAccessKey = "3rbS/1j75VuHIPTFlhzzLQCvyijeUzpbJhW8MDVd";
 
     public static String folderDirect(Integer folderNum) {
         return switch (folderNum) {
@@ -47,7 +47,7 @@ public class AwsConfig {
     public static void uploadFile(String fileName, InputStream inputStream, String folderDir)
             throws AwsServiceException, SdkClientException, IOException {
 
-
+        System.out.println("2");
         AwsCredentials credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
         S3Client client = S3Client.builder()
                 .region(Region.AP_SOUTHEAST_2)
@@ -55,7 +55,7 @@ public class AwsConfig {
                 .build();
 
 
-
+        System.out.println("3");
         String key = folderDir + "/" + fileName;
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(BUCKET)
@@ -66,7 +66,7 @@ public class AwsConfig {
         client.putObject(request,
                 RequestBody.fromInputStream(inputStream, inputStream.available()));
 
-
+        System.out.println("4");
         S3Waiter waiter = client.waiter();
         HeadObjectRequest waitRequest = HeadObjectRequest.builder()
                 .bucket(BUCKET)

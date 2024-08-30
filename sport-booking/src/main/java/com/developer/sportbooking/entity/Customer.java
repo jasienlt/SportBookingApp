@@ -51,6 +51,7 @@ public class Customer {
 
     // Customer - Booking: one to many (parent side)
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "customer",
             cascade = CascadeType.ALL,
             orphanRemoval = true

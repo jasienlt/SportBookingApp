@@ -97,4 +97,10 @@ public class BookingServiceImpl implements BookingService {
     public void updateBookingByPayment(Long paymentId, BookingStatus bookingStatus) {
         bookingRepo.updateBookingByPayment(paymentService.findPaymentById(paymentId),bookingStatus);
     }
+
+    @Override
+    public Booking findBookingByPaymentId(Long id) {
+        Payment payment = paymentService.findPaymentById(id);
+        return bookingRepo.findBookingByPayment(payment);
+    };
 }

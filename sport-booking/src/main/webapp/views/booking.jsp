@@ -39,6 +39,7 @@
         <h4 class="d-flex p-2"><spring:message key="booking.selectTime"/></h4>
 
         <form method="post" id="bookingForm">
+            <input type="hidden" name="courtId" value="${courtId}"/>
             <div class="d-flex p-1 col-4 ms-auto">
                 <input
                         id="bookingDate"
@@ -148,7 +149,6 @@
     </div>
 </div>
 
-<script type="module" src="../scripts/locale.js"></script>
 <script type="module" src="../scripts/utils.js"></script>
 <script type="module" src="../scripts/generateScript.js"></script>
 <script type="module" src="../scripts/dayScripts.js"></script>

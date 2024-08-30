@@ -18,4 +18,6 @@ public interface PaymentRepo extends JpaRepository<Payment, Long>{
     @Modifying
     @Query("UPDATE Payment p set p.paymentStatus = :status where p.id = :paymentId")
     void updatePaymentById(Long paymentId, PaymentStatus status);
+
+    Payment findByPaymentFile(String paymentFile);
 }

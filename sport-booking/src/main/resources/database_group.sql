@@ -388,7 +388,7 @@ ON SCHEDULE EVERY 30 SECOND
 DO
 UPDATE `sport_app`.`booking` SET `status` = 'CANCELED' WHERE
 -- 1 = 1 AND
-        `created_date` > NOW() - INTERVAL 30 MINUTE AND
+        `created_date` < CONVERT_TZ(NOW(), 'UTC', '+10:00') - INTERVAL 30 MINUTE AND
     `status` = 'PENDING';
 
 --

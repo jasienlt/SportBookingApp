@@ -29,7 +29,7 @@ public interface BookingService {
 //
     void updateBookingByPayment(Long paymentId, BookingStatus bookingStatus);
 //
-//    Booking findBookingByPaymentId(Integer id);
+    Booking findBookingByPaymentId(Long id);
 //
 //    Booking updateBookingById(Booking booking, Integer id);
 //

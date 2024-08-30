@@ -34,7 +34,7 @@ public class AdminController {
     public String home(Model model, @AuthenticationPrincipal CustomCustomerDetails customerDetails) {
         model.addAttribute("customerdetail", customerDetails);
         if(customerDetails.getAuthorities().contains("ADMIN")) {
-            return "dashboardAdmin";
+            return "approvePayment";
         } else if(customerDetails.getAuthorities().contains("OWNER")) {}
         return "dashboardOwner";
     }

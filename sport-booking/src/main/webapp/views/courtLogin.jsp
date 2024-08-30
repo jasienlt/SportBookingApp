@@ -8,31 +8,7 @@
     <meta charset="ISO-8859-1">
     <title>Admin Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding-top: 50px;
-        }
-        .form-login {
-            max-width: 330px;
-            padding: 15px;
-            margin: auto;
-        }
-        .form-login .form-control {
-            position: relative;
-            box-sizing: border-box;
-            height: auto;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #888;
-        }
-    </style>
+    <link rel="stylesheet" href="../resource/css/login.css">
 </head>
 <body>
 <div class="container">
@@ -58,7 +34,7 @@
             <input type="password" id="password" name="password" class="form-control" required>
         </div>
         <div class="form-footer">
-            <p class="form-footer"><a href="/customer/login">Sign in as customer</a></p>
+            <p class="form-footer"><a href="/login">Sign in as customer</a></p>
         </div>
 
 

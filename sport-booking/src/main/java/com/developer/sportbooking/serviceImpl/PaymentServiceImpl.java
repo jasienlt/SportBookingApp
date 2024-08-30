@@ -45,4 +45,9 @@ public class PaymentServiceImpl implements PaymentService {
     public void updatePaymentById(Payment payment, PaymentStatus paymentStatus) {
         paymentRepo.updatePaymentById(payment.getId(), paymentStatus);
     }
+
+    @Override
+    public Payment findPaymentByEvidence(String evidenceId) {
+        return paymentRepo.findByPaymentFile(evidenceId);
+    };
 }
