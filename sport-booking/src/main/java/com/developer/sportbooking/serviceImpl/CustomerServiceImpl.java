@@ -25,8 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer saveCustomer(CustomerDto customerDto) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Customer customer = new Customer(customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhone(),customerDto.getEmail(), passwordEncoder.encode(customerDto.getPassword()));
+        Customer customer = new Customer(customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhone(),customerDto.getEmail(), customerDto.getPassword());
         return customerRepo.save(customer);
     }
 

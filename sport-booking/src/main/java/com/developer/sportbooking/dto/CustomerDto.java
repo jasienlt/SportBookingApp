@@ -20,6 +20,7 @@ public class CustomerDto {
     private String phone;
     private String email;
     private String password;
+    private String confirmPassword;
     //private String role;
 
     public CustomerDto(String firstName, String lastName, String phone, String email, String password) {

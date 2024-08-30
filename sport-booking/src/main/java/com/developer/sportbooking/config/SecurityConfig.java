@@ -30,7 +30,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
-
+        System.out.println(passwordEncoder().encode("123456"));
         return authProvider;
     }
 
@@ -41,24 +41,24 @@ public class SecurityConfig {
 
         http.csrf().disable();
 
-        http.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/booking")
-                                .permitAll())
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/home").authenticated()
-                                .anyRequest().permitAll()
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/booking").permitAll()   // Allow access to /booking without authentication
+                        .requestMatchers("/account").authenticated() // Require authentication for /account
+                        .anyRequest().permitAll()                  // Permit all other requests
                 )
-                .formLogin(login ->
-                        login
-                                .loginPage("/login")
-                                .loginProcessingUrl("/perform_login")
-                                .usernameParameter("username")
-                                .passwordParameter("password")
-                                .defaultSuccessUrl("/homepage", true)
-                                .permitAll()
-                                .failureUrl("/login?error=True")
+                .formLogin(login -> login
+                        .loginPage("/login")                        // Custom login page
+                        .loginProcessingUrl("/perform_login")       // Form action URL for login processing
+                        .usernameParameter("username")              // Name of the username field in the login form
+                        .passwordParameter("password")              // Name of the password field in the login form
+                        .defaultSuccessUrl("/homepage", true)       // Redirect to this page after successful login
+                        .permitAll()                                // Allow access to the login page for everyone
+                        .failureUrl("/login?error=True")            // Redirect to login page with error parameter on failure
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/").permitAll()
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/")                      // Redirect to this page after logout
+                        .permitAll()                                // Allow everyone to access the logout page
                 );
 
         return http.build();

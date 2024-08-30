@@ -2,73 +2,68 @@
          pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="ISO-8859-1">
-    <title>Registration Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <title>Insert title here</title>
-
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding-top: 50px;
-        }
-        .form-registration {
-            max-width: 330px;
-            padding: 15px;
-            margin: auto;
-        }
-        .form-registration .form-control {
-            position: relative;
-            box-sizing: border-box;
-            height: auto;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .form-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #888;
-        }
-    </style>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="<c:url value='/resource/css/register.css'/>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <!-- Login Form -->
-    <form class="form-registration" method="post" action="register">
-        <h2 class="mb-3">Register</h2>
-        <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" id="firstName" name="firstName" class="form-control" required>
+    <h2>Register</h2>
+    <p>ALOBO - Sports Court Booking</p>
+    <form class="form-registration" method="post" action="register" onsubmit="return validatePasswords()">
+        <div class="input-icons">
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Enter first name" required>
         </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" id="lastName" name="lastName" class="form-control" required>
+        <div class="input-icons">
+            <label for="lastName" class="form-label">Last name</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Enter last name" required>
         </div>
-        <div class="mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="text" id="phone" name="phone" class="form-control" required>
+        <div class="input-icons">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter phone number" required>
         </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" id="email" name="email" class="form-control" required>
+        <div class="input-icons">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
         </div>
-        <div class="mb-3">
+        <div class="input-icons">
             <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" name="password" class="form-control" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
         </div>
-        <button class="btn btn-primary" type="submit">Register Now</button>
+        <div class="input-icons">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Enter confirm password" required>
+        </div>
+        <div id="passwordError" style="color: red; display: none;">
+            Passwords do not match!
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
     </form>
-    <div>
-        <span style="color: red">
-            <c:if test="${CustomerExist}">Email is taken!</c:if>
-        </span>
+    <div class="back-to-login">
+        <span>Already have an account? <a href="<c:url value='/login'/>">Log in</a></span>
     </div>
-
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script>
+    function validatePasswords() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const passwordError = document.getElementById('passwordError');
+
+        if (password !== confirmPassword) {
+            passwordError.style.display = 'block';
+            return false; // Prevent form submission
+        } else {
+            passwordError.style.display = 'none';
+            return true; // Allow form submission
+        }
+    }
+</script>
 </body>
 </html>

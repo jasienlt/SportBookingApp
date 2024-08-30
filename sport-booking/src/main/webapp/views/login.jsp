@@ -27,7 +27,7 @@
     </form>
 
     <div class="form-footer">
-        <p><spring:message key="login.askForAccount"/> <a href="registration"><spring:message key="login.register"/></a> <spring:message key="login.here"/> </p>
+        <p><spring:message key="login.askForAccount"/> <a href="register"><spring:message key="login.register"/></a> <spring:message key="login.here"/> </p>
     </div>
 
     <div class="language-selector">
@@ -40,6 +40,8 @@
         </select>
     </div>
 </div>
+
+<jsp:include page="homepage_footer.jsp" />
 
 <script type="module" src="../scripts/locale.js"></script>
 </body>

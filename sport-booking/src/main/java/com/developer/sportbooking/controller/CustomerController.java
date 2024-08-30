@@ -41,7 +41,10 @@ public class CustomerController {
     }
 
     @GetMapping("/login")
-    public String login(@ModelAttribute CustomerDto customerDto) {
+    public String login(@AuthenticationPrincipal CustomCustomerDetails customerDetails) {
+        if (customerDetails != null) {
+            return "redirect:/homepage";
+        }
         return "login";
     }
 
@@ -51,7 +54,7 @@ public class CustomerController {
         String encodedPassword = encoder.encode(customerDto.getPassword());
         customerDto.setPassword(encodedPassword);
         Customer customer = customerService.validateCustomer(customerDto.getEmail(),customerDto.getPassword());
-        System.out.println("ABC");
+        System.out.println(encodedPassword);
         if (Objects.isNull(customer)) {
             // Return an error--?
             return "registration";
@@ -69,17 +72,24 @@ public class CustomerController {
 
     @PostMapping("/register")
     public String processRegister(@ModelAttribute CustomerDto customerDto, Model model) {
+        // Check if password and confirm password match
+        if (!customerDto.getPassword().equals(customerDto.getConfirmPassword())) {
+            model.addAttribute("passwordMismatch", true);
+            return "registration"; // Return to the registration page with an error message
+        }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(customerDto.getPassword());
         customerDto.setPassword(encodedPassword);
-//        if (customerService.isCustomerExist(customerDto.getEmail())) {
-//            model.addAttribute("CustomerExist", 1);
-//            return "registration";
-//        }
-        customerService.saveCustomer(customerDto);
-        model.addAttribute("firstName", customerDto.getFirstName());
-        return "login";
 
+        // Additional logic to check if the email is already taken
+//        if (customerService.isCustomerExist(customerDto.getEmail())) {
+//            model.addAttribute("CustomerExist", true);
+//            return "registration"; // Return to the registration page with an error message
+//        }
+
+        customerService.saveCustomer(customerDto);
+        return "redirect:/login"; // Redirect to the login page after successful registration
     }
+
 }
