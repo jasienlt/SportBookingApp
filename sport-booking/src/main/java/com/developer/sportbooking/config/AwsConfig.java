@@ -28,11 +28,9 @@ public class AwsConfig {
     private static final String folderName1 = "payment_screenshots";
     private static final String folderName2 = "court_url";
 
-//    @Value("${aws.accessKeyId}")
-    private static final String accessKeyId = "AKIAZI2LE3ZNY7LK2LXN";
+    private static final String accessKeyId = "";
 
-//    @Value("${aws.secretAccessKey}")
-    private static final String secretAccessKey = "3rbS/1j75VuHIPTFlhzzLQCvyijeUzpbJhW8MDVd";
+    private static final String secretAccessKey = "";
 
     public static String folderDirect(Integer folderNum) {
         return switch (folderNum) {
