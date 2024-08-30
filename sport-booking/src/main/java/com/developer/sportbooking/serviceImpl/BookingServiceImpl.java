@@ -92,4 +92,9 @@ public class BookingServiceImpl implements BookingService {
     public Booking getBookingBySessionId(String sessionId) {
         return bookingRepo.findBookingBySessionId(sessionId);
     }
+
+    @Override
+    public void updateBookingByPayment(Long paymentId, BookingStatus bookingStatus) {
+        bookingRepo.updateBookingByPayment(paymentService.findPaymentById(paymentId),bookingStatus);
+    }
 }

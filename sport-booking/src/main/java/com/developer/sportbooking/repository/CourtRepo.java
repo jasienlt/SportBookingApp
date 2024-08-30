@@ -2,6 +2,7 @@ package com.developer.sportbooking.repository;
 
 import com.developer.sportbooking.entity.Court;
 import com.developer.sportbooking.entity.Field;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@Transactional
 public interface CourtRepo extends JpaRepository<Court, Long>{
     public Court findCourtByName(String name);
     @Query("SELECT u FROM Court u WHERE u.name = ?1")
