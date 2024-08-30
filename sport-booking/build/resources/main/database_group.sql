@@ -231,14 +231,14 @@ INSERT INTO
 VALUES
     (
       'Dung Cau Long - Chi nhanh 1'
-    , 'abc xyz'
+    , '89 Culloden Road, Marsfield NSW 2122'
     , '0123456789'
     , 1
     , 3
     )
         , (
             'Dung Cau Long - Chi nhanh 2'
-          , 'def ghi'
+          , '2/2 Inglewood Pl, Norwest NSW 2153'
           , '0987654321'
           , 1
           , 3

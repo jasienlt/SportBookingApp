@@ -16,6 +16,7 @@ import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.BookingStatus;
 import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
+import com.developer.sportbooking.service.BookingService;
 import com.developer.sportbooking.service.CanvasjsChartService;
 import com.developer.sportbooking.service.CourtService;
 import com.developer.sportbooking.service.PaymentService;
@@ -38,6 +39,8 @@ public class CanvasjsChartController {
     private BookingRepo bookingRepo;
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private BookingService bookingService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String springMVC(ModelMap modelMap, CustomerDto customerDto) {
@@ -66,9 +69,10 @@ public class CanvasjsChartController {
 
     @RequestMapping(value = "/approvePayment", method = RequestMethod.POST, params = "action=success")
     @ResponseBody
-    public Map<String, String> approvePayment(@RequestBody Map<String, Long> requestBody) {
+    public Map<String, String> approvePayment(@RequestParam("id") Long id, ModelMap modelMap) {
         Map<String, String> response = new HashMap<>();
-        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.SUCCESSFUL);
+        paymentService.updatePaymentById(paymentService.findPaymentById(id),PaymentStatus.SUCCESSFUL);
+        bookingService.updateBookingByPayment(id,BookingStatus.COMPLETED);
         response.put("message", "Payment is successful. Booking is confirmed");
         return response;
     }
@@ -78,7 +82,7 @@ public class CanvasjsChartController {
     public Map<String, String> cancelPayment(@RequestBody Map<String, Long> requestBody) {
         Map<String, String> response = new HashMap<>();
         paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.CANCELED);
-
+        bookingService.updateBookingByPayment(requestBody.get("id"),BookingStatus.CANCELED);
         response.put("message", "Payment is cancelled. Booking is revoked.");
         return response;
     }

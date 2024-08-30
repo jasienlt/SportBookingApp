@@ -50,6 +50,11 @@ public class PaymentController {
 
     @PostMapping("/finishBooking")
     public String QRPayment(Model model, @ModelAttribute("courtId") String courtId,
+                            @RequestParam Long selectedStartTimeslot,
+                            @RequestParam Long selectedEndTimeslot,
+                            @RequestParam(name = "date") List<Integer> dates,
+                            @RequestParam(name = "selectedFields") String selectedFieldsString,
+                            @RequestParam(name = "bookingPeriod") String bookingPeriodString,
                             @RequestParam(name = "totalFee") String totalFee,
                             @RequestParam(name = "customerEmail") String customerEmail,
                             @AuthenticationPrincipal CustomCustomerDetails customerDetails,
@@ -68,8 +73,14 @@ public class PaymentController {
         model.addAttribute("totalFee", totalFee);
         model.addAttribute("message", message);
         model.addAttribute("imgAsBase64", file);
+        model.addAttribute("selectedStartTimeslot", selectedStartTimeslot);
+        model.addAttribute("selectedEndTimeslot", selectedEndTimeslot);
+        model.addAttribute("dates", dates);
+        model.addAttribute("selectedFields", selectedFieldsString);
+        model.addAttribute("bookingPeriod", bookingPeriodString);
         model.addAttribute("custName", customerName);
         model.addAttribute("custEmail", customerEmail);
+        model.addAttribute("customerDetails", customerDetails);
 
         return "paymentReceipt";
     }
@@ -78,12 +89,12 @@ public class PaymentController {
     public String QRPayment(Model model,
                             @ModelAttribute("custName") String custName,
                             @ModelAttribute("custEmail") String custEmail,
-                            @RequestParam Long selectedStartTimeslot,
-                            @RequestParam Long selectedEndTimeslot,
-                            @RequestParam(name = "date") List<Integer> dates,
-                            @RequestParam(name = "selectedFields") String selectedFieldsString,
-                            @RequestParam(name = "totalFee") String totalFee,
-                            @RequestParam(name = "bookingPeriod") String bookingPeriodString,
+                            @ModelAttribute("selectedStartTimeslot") Long selectedStartTimeslot,
+                            @ModelAttribute("selectedEndTimeslot") Long selectedEndTimeslot,
+                            @ModelAttribute("date") List<Integer> dates,
+                            @ModelAttribute("selectedFields") String selectedFieldsString,
+                            @ModelAttribute("totalFee") String totalFee,
+                            @ModelAttribute("bookingPeriod") String bookingPeriodString,
                             @RequestParam(name = "receiptImg") MultipartFile multipart,
                             @AuthenticationPrincipal CustomCustomerDetails customerDetails) {
 
