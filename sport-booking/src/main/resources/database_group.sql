@@ -391,6 +391,15 @@ UPDATE `sport_app`.`booking` SET `status` = 'CANCELED' WHERE
         `created_date` > NOW() - INTERVAL 30 MINUTE AND
     `status` = 'PENDING';
 
+--
+DROP EVENT IF EXISTS refresh_booking;
+
+CREATE EVENT refresh_booking
+ON SCHEDULE EVERY 1 DAY
+DO
+DELETE FROM `sport_app`.`booking` WHERE
+-- 1 = 1 AND
+    `status` = 'CANCELED';
 
 -- INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (1, 1, 25.00, 'MONDAY');
 -- INSERT INTO field_timeslot (field_id, ts_id, price, day_in_week) VALUES (2, 2, 30.00, 'TUESDAY');
