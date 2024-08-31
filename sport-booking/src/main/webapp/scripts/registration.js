@@ -16,3 +16,4 @@ function checkUniqueness() {
         alert("unable to connect to server");
     }
 }
+

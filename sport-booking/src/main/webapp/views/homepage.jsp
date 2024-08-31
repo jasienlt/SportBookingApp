@@ -59,20 +59,7 @@
 </div>
 
 <!-- Footer -->
-<div class="footer">
-    <div class="footer-item" onclick="window.location.href='test'">
-        <i class="bi bi-list-task"></i><br>
-        Danh sách
-    </div>
-    <div class="footer-item" onclick="window.location.href='featured.jsp'">
-        <i class="bi bi-star-fill"></i><br>
-        Nổi bật
-    </div>
-    <div class="footer-item" onclick="window.location.href='login'">
-        <i class="bi bi-person-square"></i><br>
-        Tài khoản
-    </div>
-</div>
+<jsp:include page="homepage_footer.jsp" />
 
 <script src="../scripts/map.js"></script>
 

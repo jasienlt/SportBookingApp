@@ -19,6 +19,8 @@ public interface PaymentService {
 
     void updatePaymentById(Payment payment, PaymentStatus paymentStatus);
 
+    Payment findPaymentByEvidence(String evidenceId);
+
 //    Payment findPaymentByBookingId(Long id);
 //
 //    Payment updatePaymentById(Payment payment, Long id);

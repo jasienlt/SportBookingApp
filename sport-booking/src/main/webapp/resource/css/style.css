@@ -263,32 +263,6 @@ body {
     margin-bottom: 15px;
 }
 
-.footer {
-    background-color: #b4aeff;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-around;
-    color: #FEFFEF;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.footer .footer-item {
-    text-align: center;
-    cursor: pointer;
-}
-
-.footer .footer-item:hover {
-    color: #ffc107;
-}
-
-/* Icon styles */
-.footer-item i {
-    font-size: 24px;
-}
-
 .search-button {
     padding: 10px;
     background: white;

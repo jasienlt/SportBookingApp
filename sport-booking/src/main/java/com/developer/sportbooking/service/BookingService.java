@@ -3,6 +3,7 @@ package com.developer.sportbooking.service;
 import com.developer.sportbooking.config.CustomCustomerDetails;
 import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.Customer;
+import com.developer.sportbooking.enumType.BookingStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,9 @@ public interface BookingService {
 
 //    List<Booking> findAllBooking();
 //
-//    Booking findBookingById(Integer id);
+    void updateBookingByPayment(Long paymentId, BookingStatus bookingStatus);
 //
-//    Booking findBookingByPaymentId(Integer id);
+    Booking findBookingByPaymentId(Long id);
 //
 //    Booking updateBookingById(Booking booking, Integer id);
 //

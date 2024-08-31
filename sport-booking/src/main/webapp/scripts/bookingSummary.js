@@ -30,8 +30,8 @@ submitBtn
                     // Parse the JSON response
                     const response = JSON.parse(xhr.responseText);
 
-                    customerNameText.textContent += response.customerName;
-                    customerEmailText.textContent += response.customerEmail;
+                    customerNameText.textContent = "Customer Name: " + response.customerName;
+                    customerEmailText.textContent = "Customer Email: " + response.customerEmail;
 
                     let sortedSelectedFields = new Set([...selectedFields].sort())
                     sortedSelectedFields.forEach(key => selectedFieldsText += `Field ${key + 1} - `);

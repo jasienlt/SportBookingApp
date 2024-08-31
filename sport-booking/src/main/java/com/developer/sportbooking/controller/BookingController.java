@@ -69,6 +69,7 @@ public class BookingController {
         model.addAttribute("fields", fields);
         model.addAttribute("timeslotStartTime", timeslotStartTime);
         model.addAttribute("currentDate", startMonthAndYear);
+        model.addAttribute("courtId", courtId);
 
         return "booking";
     }

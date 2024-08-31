@@ -28,7 +28,7 @@
                     <td><c:out value="${payment.paymentType}" /></td>
                     <td><c:out value="${payment.bookingId}" /></td>
                     <input type="hidden" name="id" value="${payment.id}"/>
-                    <td><button type="submit" name="action" value="success" onclick="return confirm('Do you really want to approve the payment?');"">SUCCESSFUL</button></td>
+                    <td><button type="submit" name="action" value="success" onclick="return confirm('Do you really want to approve the payment?');">SUCCESSFUL</button></td>
                     <td><button type="submit" name="action" value="cancelled" onclick="return confirm('Do you really want to cancel the payment?');">CANCELLED</button></td>
                 </tr>
             </c:forEach>

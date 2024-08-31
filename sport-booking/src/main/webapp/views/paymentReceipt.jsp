@@ -24,16 +24,25 @@
     ></script>
 </head>
 <body>
-<form action="./finishPayment" method="post">
+<form action="./finishPayment" method="post" enctype="multipart/form-data">
     <h2>Customer Name: ${custName}</h2>
-    <input type="text" name="custName" value=${custName} hidden=true>
+    <input type="hidden" name="custName" value=${custName}>
     <h2>Total Fee: ${totalFee}</h2>
-    <input type="text" name="totalFee" value=${totalFee} hidden=true>
+    <input type="hidden" name="totalFee" value=${totalFee}>
     <h2>Scan here to transfer:</h2><br>
     <img src="data:image/png;base64,${imgAsBase64}" /><br>
 
     <label for="receiptImg" class="form-label">Payment Screnshot:</label><br>
-    <input type="file" id="receiptImg" name="receiptImg" required /><br>
+    <input type="file" accept="image/x-png,image/gif,image/jpeg,image/jpg" id="receiptImg" name="receiptImg" required /><br>
+
+    <input type="hidden" name="custEmail" value="${custEmail}">
+    <input type="hidden" name="selectedStartTimeslot" value="${selectedStartTimeslot}">
+    <input type="hidden" name="selectedEndTimeslot" value="${selectedEndTimeslot}">
+    <input type="hidden" name="date" value="${dates}">
+    <input type="hidden" name="selectedFields" value="${selectedFields}">
+    <input type="hidden" name="bookingPeriod" value="${bookingPeriod}">
+    <input type="hidden" name="courtId" value="${courtId}">
+
 
     <div>
         <button type="submit" id="submitBtn" class="btn btn-dark btn-lg submitBtn my-2">

@@ -1,0 +1,71 @@
+body {
+    color: #b4aeff;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.account-header {
+    background-image: url('../webapp/resource/image/logo.png'); /* Add your image path */
+    background-size: cover;
+    background-position: center;
+    height: 200px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    position: absolute;
+    bottom: -50px;
+    left: calc(50% - 50px);
+}
+.account-info {
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+.nav {
+    border-color: #b4aeff
+}
+.nav-tabs {
+    background-color: #b4aeff; /* Dark green to match the theme */
+    display: flex;
+    justify-content: space-around; /* Center the tabs horizontally */
+}
+.nav-tabs .nav-link {
+    color: #ffffff;
+    border-radius: 0;
+}
+
+.nav-tabs .nav-link::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: #ffffff; /* White underline */
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease; /* Smooth transition for underline */
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #b4aeff; /* Slightly darker green for active tab */
+    color: #ffffff;
+    border-color: #b4aeff;
+    border-bottom-color: white;
+}
+.nav-tabs .nav-link:hover {
+    background-color: #908BCC; /* Darker green on hover */
+    color: #ffffff; /* Yellow text on hover */
+    transform: scale(1.05); /* Slightly scale up the tab on hover */
+}
+.tab-content {
+    padding: 20px;
+}

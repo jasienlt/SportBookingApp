@@ -1,5 +1,6 @@
 package com.developer.sportbooking.controller;
 
+import java.io.InputStream;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.developer.sportbooking.chartDto.BookingCount;
+import com.developer.sportbooking.config.AwsConfig;
 import com.developer.sportbooking.dto.CustomerDto;
 import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.Court;
@@ -16,6 +18,7 @@ import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.BookingStatus;
 import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
+import com.developer.sportbooking.service.BookingService;
 import com.developer.sportbooking.service.CanvasjsChartService;
 import com.developer.sportbooking.service.CourtService;
 import com.developer.sportbooking.service.PaymentService;
@@ -38,6 +41,8 @@ public class CanvasjsChartController {
     private BookingRepo bookingRepo;
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private BookingService bookingService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String springMVC(ModelMap modelMap, CustomerDto customerDto) {
@@ -61,24 +66,52 @@ public class CanvasjsChartController {
         // to be changed to include courtId
         List<Payment> listPayment = paymentService.findPaymentByStatus(PaymentStatus.PENDING);
         modelMap.addAttribute("listPayment", listPayment);
+        // wsConfig.moveFile();
         return "approvePayment";
     }
 
     @RequestMapping(value = "/approvePayment", method = RequestMethod.POST, params = "action=success")
     @ResponseBody
-    public Map<String, String> approvePayment(@RequestBody Map<String, Long> requestBody) {
+    public Map<String, String> approvePayment(@RequestParam("id") Long id, ModelMap modelMap) {
         Map<String, String> response = new HashMap<>();
-        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.SUCCESSFUL);
+
+//        String fileName = paymentService.findPaymentById(id).getPaymentFile();
+//        String courtId = fileName.split('#',2).get(0);
+//        String fromDir = "payment_screenshots/pending/" + courtId
+//        String fromDir = "payment_screenshots/success/" + courtId
+//        try {
+//            AwsConfig.uploadFile(fileName, multipart.getInputStream(),folderDir);
+//            AwsConfig.moveFile(fileName, String fromDir, String toDir);
+//        }
+//        catch (Exception ex) {
+//            message = "Error uploading file: " + ex.getMessage();
+//        }
+
+        paymentService.updatePaymentById(paymentService.findPaymentById(id),PaymentStatus.SUCCESSFUL);
+        bookingService.updateBookingByPayment(id,BookingStatus.COMPLETED);
         response.put("message", "Payment is successful. Booking is confirmed");
         return response;
     }
 
     @RequestMapping(value = "/approvePayment", method = RequestMethod.POST, params = "action=cancelled")
     @ResponseBody
-    public Map<String, String> cancelPayment(@RequestBody Map<String, Long> requestBody) {
+    public Map<String, String> cancelPayment(@RequestParam("id") Long id, ModelMap modelMap) {
         Map<String, String> response = new HashMap<>();
-        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.CANCELED);
 
+        String message = "";
+        String fileName = paymentService.findPaymentById(id).getPaymentFile();
+        String courtId = fileName.split('#',2).get(0);
+        String fromDir = "payment_screenshots/pending/" + courtId;
+        String toDir = "payment_screenshots/canceled/" + courtId;
+        try {
+            AwsConfig.moveFile(fileName, fromDir, toDir);
+        }
+        catch (Exception ex) {
+            message = "Error uploading file: " + ex.getMessage();
+        }
+
+        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.CANCELED);
+        bookingService.updateBookingByPayment(requestBody.get("id"),BookingStatus.CANCELED);
         response.put("message", "Payment is cancelled. Booking is revoked.");
         return response;
     }

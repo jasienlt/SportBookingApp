@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -24,7 +25,7 @@ public class Payment {
     private Long id;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
@@ -47,7 +48,7 @@ public class Payment {
         this.paymentType = paymentType;
     }
 
-    public Payment(Date createdDate, String paymentType, PaymentStatus paymentStatus) {
+    public Payment(LocalDateTime createdDate, String paymentType, PaymentStatus paymentStatus) {
         this.createdDate = createdDate;
         this.paymentType = paymentType;
         this.paymentFile = null;
@@ -55,7 +56,7 @@ public class Payment {
         this.bookingId = null;
     }
 
-    public Payment(Date createdDate, String paymentType, String paymentFile, PaymentStatus paymentStatus) {
+    public Payment(LocalDateTime createdDate, String paymentType, String paymentFile, PaymentStatus paymentStatus) {
         this.createdDate = createdDate;
         this.paymentType = paymentType;
         this.paymentFile = paymentFile;
@@ -63,7 +64,7 @@ public class Payment {
         this.bookingId = null;
     }
 
-    public Payment(Date createdDate, String paymentType, String paymentFile, PaymentStatus paymentStatus, Long bookingId) {
+    public Payment(LocalDateTime createdDate, String paymentType, String paymentFile, PaymentStatus paymentStatus, Long bookingId) {
         this.createdDate = createdDate;
         this.paymentType = paymentType;
         this.paymentFile = paymentFile;
