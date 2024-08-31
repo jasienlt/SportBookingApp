@@ -34,7 +34,7 @@ public class StripeWebhookController {
     private final ReservedFieldTimeslotService reservedFieldTimeslotService;
 
     @Autowired
-    public StripeWebhookController(BookingService bookingService, ReservedFieldTimeslotService reservedFieldTimeslotService, @Qualifier("paymentService") PaymentService paymentService) {
+    public StripeWebhookController(BookingService bookingService, ReservedFieldTimeslotService reservedFieldTimeslotService, PaymentService paymentService) {
         this.bookingService = bookingService;
         this.reservedFieldTimeslotService = reservedFieldTimeslotService;
         this.paymentService = paymentService;

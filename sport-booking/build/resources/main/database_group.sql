@@ -254,9 +254,16 @@ VALUES
 INSERT INTO
     product(name, price, amount, court_id)
 VALUES
-('Sting Dau', 8000, 1, 1)
-     , ('Pepsi', 10000, 1, 1)
-     , ('7Up', 10500, 1, 1);
+('Tennis Racket', 50.00, 10, 1),
+('Soccer Ball', 30.00, 20, 1),
+('Basketball', 25.00, 15, 1),
+('Swim Goggles', 10.00, 25, 1),
+('Volleyball', 20.00, 10, 1),
+('Badminton Shuttlecock', 5.00, 50, 1),
+('Table Tennis Bat', 15.00, 30, 1),
+('Cricket Bat', 70.00, 5, 1),
+('Baseball Glove', 40.00, 10, 1),
+('Rugby Ball', 35.00, 12, 1);
 
 -- 5) Court_Customer
 INSERT INTO
@@ -308,27 +315,27 @@ VALUES
          str_to_date('0600', '%h%i')
        , str_to_date('0630', '%h%i')
        , 1
-);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('08:00:00', '09:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('09:00:00', '10:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('10:00:00', '11:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('11:00:00', '12:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('12:00:00', '13:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('13:00:00', '14:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('14:00:00', '15:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('15:00:00', '16:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('16:00:00', '17:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('17:00:00', '18:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('18:00:00', '19:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('19:00:00', '20:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('20:00:00', '21:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('21:00:00', '22:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('22:00:00', '23:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('23:00:00', '00:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('00:00:00', '01:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('01:00:00', '02:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('02:00:00', '03:00:00', 1);
-INSERT INTO timeslot (start_time, end_time, court_id) VALUES ('03:00:00', '04:00:00', 1);
+),
+    ('08:00:00', '09:00:00', 1),
+('09:00:00', '10:00:00', 1),
+('10:00:00', '11:00:00', 1),
+('11:00:00', '12:00:00', 1),
+('12:00:00', '13:00:00', 1),
+('13:00:00', '14:00:00', 1),
+('14:00:00', '15:00:00', 1),
+('15:00:00', '16:00:00', 1),
+('16:00:00', '17:00:00', 1),
+('17:00:00', '18:00:00', 1),
+('18:00:00', '19:00:00', 1),
+('19:00:00', '20:00:00', 1),
+('20:00:00', '21:00:00', 1),
+('21:00:00', '22:00:00', 1),
+('22:00:00', '23:00:00', 1),
+('23:00:00', '00:00:00', 1),
+('00:00:00', '01:00:00', 1),
+('01:00:00', '02:00:00', 1),
+('02:00:00', '03:00:00', 1),
+('03:00:00', '04:00:00', 1);
 
 -- 😎 Field - Timeslot
 DELIMITER $$

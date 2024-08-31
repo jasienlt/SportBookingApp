@@ -68,7 +68,7 @@ public class PaymentController {
         String message = "";
         String file = "";
         try {
-            file = AwsConfig.getImage(courtId, "payment_screenshots");
+            file = AwsConfig.getImage(courtId, "court_url");
             message = "Your file has been retrieved successfully!";
         }
         catch (Exception ex) {
