@@ -131,6 +131,20 @@ public class CanvasjsChartController {
         }
     }
 
+    @GetMapping("/checkNewData")
+    @ResponseBody
+    public Map<String, Boolean> checkNewData() {
+        List<Payment> hasNewData = paymentService.hasNewPayment(); // Implement this method in your service
+        Map<String, Boolean> response = new HashMap<>();
+
+        boolean res = false;
+        if (!hasNewData.isEmpty()) {
+            res = true;
+        }
+        response.put("hasNewData", res);
+        return response;
+    }
+
 
     private List<List<DataPointModel>> bookingStatusStackedBar(Court court) {
 

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,4 +21,7 @@ public interface PaymentRepo extends JpaRepository<Payment, Long>{
     void updatePaymentById(Long paymentId, PaymentStatus status);
 
     Payment findByPaymentFile(String paymentFile);
+
+    @Query("SELECT p FROM Payment p WHERE p.createdDate >= :checkedTime")
+    List<Payment> findNewPaymentsSince(LocalDateTime checkedTime);
 }

@@ -1,5 +1,6 @@
 package com.developer.sportbooking.service;
 
+import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.entity.Product;
 import com.developer.sportbooking.enumType.PaymentStatus;
@@ -21,7 +22,9 @@ public interface PaymentService {
 
     Payment findPaymentByEvidence(String evidenceId);
 
-//    Payment findPaymentByBookingId(Long id);
+    List<Payment> hasNewPayment();
+
+//    Payment findPaymentByBookingId(Booking booking);
 //
 //    Payment updatePaymentById(Payment payment, Long id);
 //

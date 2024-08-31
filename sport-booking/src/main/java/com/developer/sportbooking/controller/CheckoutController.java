@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +30,12 @@ public class CheckoutController {
     @Value("${STRIPE_SECRET_KEY}")
     private String stripeSecretKey;
     private final BookingService bookingService;
+    private final PaymentService paymentService;
     private static final String YOUR_DOMAIN = "http://localhost:8080";
 
-    public CheckoutController(BookingService bookingService) {
+    public CheckoutController(BookingService bookingService, PaymentService paymentService) {
         this.bookingService = bookingService;
+        this.paymentService = paymentService;
     }
 
     @PostMapping("/create-checkout-session")
@@ -85,6 +88,9 @@ public class CheckoutController {
                 session.getId(),
                 "Stripe",
                 customerDetails == null ? new Customer(parts[0], parts[parts.length - 1], customerEmail) : customerDetails.getCustomer());
+
+        Payment payment = new Payment(LocalDateTime.now(),"Stripe",session.getId(),PaymentStatus.PENDING,bookingService.getBookingBySessionId(session.getId()).getId());
+        paymentService.savePayment(payment);
 
         return "redirect:" + session.getUrl();
     }

@@ -36,5 +36,29 @@
 
     </form>
 </div>
+
+<script type="text/javascript">
+    function checkForNewData() {
+        $.ajax({
+            url: "/checkNewData",  // The endpoint to check for new data
+            method: "GET",
+            success: function (data) {
+                if (data.hasNewData) {  // Assuming the server returns a JSON object with a boolean flag
+                    alert("New booking data has been added! Please confirm the payment.");
+                    setTimeout(function() {
+                        location.reload();  // Refresh the page after 2 seconds
+                    }, 2000);
+                }
+            },
+            error: function (error) {
+                console.error("Error checking for new data: ", error);
+            }
+        });
+    }
+
+    // Check for new data every 20 seconds (20000 milliseconds)
+    setInterval(checkForNewData, 20000);
+</script>
+
 </body>
 </html>

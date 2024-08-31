@@ -1,11 +1,13 @@
 package com.developer.sportbooking.serviceImpl;
 
+import com.developer.sportbooking.entity.Booking;
 import com.developer.sportbooking.entity.Payment;
 import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.PaymentRepo;
 import com.developer.sportbooking.service.PaymentService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -50,4 +52,13 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment findPaymentByEvidence(String evidenceId) {
         return paymentRepo.findByPaymentFile(evidenceId);
     };
+
+    @Override
+    public List<Payment> hasNewPayment() {
+        // Implement your logic to check for new data
+        // For example, check for any new bookings since the last check
+        LocalDateTime lastCheckedTime = LocalDateTime.now().minusMinutes(30);// Implement logic to store/retrieve last checked time
+        List<Payment> newPayments = paymentRepo.findNewPaymentsSince(lastCheckedTime);
+        return newPayments;
+    }
 }

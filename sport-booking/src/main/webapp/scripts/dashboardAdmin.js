@@ -19,3 +19,4 @@ document.addEventListener("click",function openTab(evt, tabNam) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 })
+
