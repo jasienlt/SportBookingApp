@@ -30,7 +30,7 @@
     <h2>Total Fee: ${totalFee}</h2>
     <input type="hidden" name="totalFee" value=${totalFee}>
     <h2>Scan here to transfer:</h2><br>
-    <img src="data:image/png;base64,${imgAsBase64}" /><br>
+    <img src="data:image/png;base64,${imgAsBase64}" class="align-items-md-center" /><br>
 
     <label for="receiptImg" class="form-label">Payment Screnshot:</label><br>
     <input type="file" accept="image/x-png,image/gif,image/jpeg,image/jpg" id="receiptImg" name="receiptImg" required /><br>

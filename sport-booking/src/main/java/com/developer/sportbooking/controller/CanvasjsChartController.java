@@ -25,6 +25,7 @@ import com.developer.sportbooking.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +69,13 @@ public class CanvasjsChartController {
         modelMap.addAttribute("listPayment", listPayment);
         // wsConfig.moveFile();
         return "approvePayment";
+    }
+
+    @GetMapping("/getBookingDetails")
+    public String getBookingDetails(Model model, @RequestParam String paymentId) {
+        Booking booking = bookingService.findBookingByPaymentId(Long.parseLong(paymentId));
+        model.addAttribute("booking", booking);
+        return "getBookingDetails";
     }
 
     @RequestMapping(value = "/approvePayment", method = RequestMethod.POST, params = "action=success")
