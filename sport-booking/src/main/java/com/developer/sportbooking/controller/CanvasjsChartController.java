@@ -75,21 +75,23 @@ public class CanvasjsChartController {
     public Map<String, String> approvePayment(@RequestParam("id") Long id, ModelMap modelMap) {
         Map<String, String> response = new HashMap<>();
 
-//        String fileName = paymentService.findPaymentById(id).getPaymentFile();
-//        String courtId = fileName.split('#',2).get(0);
-//        String fromDir = "payment_screenshots/pending/" + courtId
-//        String fromDir = "payment_screenshots/success/" + courtId
-//        try {
-//            AwsConfig.uploadFile(fileName, multipart.getInputStream(),folderDir);
-//            AwsConfig.moveFile(fileName, String fromDir, String toDir);
-//        }
-//        catch (Exception ex) {
-//            message = "Error uploading file: " + ex.getMessage();
-//        }
+        String message = "";
+        String fileName = paymentService.findPaymentById(id).getPaymentFile();
+        String courtId = fileName.split("#",2)[0];
+        String fromDir = "payment_screenshots/pending/" + courtId;
+        String toDir = "payment_screenshots/success/" + courtId;
+        try {
+            AwsConfig.moveFile(fileName, fromDir, toDir);
+        }
+        catch (Exception ex) {
+            message = "Error uploading file: " + ex.getMessage();
+            response.put("message", message);
+            return response;
+        }
 
-        paymentService.updatePaymentById(paymentService.findPaymentById(id),PaymentStatus.SUCCESSFUL);
-        bookingService.updateBookingByPayment(id,BookingStatus.COMPLETED);
-        response.put("message", "Payment is successful. Booking is confirmed");
+        paymentService.updatePaymentById(paymentService.findPaymentById(id),PaymentStatus.CANCELED);
+        bookingService.updateBookingByPayment(id,BookingStatus.CANCELED);
+        response.put("message", "Payment is cancelled. Booking is revoked.");
         return response;
     }
 
@@ -100,7 +102,7 @@ public class CanvasjsChartController {
 
         String message = "";
         String fileName = paymentService.findPaymentById(id).getPaymentFile();
-        String courtId = fileName.split('#',2).get(0);
+        String courtId = fileName.split("#",2)[0];
         String fromDir = "payment_screenshots/pending/" + courtId;
         String toDir = "payment_screenshots/canceled/" + courtId;
         try {
@@ -108,10 +110,12 @@ public class CanvasjsChartController {
         }
         catch (Exception ex) {
             message = "Error uploading file: " + ex.getMessage();
+            response.put("message", message);
+            return response;
         }
 
-        paymentService.updatePaymentById(paymentService.findPaymentById(requestBody.get("id")),PaymentStatus.CANCELED);
-        bookingService.updateBookingByPayment(requestBody.get("id"),BookingStatus.CANCELED);
+        paymentService.updatePaymentById(paymentService.findPaymentById(id),PaymentStatus.CANCELED);
+        bookingService.updateBookingByPayment(id,BookingStatus.CANCELED);
         response.put("message", "Payment is cancelled. Booking is revoked.");
         return response;
     }
@@ -126,6 +130,7 @@ public class CanvasjsChartController {
             return new ArrayList<>(); // Return empty list if there's an error
         }
     }
+
 
     private List<List<DataPointModel>> bookingStatusStackedBar(Court court) {
 
