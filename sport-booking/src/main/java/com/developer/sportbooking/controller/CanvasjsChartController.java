@@ -11,17 +11,11 @@ import java.util.Map;
 import com.developer.sportbooking.chartDto.BookingCount;
 import com.developer.sportbooking.config.AwsConfig;
 import com.developer.sportbooking.dto.CustomerDto;
-import com.developer.sportbooking.entity.Booking;
-import com.developer.sportbooking.entity.Court;
-import com.developer.sportbooking.entity.DataPointModel;
-import com.developer.sportbooking.entity.Payment;
+import com.developer.sportbooking.entity.*;
 import com.developer.sportbooking.enumType.BookingStatus;
 import com.developer.sportbooking.enumType.PaymentStatus;
 import com.developer.sportbooking.repository.BookingRepo;
-import com.developer.sportbooking.service.BookingService;
-import com.developer.sportbooking.service.CanvasjsChartService;
-import com.developer.sportbooking.service.CourtService;
-import com.developer.sportbooking.service.PaymentService;
+import com.developer.sportbooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -44,6 +38,10 @@ public class CanvasjsChartController {
     private PaymentService paymentService;
     @Autowired
     private BookingService bookingService;
+    @Qualifier("reservedFieldTimeslotService")
+    @Autowired
+    private ReservedFieldTimeslotService reservedFieldTimeslotService;
+
 
     @RequestMapping(method = RequestMethod.GET)
     public String springMVC(ModelMap modelMap, CustomerDto customerDto) {
@@ -74,7 +72,11 @@ public class CanvasjsChartController {
     @GetMapping("/getBookingDetails")
     public String getBookingDetails(Model model, @RequestParam String paymentId) {
         Booking booking = bookingService.findBookingByPaymentId(Long.parseLong(paymentId));
+        Customer customer = booking.getCustomer();
+        List<ReservedFieldTimeslot> reserved_fts = reservedFieldTimeslotService.getReservedFieldTimeslotByBooking(booking);
+
         model.addAttribute("booking", booking);
+        model.addAttribute("customer", customer);
         return "getBookingDetails";
     }
 

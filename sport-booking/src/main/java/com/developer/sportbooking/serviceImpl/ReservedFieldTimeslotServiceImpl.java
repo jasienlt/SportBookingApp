@@ -84,4 +84,9 @@ public class ReservedFieldTimeslotServiceImpl implements ReservedFieldTimeslotSe
             reservedFieldTimeslotRepo.delete(reservedFieldTimeslot);
         }
     }
+
+    @Override
+    public List<ReservedFieldTimeslot> getReservedFieldTimeslotByBooking(Booking booking) {
+        return reservedFieldTimeslotRepo.findReservedFieldTimeslotByBooking(booking);
+    }
 }

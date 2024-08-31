@@ -17,4 +17,5 @@ public interface ReservedFieldTimeslotService {
     void saveReservedFieldTimeslots(Booking booking, List<FieldTimeslot> fieldTimeslots, LocalDate bookingPeriod);
     HashMap<BookingStatus, List<ReservedFieldTimeslot>> getAllReservedFieldBetweenTimePeriod(Date firstDate, Date lastDate);
     void removeReservedFieldByBooking(Booking booking);
+    List<ReservedFieldTimeslot> getReservedFieldTimeslotByBooking(Booking booking);
 }
